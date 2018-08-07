@@ -2,29 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bg_message_board"
     android:orientation="horizontal">
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:src="@mipmap/ic_face" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_bot" />
 
     <TextView
         android:id="@+id/message"
         android:autoLink="web"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/bg_bubble_watbot"
+        android:layout_marginTop="12dp"
+        android:padding="8dp"
+        android:elevation="2dp"
+        android:background="@drawable/bg_bot_message_box"
         android:textColor="@android:color/black"
         android:textIsSelectable="true"
-        android:textSize="14sp" />
-    <!--android:fontFamily="@font/montserrat"-->
+        android:textSize="16sp" />
 
 
 </LinearLayout>

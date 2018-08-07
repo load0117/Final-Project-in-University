@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.twolee.chatbot.R;
@@ -40,7 +41,8 @@ import java.util.ArrayList;
 
 /*
         왓슨
-        Workplace id : a1e19fa2-8947-4444-8bd7-ddf358e51e44,
+        기존 Workplace id : a1e19fa2-8947-4444-8bd7-ddf358e51e44,
+        연습용 Workplace id : be7a4631-bd1c-4031-81a2-29b5f4637b37,
         "url": "https://gateway.watsonplatform.net/assistant/api",
         "username": "7de2c306-c49a-4882-978d-50bd00e43312",
         "password": "bpOFAA82TUHx"
@@ -48,13 +50,13 @@ import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
 
-
+    private String workplaceId = "be7a4631-bd1c-4031-81a2-29b5f4637b37";
     private RecyclerView recyclerView;
     private ChatAdapter mAdapter;
     private ArrayList messageArrayList;
     private EditText inputMessage;
-    private ImageButton btnSend;
-    private ImageButton btnRecord;
+    private ImageView btnSend;
+    private ImageView btnRecord;
     //private Map<String,Object> context = new HashMap<>();
     com.ibm.watson.developer_cloud.conversation.v1.model.Context context = null;
     StreamPlayer streamPlayer;
@@ -75,8 +77,8 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         inputMessage = (EditText) findViewById(R.id.message);
-        btnSend = (ImageButton) findViewById(R.id.btn_send);
-        btnRecord = (ImageButton) findViewById(R.id.btn_record);
+        btnSend = (ImageView) findViewById(R.id.btn_send);
+        btnRecord = (ImageView) findViewById(R.id.btn_record);
 //        String customFont = "Montserrat-Regular.ttf";
 //        Typeface typeface = Typeface.createFromAsset(getAssets(), customFont);
 //        inputMessage.setTypeface(typeface);
@@ -226,7 +228,7 @@ public class ChatActivity extends AppCompatActivity {
                     service.setUsernameAndPassword("7de2c306-c49a-4882-978d-50bd00e43312", "bpOFAA82TUHx");
 
                     InputData input = new InputData.Builder(inputmessage).build();
-                    MessageOptions options = new MessageOptions.Builder("a1e19fa2-8947-4444-8bd7-ddf358e51e44").input(input).context(context).build();
+                    MessageOptions options = new MessageOptions.Builder(workplaceId).input(input).context(context).build();
                     MessageResponse response = service.message(options).execute();
 
                     //Passing Context of last conversation
