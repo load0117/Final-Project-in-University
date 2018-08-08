@@ -5,7 +5,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--상태바 색상 변경-->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
+
 
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
