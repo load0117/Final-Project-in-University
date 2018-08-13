@@ -69,7 +69,6 @@
                 android:textSize="18sp" />
         </RelativeLayout>
 
-
         <RelativeLayout
             android:id="@+id/addBtn"
             android:layout_width="50dp"

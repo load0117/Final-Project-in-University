@@ -70,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
     private MicrophoneInputStream capture;
     private SpeakerLabelsDiarization.RecoTokens recoTokens;
     private MicrophoneHelper microphoneHelper;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,13 +79,13 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        inputMessage = (EditText) findViewById(R.id.message);
-        btnSend = (ImageView) findViewById(R.id.btn_send);
-        btnRecord = (ImageView) findViewById(R.id.btn_record);
+        inputMessage = findViewById(R.id.message);
+        btnSend = findViewById(R.id.btn_send);
+        btnRecord = findViewById(R.id.btn_record);
 //        String customFont = "Montserrat-Regular.ttf";
 //        Typeface typeface = Typeface.createFromAsset(getAssets(), customFont);
 //        inputMessage.setTypeface(typeface);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
 
         messageArrayList = new ArrayList<>();
         mAdapter = new ChatAdapter(messageArrayList);

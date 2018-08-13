@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">chatbot</string>
+    <string name="app_name">webot</string>
     <string name="what_s_on_your_mind">What\'s on your mind?</string>
     <!--추가 사항-->
     <string name="input_message">메시지를 입력해주세요.</string>
+    <string name="home">홈</string>
+    <string name="content">상담내용</string>
+    <string name="message">메세지</string>
+    <string name="more">더보기</string>
 </resources>

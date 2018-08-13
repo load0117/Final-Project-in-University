@@ -6,25 +6,25 @@
         android:id="@+id/action_home"
         android:enabled="true"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="홈"
+        android:title="@string/home"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_search"
         android:enabled="true"
         android:icon="@drawable/ic_search_black_24dp"
-        android:title="상담내용"
+        android:title="@string/content"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_chatting"
         android:enabled="true"
         android:icon="@drawable/ic_chat_black_24dp"
-        android:title="메시지"
+        android:title="@string/message"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_settings"
         android:enabled="true"
         android:icon="@drawable/ic_more_horiz_black_24dp"
-        android:title="더보기"
+        android:title="@string/more"
         app:showAsAction="ifRoom" />
 
 </menu>

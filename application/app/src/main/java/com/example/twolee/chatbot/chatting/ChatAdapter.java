@@ -17,6 +17,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private int SELF = 100;
+    //메세지 리스트 보여주기
     private ArrayList<Message> messageArrayList;
 
 
