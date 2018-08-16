@@ -38,7 +38,6 @@ import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
 
 import java.util.ArrayList;
 
-
 /*
         왓슨
         기존 Workplace id : a1e19fa2-8947-4444-8bd7-ddf358e51e44,
@@ -275,6 +274,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     //Record a message via Watson Speech to Text
+    // 왓슨 STT를 통해서 메세지를 기록
     private void recordMessage() {
         //mic.setEnabled(false);
         speechService = new SpeechToText();
@@ -294,7 +294,6 @@ public class ChatActivity extends AppCompatActivity {
             }).start();
             listening = true;
             Toast.makeText(ChatActivity.this, "Listening....Click to Stop", Toast.LENGTH_LONG).show();
-
         } else {
             try {
                 microphoneHelper.closeInputStream();
@@ -303,7 +302,6 @@ public class ChatActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -312,10 +310,10 @@ public class ChatActivity extends AppCompatActivity {
      *
      * @return
      */
+    // 인터넷 연결 확인
     private boolean checkInternetConnection() {
         // get Connectivity Manager object to check connection
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
@@ -344,7 +342,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private class MicrophoneRecognizeDelegate extends BaseRecognizeCallback {
-
         @Override
         public void onTranscription(SpeechResults speechResults) {
             System.out.println(speechResults);
@@ -354,8 +351,6 @@ public class ChatActivity extends AppCompatActivity {
             {
                 recoTokens.add(speechResults);
                 Log.i("SPEECHRESULTS",speechResults.getSpeakerLabels().get(0).toString());
-
-
             }*/
             if (speechResults.getResults() != null && !speechResults.getResults().isEmpty()) {
                 String text = speechResults.getResults().get(0).getAlternatives().get(0).getTranscript();
@@ -365,7 +360,6 @@ public class ChatActivity extends AppCompatActivity {
 
         @Override
         public void onConnected() {
-
         }
 
         @Override
@@ -386,7 +380,7 @@ public class ChatActivity extends AppCompatActivity {
 
         @Override
         public void onListening() {
-
+            
         }
 
         @Override
@@ -403,7 +397,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
-
+    //마이크 버튼 가능하게 하기
     private void enableMicButton() {
         runOnUiThread(new Runnable() {
             @Override

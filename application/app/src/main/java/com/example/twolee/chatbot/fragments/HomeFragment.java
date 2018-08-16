@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.example.twolee.chatbot.R;
 
 public class HomeFragment extends Fragment {
+    //singleton
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         return fragment;
@@ -22,6 +23,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //fragment_item_home xml 실행
         return inflater.inflate(R.layout.fragment_item_home,container, false);
     }
 }

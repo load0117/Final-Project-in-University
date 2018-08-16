@@ -9,16 +9,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
     }
+
     @Override
     public void onPause() {
         super.onPause();
-
-        // Remove the activity when its off the screen
         finish();
     }
 }

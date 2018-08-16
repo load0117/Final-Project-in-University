@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                             Fragment selectedFragment = null;
-
                             switch (item.getItemId()) {
                                 case R.id.action_home:
                                     selectedFragment = HomeFragment.newInstance();
@@ -59,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                             }
                             if (selectedFragment != null) {
-                                //프레그먼트 선택할 때
+                                //프레그먼트 선택할 때#
+                                // TODO: 2018. 8. 14. 프래그먼트 안의 내용물 구조는 어떻게 작성할 것인가
                                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.frame_layout, selectedFragment);
+                                transaction.replace(R.id.frame_layout, selectedFragment); // 프래그먼트 대체
                                 transaction.commit();
                             }
                             return true;
