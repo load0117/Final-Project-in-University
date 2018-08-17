@@ -21,8 +21,8 @@
 
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <!-- 스플래시 화면-->
                 <action android:name="android.intent.action.MAIN" />
@@ -31,18 +31,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
 
         <activity
             android:name=".chatting.ChatActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+
         </activity>
-
-
-
-
     </application>
-
 </manifest>
+

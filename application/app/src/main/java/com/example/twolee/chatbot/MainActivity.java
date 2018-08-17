@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (actionBar != null) {
                 // 커스텀 바 추가
-                actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
+                actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
                 actionBar.setCustomView(R.layout.custom_action_bar);
             }
             // 버튼 이벤트 추가

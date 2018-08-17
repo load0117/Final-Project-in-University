@@ -1,9 +1,10 @@
 package com.example.twolee.chatbot.chatting;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -14,12 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneHelper;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneInputStream;
@@ -69,14 +72,19 @@ public class ChatActivity extends AppCompatActivity {
     private MicrophoneInputStream capture;
     private SpeakerLabelsDiarization.RecoTokens recoTokens;
     private MicrophoneHelper microphoneHelper;
+    private Toolbar toolbar;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-//        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>위봇</font>"));
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar);
+        // toolbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("위봇");
+        toolbar.setTitleTextColor(Color.BLACK);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         inputMessage = findViewById(R.id.message);
         btnSend = findViewById(R.id.btn_send);
@@ -111,6 +119,14 @@ public class ChatActivity extends AppCompatActivity {
             Log.i(TAG, "Permission to record denied");
             makeRequest();
         }
+        // 뒤로가기 이벤트
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChatActivity.this, MainActivity.class));
+                finish();
+            }
+        });
 
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
