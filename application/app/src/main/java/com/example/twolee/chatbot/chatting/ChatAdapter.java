@@ -20,7 +20,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //메세지 리스트 보여주기
     private ArrayList<Message> messageArrayList;
 
-
+    // 생성자
     public ChatAdapter(ArrayList<Message> messageArrayList) {
         this.messageArrayList=messageArrayList;
 

@@ -161,7 +161,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    ;
 
     // Speech to Text Record Audio permission
     @Override
