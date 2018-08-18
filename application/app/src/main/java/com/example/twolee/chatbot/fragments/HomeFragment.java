@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.twolee.chatbot.R;
+import com.example.twolee.chatbot.ReviewWrite.ReviewFormActivity;
 import com.example.twolee.chatbot.chatting.ChatActivity;
 
 
@@ -32,12 +33,38 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //fragment_item_home xml 실행
         View v = inflater.inflate(R.layout.fragment_item_home,container,false);
+
         startBtn = v.findViewById(R.id.startBtn);
+        writeBtn = v.findViewById(R.id.writeBtn);
+
         home_recycle_view = v.findViewById(R.id.home_recycle_view);
-        // TODO: 2018. 8. 18. 리스너 추가하기. 
+
         return v;
     }
-    
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+        writeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ReviewFormActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        // TODO: 2018. 8. 18. 리사이클 뷰 내용 불러오기.- 찾아보기
+
+    }
+
 }
