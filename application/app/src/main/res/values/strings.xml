@@ -7,4 +7,8 @@
     <string name="content">상담내용</string>
     <string name="message">메세지</string>
     <string name="more">더보기</string>
+
+    <!-- 홈 프래그먼트 string -->
+    <string name="startConsult">상담 시작</string>
+    <string name="writeReview">리뷰 작성</string>
 </resources>
