@@ -11,4 +11,8 @@
     <!-- 홈 프래그먼트 string -->
     <string name="startConsult">상담 시작</string>
     <string name="writeReview">리뷰 작성</string>
+
+    <!-- 리뷰 폼 string -->
+    <string name= "reviewWriteBtn">리뷰 등록</string>
+
 </resources>
