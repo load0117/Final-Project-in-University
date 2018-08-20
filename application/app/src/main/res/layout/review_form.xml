@@ -3,16 +3,26 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!--
+        todo 2018.08.20 글자 수 한계 제한 (디비 용량을 위해 제한)
+        todo 2018.08.20 디자인 변경 할 것 찾아보기.
+    -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="@string/reviewTitle"/>
         <EditText
             android:id="@+id/review"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="300dp"
+            android:gravity="top"
+            android:hint="@string/reviewHint" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
