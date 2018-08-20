@@ -14,5 +14,6 @@
 
     <!-- 리뷰 폼 string -->
     <string name= "reviewWriteBtn">리뷰 등록</string>
-
+    <string name="reviewTitle">리뷰 작성</string>
+    <string name="reviewHint">리뷰를 작성하세요.</string>
 </resources>
