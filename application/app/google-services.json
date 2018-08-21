@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "56546280869",
+    "firebase_url": "https://chatbot-6c425.firebaseio.com",
+    "project_id": "chatbot-6c425",
+    "storage_bucket": "chatbot-6c425.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56546280869:android:111ca3d5bf7e2d7e",
+        "android_client_info": {
+          "package_name": "com.example.twolee.chatbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56546280869-r9s297ukg9jtdm5jvvr6df1575m7ette.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.twolee.chatbot",
+            "certificate_hash": "6db1682a61e731f8a4f25b489f8c9c3a84a0d789"
+          }
+        },
+        {
+          "client_id": "56546280869-j95592eqnnqs9o3bane52qogj4h1d1n9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXmad_s71Zs_KL-J-eyLhetMpJgU424sY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56546280869-j95592eqnnqs9o3bane52qogj4h1d1n9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

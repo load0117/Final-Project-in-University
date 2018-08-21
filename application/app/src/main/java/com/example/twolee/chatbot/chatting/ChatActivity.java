@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.twolee.chatbot.MainActivity;
@@ -40,6 +40,10 @@ import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 /*
         왓슨
@@ -72,19 +76,30 @@ public class ChatActivity extends AppCompatActivity {
     private MicrophoneInputStream capture;
     private SpeakerLabelsDiarization.RecoTokens recoTokens;
     private MicrophoneHelper microphoneHelper;
-    private Toolbar toolbar;
-    
+    protected @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    protected @BindView(R.id.toolbar_title)
+    TextView chatToolbarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        ButterKnife.bind(this);
         // toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("위봇");
-        toolbar.setTitleTextColor(Color.BLACK);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        chatToolbarTitle.setText("위봇");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // 뒤로가기 이벤트
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChatActivity.this, MainActivity.class));
+                finish();
+            }
+        });
 
         inputMessage = findViewById(R.id.message);
         btnSend = findViewById(R.id.btn_send);
@@ -119,15 +134,6 @@ public class ChatActivity extends AppCompatActivity {
             Log.i(TAG, "Permission to record denied");
             makeRequest();
         }
-        // 뒤로가기 이벤트
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ChatActivity.this, MainActivity.class));
-                finish();
-            }
-        });
-
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
@@ -395,7 +401,7 @@ public class ChatActivity extends AppCompatActivity {
 
         @Override
         public void onListening() {
-            
+
         }
 
         @Override
@@ -412,6 +418,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
+
     //마이크 버튼 가능하게 하기
     private void enableMicButton() {
         runOnUiThread(new Runnable() {
