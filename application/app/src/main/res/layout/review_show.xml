@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="300sp">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <!-- 여기에는 리뷰-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</RelativeLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/review_screen"
+        android:layout_width="match_parent"
+        android:layout_height="170sp"
+        android:background="@drawable/backgroud_splash" />
+
+    <!-- 평점 버튼-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/review_likeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:src="@mipmap/ic_face"
+            android:layout_weight="1"
+            android:contentDescription="@string/reviewWriteBtn" />
+
+    </LinearLayout>
+</LinearLayout>
