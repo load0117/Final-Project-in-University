@@ -13,7 +13,11 @@
     <string name="writeReview">리뷰 작성</string>
 
     <!-- 리뷰 폼 string -->
-    <string name= "reviewWriteBtn">리뷰 등록</string>
+    <string name="profile">프로필</string>
+    <string name="ratingNum">0.0</string>
+    <string name="review_id">아이디</string>
+    <string name="reviewWriteBtn">리뷰 등록</string>
     <string name="reviewTitle">리뷰 작성</string>
-    <string name="reviewHint">리뷰를 작성하세요.</string>
+    <string name="reviewHint">리뷰를 남겨 주세요.</string>
+    <string name="dot">점 3개</string>
 </resources>
