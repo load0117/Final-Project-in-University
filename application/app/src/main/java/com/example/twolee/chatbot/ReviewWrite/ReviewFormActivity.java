@@ -1,13 +1,16 @@
 package com.example.twolee.chatbot.ReviewWrite;
 
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.twolee.chatbot.MainActivity;
@@ -25,7 +28,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ReviewFormActivity extends AppCompatActivity{
     private Button reviewWriteBtn;
-    private RatingBar ratingBar;
+    private RatingBar rating;
+    private TextView ratingNum;
     private EditText review;
 
     //db
@@ -34,20 +38,31 @@ public class ReviewFormActivity extends AppCompatActivity{
     //private FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        // 폼 작성 액티비티.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_form);
-        // db의 값 가져오기
 
-
+        //data structure
         review = findViewById(R.id.review);
-        ratingBar = findViewById(R.id.ratingBar);
+        rating = findViewById(R.id.ratingBar);
+        ratingNum = findViewById(R.id.ratingNum);
         reviewWriteBtn = findViewById(R.id.reviewWriteBtn);
+
+        //평점 변경.
+
+        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                ratingNum.setText(String.valueOf(ratingBar.getRating()));
+            }
+        });
 
 
         reviewWriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2018. 8. 18. 디비에 값 전달.
+                // 버튼 눌렸을 시.
+                // TODO: 2018. 8. 30. 디비에 연결 및 값 받아오기
                 /*
                 db.collection("reviews").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -70,11 +85,17 @@ public class ReviewFormActivity extends AppCompatActivity{
                 //
                 */
 
-                // 버튼 성공 시
-                Toast.makeText(getApplicationContext(),"됐다.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ReviewFormActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                // 평점 입력 안할 시
+               if(review.getText().equals("")) {
+                   Toast.makeText(getApplicationContext(), "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
+                   // TODO: 2018. 8. 30. 알림창으로 변경
+               }
+                else{
+                   // TODO: 2018. 8. 30. 리뷰 작성한 것을 보여주는 페이지로 이동.
+                    Intent intent = new Intent(ReviewFormActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             }
         });
     }
