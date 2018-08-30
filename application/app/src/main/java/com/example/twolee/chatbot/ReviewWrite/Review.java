@@ -1,6 +1,7 @@
 package com.example.twolee.chatbot.ReviewWrite;
 
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class Review {
     /*
@@ -12,16 +13,17 @@ public class Review {
         사용자의 리뷰 내용.
         리뷰 평점.
      */
+    private String reviewNum;
     private String id;
     private String contents;
-    private ProgressBar rating;
+    private double rating;
 
     public Review(){}
 
-    public Review(String id, String contents){
-        // TODO: 2018. 8. 27. progress bar 점수 어떻게?
+    public Review(String id, String contents, double rating){
         setId(id);
         setContents(contents);
+        setRating(rating);
     }
 
     //getter, setter
@@ -42,11 +44,20 @@ public class Review {
         return this.contents;
     }
 
-    public void setRating(ProgressBar rating){
+    public void setRating(double rating){
         this.rating = rating;
     }
 
-    public ProgressBar getRating() {
+    public double getRating() {
         return rating;
+    }
+
+    //디비 저장시에 리뷰 넘버 저장.
+    public String getReviewNum() {
+        return reviewNum;
+    }
+
+    public void setReviewNum(String reviewNum) {
+        this.reviewNum = reviewNum;
     }
 }
