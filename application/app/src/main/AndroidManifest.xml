@@ -44,11 +44,10 @@
 
         <activity
             android:name=".ReviewWrite.ReviewFormActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
+        <activity android:name=".ReviewWrite.ReviewShow"/>
     </application>
 </manifest>
 
