@@ -13,9 +13,9 @@ public class Review {
         사용자의 리뷰 내용.
         리뷰 평점.
      */
-    private String reviewNum;
     private String id;
     private String contents;
+
     private double rating;
 
     public Review(){}
@@ -52,12 +52,5 @@ public class Review {
         return rating;
     }
 
-    //디비 저장시에 리뷰 넘버 저장.
-    public String getReviewNum() {
-        return reviewNum;
-    }
-
-    public void setReviewNum(String reviewNum) {
-        this.reviewNum = reviewNum;
-    }
+    // TODO: 2018. 8. 31. 작성 시간 확인
 }
