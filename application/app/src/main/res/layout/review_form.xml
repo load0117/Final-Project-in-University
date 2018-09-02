@@ -29,7 +29,7 @@
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/review"
+        android:id="@+id/reviewWriteScreen"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:gravity="top"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content">
 
         <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/reviewRatingBar"
             style="?android:attr/ratingBarStyleIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,12 +57,12 @@
             android:stepSize="0.1" />
 
         <TextView
-            android:id="@+id/ratingNum"
+            android:id="@+id/reviewRatingNum"
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/ratingBar"
+            android:layout_toEndOf="@+id/reviewRatingBar"
             android:gravity="center"
             android:text="@string/ratingNum"
             android:textColor="#bf4a7f"
