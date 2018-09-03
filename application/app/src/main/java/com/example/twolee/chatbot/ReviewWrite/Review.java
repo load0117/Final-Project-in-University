@@ -1,11 +1,8 @@
 package com.example.twolee.chatbot.ReviewWrite;
 
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 public class Review {
     /*
-        Review 내용 V 1.0
+        Review 내용 V 1.1
 
         객체가 가지는 정보
 
@@ -13,20 +10,31 @@ public class Review {
         사용자의 리뷰 내용.
         리뷰 평점.
      */
+    private String reviewNum;
     private String id;
     private String contents;
-
-    private double rating;
+    private String rating;
+    private String writtenTime;
 
     public Review(){}
 
-    public Review(String id, String contents, double rating){
+    public Review(String reviewNum, String id, String contents, String rating, String writtenTime){
+        setReviewNum(reviewNum);
         setId(id);
         setContents(contents);
         setRating(rating);
+        setWrittenTime(writtenTime);
     }
 
     //getter, setter
+
+    public void setReviewNum(String reviewNum) {
+        this.reviewNum = reviewNum;
+    }
+
+    public String getReviewNum() {
+        return reviewNum;
+    }
 
     public void setId(String id){
         this.id = id;
@@ -44,13 +52,19 @@ public class Review {
         return this.contents;
     }
 
-    public void setRating(double rating){
+    public void setRating(String rating){
         this.rating = rating;
     }
 
-    public double getRating() {
+    public String getRating() {
         return rating;
     }
 
-    // TODO: 2018. 8. 31. 작성 시간 확인
+    public void setWrittenTime(String writtenTime) {
+        this.writtenTime = writtenTime;
+    }
+
+    public String getWrittenTime() {
+        return writtenTime;
+    }
 }
