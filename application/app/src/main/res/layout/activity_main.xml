@@ -6,12 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.twolee.chatbot.MainActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar"
+        android:id="@+id/mainactivity_toolbar"/>
 
     <FrameLayout
         android:id="@+id/frame_layout"
+        android:layout_below="@+id/mainactivity_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></FrameLayout>
+        android:layout_height="wrap_content"
+        tools:ignore="UnknownId"></FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
