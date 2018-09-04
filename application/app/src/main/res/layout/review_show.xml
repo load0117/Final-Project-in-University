@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40sp"
             android:layout_alignParentTop="true"
+
             android:src="@drawable/ic_heart_like" />
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="74dp"
             android:gravity="center"
-            android:text="ID" />
+            android:text="@string/review_id" />
 
         <ImageView
             android:id="@+id/review_more"
