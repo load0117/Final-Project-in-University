@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 case R.id.action_chatting:
                                     Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                                    // TODO: 2018. 8. 13. 어떤 FLAG를 사용할 지 생각
+                                    // TODO: 2018. 8. 27. 뒤로 가기시에 메인 화면이 나오도록 하는 플레그 적용하기
                                     intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                                     startActivity(intent);
                                     break;
@@ -69,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                             }
                             if (selectedFragment != null) {
-                                //프레그먼트 선택할 때#
-                                // TODO: 2018. 8. 14. 프래그먼트 안의 내용물 구조는 어떻게 작성할 것인가
+                                //프레그먼트 선택할 때
                                 transaction = getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.frame_layout, selectedFragment); // 프래그먼트 대체
                                 transaction.commit();
