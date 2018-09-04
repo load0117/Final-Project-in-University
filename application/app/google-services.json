@@ -23,6 +23,17 @@
           }
         },
         {
+<<<<<<< HEAD
+=======
+          "client_id": "56546280869-80ntku41n5aeodt4raf49v8p04f5c7b9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.twolee.chatbot",
+            "certificate_hash": "30affbe52f8f835f004c058e8b9e184b99245c5b"
+          }
+        },
+        {
+>>>>>>> hk_home_branch
           "client_id": "56546280869-j95592eqnnqs9o3bane52qogj4h1d1n9.apps.googleusercontent.com",
           "client_type": 3
         }

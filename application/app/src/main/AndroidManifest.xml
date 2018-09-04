@@ -29,6 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <!-- main 화면 -->
         <activity android:name=".MainActivity" />
         <!-- chat 화면 -->
@@ -39,6 +40,26 @@
         <activity android:name=".login.SignUpActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.SignInActivity"></activity>
+=======
+
+        <activity android:name=".MainActivity">
+
+        </activity>
+
+        <activity
+            android:name=".chatting.ChatActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".ReviewWrite.ReviewFormActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity android:name=".ReviewWrite.ReviewShow"/>
+>>>>>>> hk_home_branch
     </application>
 
 </manifest>

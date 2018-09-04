@@ -7,5 +7,9 @@
 /build
 /captures
 .externalNativeBuild
+<<<<<<< HEAD
 /.idea/caches
 /.idea/codeStyles
+=======
+.idea
+>>>>>>> hk_home_branch

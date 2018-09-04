@@ -7,4 +7,17 @@
     <string name="content">상담내용</string>
     <string name="message">메세지</string>
     <string name="more">더보기</string>
+
+    <!-- 홈 프래그먼트 string -->
+    <string name="startConsult">상담 시작</string>
+    <string name="writeReview">리뷰 작성</string>
+
+    <!-- 리뷰 폼 string -->
+    <string name="profile">프로필</string>
+    <string name="ratingNum">0.0</string>
+    <string name="review_id">아이디</string>
+    <string name="reviewWriteBtn">리뷰 등록</string>
+    <string name="reviewTitle">리뷰 작성</string>
+    <string name="reviewHint">리뷰를 남겨 주세요.</string>
+    <string name="dot">점 3개</string>
 </resources>

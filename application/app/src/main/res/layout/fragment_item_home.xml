@@ -6,18 +6,39 @@
     android:layout_height="match_parent"
     tools:context="com.example.twolee.chatbot.fragments.HomeFragment">
 
-    <ImageView
-        android:id="@+id/home_bottom_btn"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/ic_launcher"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/home_bottom_btn"
-        android:layout_centerHorizontal="true"
-        android:text="Fragment 1"
-        android:textSize="30sp"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/startBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            style="?attr/buttonBarButtonStyle"
+            android:text="@string/startConsult"
+            />
+        <Button
+            android:id="@+id/writeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            style="?attr/buttonBarButtonStyle"
+            android:text="@string/writeReview"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/home_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_layout">
+
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>
