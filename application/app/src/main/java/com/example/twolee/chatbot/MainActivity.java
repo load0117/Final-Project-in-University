@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-<<<<<<< HEAD
+
     protected @BindView(R.id.toolbar)
     Toolbar toolbar;
     protected @BindView(R.id.toolbar_title)
@@ -28,44 +28,32 @@ public class MainActivity extends AppCompatActivity {
     protected @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
-=======
+
     //처음 홈 프래그먼트가 뜨도록 초기값 설정.
     private Fragment selectedFragment;
     private FragmentTransaction transaction;
-    private ActionBar actionBar;
-    private BottomNavigationView bottomNavigationView;
     // 틀 안에 무엇이 들어갈지..
->>>>>>> hk_home_branch
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-<<<<<<< HEAD
+
         //toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mainToolbarTitle.setText("위봇");
 
-        try {
-=======
         selectedFragment = HomeFragment.newInstance();
 
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, selectedFragment); // 프래그먼트 대체
         transaction.commit();
 
-        actionBar = getSupportActionBar();
-
         try {
-            // 커스텀 바 추가
-            if (actionBar != null) {
-                actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-                actionBar.setCustomView(R.layout.custom_action_bar);
-            }
 
->>>>>>> hk_home_branch
             // 버튼 이벤트 추가
             BottomNavigationViewHelper.disableShiftMode(bottomNavigationView); //이동 모드 해제
             bottomNavigationView.setOnNavigationItemSelectedListener(
