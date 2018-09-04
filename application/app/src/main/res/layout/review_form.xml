@@ -11,6 +11,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/profile"
             android:layout_width="48sp"
             android:layout_height="48sp"
             android:contentDescription="@string/profile"
