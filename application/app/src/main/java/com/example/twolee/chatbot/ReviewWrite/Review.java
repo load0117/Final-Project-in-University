@@ -2,25 +2,27 @@ package com.example.twolee.chatbot.ReviewWrite;
 
 public class Review {
     /*
-        Review 내용 V 1.1
+        Review 내용 V 1.2
 
         객체가 가지는 정보
 
-        사용자의 ID.
+        리뷰 UID.
+        사용자 UID.
         사용자의 리뷰 내용.
         리뷰 평점.
+        작성 시간.
      */
     private String reviewNum;
-    private String id;
+    private String uid;
     private String contents;
     private String rating;
     private String writtenTime;
 
     public Review(){}
 
-    public Review(String reviewNum, String id, String contents, String rating, String writtenTime){
+    public Review(String reviewNum, String uid, String contents, String rating, String writtenTime){
         setReviewNum(reviewNum);
-        setId(id);
+        setUid(uid);
         setContents(contents);
         setRating(rating);
         setWrittenTime(writtenTime);
@@ -36,12 +38,12 @@ public class Review {
         return reviewNum;
     }
 
-    public void setId(String id){
-        this.id = id;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getId(){
-        return this.id;
+    public String getUid() {
+        return uid;
     }
 
     public void setContents(String contents){
