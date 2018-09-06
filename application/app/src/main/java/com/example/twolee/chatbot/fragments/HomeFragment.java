@@ -14,9 +14,18 @@ import com.example.twolee.chatbot.R;
 import com.example.twolee.chatbot.ReviewWrite.Review;
 import com.example.twolee.chatbot.ReviewWrite.ReviewAdapter;
 import com.example.twolee.chatbot.ReviewWrite.ReviewFormActivity;
+import com.example.twolee.chatbot.ReviewWrite.ReviewLoader;
 import com.example.twolee.chatbot.chatting.ChatActivity;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 //import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -28,7 +37,7 @@ public class HomeFragment extends Fragment {
     private Button writeBtn;
 
     // 코드 level
-    private ArrayList<Review> reviewArrayList;
+    private List<Review> reviewArrayList;
     private ReviewAdapter reviewAdapter;
 
     /* Real Time */
@@ -43,11 +52,9 @@ public class HomeFragment extends Fragment {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        //생성 되면서.
+        // 변수 할당.
         super.onCreate(savedInstanceState);
 
-        reviewArrayList = new ArrayList<>();
-        reviewAdapter = new ReviewAdapter(reviewArrayList);
     }
  
     @Override
@@ -67,7 +74,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
-        //액티비티 실행후.
+        // activity onCreate 완료 후에 실행
 
         //리스너 생성.
         super.onActivityCreated(savedInstanceState);
@@ -88,40 +95,19 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // 레이아웃 관리자 생성.
+        // 1. 데이터 받아오기
+        reviewArrayList = ReviewLoader.getInitData();
+        // 2. 어댑터
+        reviewAdapter = new ReviewAdapter(reviewArrayList);
+        // 3. 리사이클러 뷰 어댑터 연결
+        home_recycle_view.setAdapter(reviewAdapter);
+        // 4. 레이아웃 관리자 생성.
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-
         home_recycle_view.setLayoutManager(linearLayoutManager);
-        home_recycle_view.setAdapter(reviewAdapter);
 
-        /*
-        home_recycle_view.addOnItemTouchListener(new RecyclerTouchListener(getContext(), home_recycle_view, new ClickListener() {
-            @Override
-            public void onClick(final View view, final int position) {
-                // TODO: 2018. 8. 27. 뒤로 가기 하면 메인 화면이 뜰 수 있도록 플래그 수정.
-
-                Intent intent = new Intent(getActivity(), ReviewShow.class);
-                startActivity(intent);
-
-
-                Thread thread = new Thread(new Runnable() {
-                    public void run() {
-
-                    }
-                });
-                thread.start();
-
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                // TODO: 2018. 8. 30. 롱 터치 시 이벤트 처리
-                Toast.makeText(getActivity(), "롱 터치", Toast.LENGTH_SHORT).show();
-            }
-        }));
-        */
+        // TODO: 2018. 8. 27. 뒤로 가기 하면 메인 화면이 뜰 수 있도록 플래그 수정.
+        // TODO: 2018. 8. 30. 롱 터치 시 이벤트 처리
     }
-
 }
