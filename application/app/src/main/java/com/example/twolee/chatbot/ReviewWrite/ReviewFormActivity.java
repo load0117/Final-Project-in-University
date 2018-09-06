@@ -129,7 +129,7 @@ public class ReviewFormActivity extends AppCompatActivity{
                 DatabaseReference keyRef = myref.child("reviews").push();
 
                 String rating = String.format(Locale.KOREA,"%.1f",reviewRatingBar.getRating());
-                Review review = new Review(keyRef.getKey(), uid, reviewWriteScreen.getText().toString(), rating, getCurrentTime());
+                Review review = new Review(uid, idShow.getText().toString(), reviewWriteScreen.getText().toString(), rating, getCurrentTime(),0);
                 // TODO: 2018. 8. 31. 현재 시간이 틀리다. 나라 수정으로 현재 시간 바꾸자.
 
                 keyRef.setValue(review);
@@ -147,8 +147,11 @@ public class ReviewFormActivity extends AppCompatActivity{
                    Toast.makeText(getApplicationContext(),"입력 되었습니다.", Toast.LENGTH_SHORT).show();
                    Intent intent = new Intent(ReviewFormActivity.this, ReviewShow.class);
                    // TODO: 2018. 9. 4. 뒤로 가기 시에 종료가 되도록 스택에 쌓여 있는 액티비티들 제거 하는 플래그 추가.
+                   //intent.putExtra("uid",uid);
                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                    startActivity(intent);
+                   //차 후 주석 제거.
+                   //finish();
                 }
             }
         });
