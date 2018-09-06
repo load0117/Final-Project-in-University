@@ -6,14 +6,29 @@
     android:layout_height="match_parent"
     tools:context="com.example.twolee.chatbot.MainActivity">
 
-    <include layout="@layout/toolbar"
-        android:id="@+id/mainactivity_toolbar"/>
+
+    <include
+        android:id="@+id/mainactivity_toolbar"
+        layout="@layout/toolbar" />
+
+    <Button
+        android:id="@+id/mainactivity_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mainactivity_toolbar"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:text="감정 스캐너"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        tools:ignore="UnknownId" />
 
     <FrameLayout
         android:id="@+id/frame_layout"
-        android:layout_below="@+id/mainactivity_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/mainactivity_scanner"
         tools:ignore="UnknownId"></FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
