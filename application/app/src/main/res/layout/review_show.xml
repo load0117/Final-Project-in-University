@@ -15,41 +15,84 @@
         <!--todo 아이디와 더 보기 이미지-->
 
         <ImageView
-            android:id="@+id/profile_icon"
+            android:id="@+id/profile_show"
             android:layout_width="wrap_content"
             android:layout_height="40sp"
             android:layout_alignParentTop="true"
 
             android:src="@drawable/ic_heart_like" />
-
-        <TextView
-            android:id="@+id/review_id_show"
-            android:layout_width="68dp"
-            android:layout_height="40sp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="74dp"
-            android:gravity="center"
-            android:text="@string/review_id" />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/review_id_show"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_marginStart="74dp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/review_writtenTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:paddingStart="20sp"
+                android:paddingEnd="0sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/clock"
+                android:layout_gravity="center"
+                android:src="@drawable/review_clock"/>
+            <TextView
+                android:id="@+id/review_uid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/review_more"
             android:layout_width="38dp"
             android:layout_height="40sp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/dot"
             android:src="@drawable/ic_more_horiz_black_24dp" />
 
     </RelativeLayout>
+
     <TextView
         android:id="@+id/review_screen"
         android:layout_width="match_parent"
         android:layout_height="170sp"
         android:background="@drawable/bg_textview_border"
          />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/review_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="25sp" />
+        <!-- 평점 버튼-->
 
-    <!-- 평점 버튼-->
+        <TextView
+            android:id="@+id/review_like"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="25sp" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +100,7 @@
 
         <ImageButton
             android:id="@+id/review_likeBtn"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50sp"
             android:src="@drawable/ic_heart_like"
             android:background="@color/bg_message_board"
@@ -67,6 +110,6 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="10sp"
+        android:layout_height="12sp"
         android:background="#878787"/>
 </LinearLayout>
