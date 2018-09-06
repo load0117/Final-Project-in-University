@@ -1,42 +1,43 @@
 package com.example.twolee.chatbot.ReviewWrite;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Review {
     /*
-        Review 내용 V 1.2
+        Review 내용 V 1.3
 
         객체가 가지는 정보
 
         리뷰 UID.
         사용자 UID.
-        사용자의 리뷰 내용.
+        사용자 username.
+        사용자 리뷰 내용.
         리뷰 평점.
         작성 시간.
+        좋아요 개수.
      */
-    private String reviewNum;
     private String uid;
+    private String username;
     private String contents;
     private String rating;
     private String writtenTime;
+    private long like;
 
     public Review(){}
 
-    public Review(String reviewNum, String uid, String contents, String rating, String writtenTime){
-        setReviewNum(reviewNum);
+    public Review(String uid, String username, String contents, String rating, String writtenTime, long like){
         setUid(uid);
+        setUsername(username);
         setContents(contents);
         setRating(rating);
         setWrittenTime(writtenTime);
+        setLike(like);
     }
 
     //getter, setter
-
-    public void setReviewNum(String reviewNum) {
-        this.reviewNum = reviewNum;
-    }
-
-    public String getReviewNum() {
-        return reviewNum;
-    }
 
     public void setUid(String uid) {
         this.uid = uid;
@@ -44,6 +45,14 @@ public class Review {
 
     public String getUid() {
         return uid;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setContents(String contents){
@@ -69,4 +78,37 @@ public class Review {
     public String getWrittenTime() {
         return writtenTime;
     }
+
+    public void setLike(long like) {
+        this.like = like;
+    }
+
+    public long getLike() {
+        return like;
+    }
+    /*
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uid", uid);
+        result.put("username", username);
+        result.put("contents", contents);
+        result.put("rating", rating);
+        result.put("writtenTime", writtenTime);
+        result.put("like", like);
+
+        return result;
+    }
+
+
+    public void setReview(Review review){
+        this.uid = review.getUid();
+        this.username = review.getUsername();
+        this.contents = review.getContents();
+        this.rating = review.getRating();
+        this.writtenTime = review.getWrittenTime();
+        this.like = review.getLike();
+    }
+
+    */
 }
