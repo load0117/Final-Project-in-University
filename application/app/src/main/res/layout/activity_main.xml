@@ -8,18 +8,18 @@
 
 
     <include
-        android:id="@+id/mainactivity_toolbar"
+        android:id="@+id/mainActivity_toolbar"
         layout="@layout/toolbar" />
 
     <Button
-        android:id="@+id/mainactivity_scanner"
+        android:id="@+id/mainActivity_scanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mainactivity_toolbar"
+        android:layout_below="@id/mainActivity_toolbar"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
-        android:text="감정 스캐너"
+        android:text="@string/sentimentScanner"
         android:textSize="18sp"
         android:textColor="@color/colorAccent"
         tools:ignore="UnknownId" />
@@ -28,15 +28,16 @@
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mainactivity_scanner"
-        tools:ignore="UnknownId"></FrameLayout>
+        android:layout_below="@id/mainActivity_scanner"
+        tools:ignore="UnknownId">
+
+    </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_gravity="bottom"
         app:itemBackground="@color/colorPrimary"
