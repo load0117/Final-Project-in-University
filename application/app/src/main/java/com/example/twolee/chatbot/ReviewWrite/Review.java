@@ -86,29 +86,4 @@ public class Review {
     public long getLike() {
         return like;
     }
-    /*
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", uid);
-        result.put("username", username);
-        result.put("contents", contents);
-        result.put("rating", rating);
-        result.put("writtenTime", writtenTime);
-        result.put("like", like);
-
-        return result;
-    }
-
-
-    public void setReview(Review review){
-        this.uid = review.getUid();
-        this.username = review.getUsername();
-        this.contents = review.getContents();
-        this.rating = review.getRating();
-        this.writtenTime = review.getWrittenTime();
-        this.like = review.getLike();
-    }
-
-    */
 }
