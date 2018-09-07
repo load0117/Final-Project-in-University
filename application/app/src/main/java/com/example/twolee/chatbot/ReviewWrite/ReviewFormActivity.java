@@ -16,9 +16,7 @@ import android.widget.Toast;
 
 import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
-import com.example.twolee.chatbot.chatting.ChatActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,13 +31,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-/*
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-*/
 
 public class ReviewFormActivity extends AppCompatActivity{
     // xml
@@ -89,7 +80,6 @@ public class ReviewFormActivity extends AppCompatActivity{
                 finish();
             }
         });
-        
     }
 
     public void getData(){
@@ -107,8 +97,6 @@ public class ReviewFormActivity extends AppCompatActivity{
                 Log.w("failure",databaseError.toException());
             }
         });
-
-
     }
 
     public void setListeners(){
@@ -162,7 +150,7 @@ public class ReviewFormActivity extends AppCompatActivity{
         Date date = new Date(now);
         System.out.println(SimpleDateFormat.getInstance());
 
-        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd E HH:mm:ss",Locale.KOREAN);
 
         return sdfNow.format(date);
     }
