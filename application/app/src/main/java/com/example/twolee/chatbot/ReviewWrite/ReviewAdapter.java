@@ -55,7 +55,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
-        //여기서 홀더 관리.
+        //        //여기서 홀더 관리.
         @BindView(R.id.profile_show) ImageView profile_show;
         @BindView(R.id.review_id_show) TextView review_id_show;
         @BindView(R.id.review_uid) TextView review_uid;
@@ -63,6 +63,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         @BindView(R.id.review_screen) TextView review_screen;
         @BindView(R.id.review_rating) TextView review_rating;
         @BindView(R.id.review_like) TextView review_like;
+        @BindView(R.id.review_writtenTime) TextView review_writtenTime;
         @BindView(R.id.review_likeBtn)
         ImageButton review_likeBtn;
 
@@ -75,7 +76,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             super(view);
             ButterKnife.bind(this,view);
 
-            //uid는 안보이게..
+            //non see uid.
             review_uid.setVisibility(View.INVISIBLE);
 
             setListener();
@@ -88,6 +89,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             review_screen.setText(review.getContents());
             review_rating.setText(review.getRating());
             review_like.setText(String.valueOf(review.getLike()));
+            review_writtenTime.setText(review.getWrittenTime());
         }
 
 
@@ -119,7 +121,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             review_likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: 2018. 8. 30. 버튼 누를 시 디비와 연동 - 리뷰 넘버를 알고선 추가.
+                    // TODO: 2018. 9. 8. 버튼 누를 시에 좋아요 색깔 변동
                     long likes = Long.valueOf(review_like.getText().toString());
                     if(like){ // 좋아하는 것에서 -> 취소로
                         likes--;
@@ -134,8 +136,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
                         // 디버그 용
                         Toast.makeText(v.getContext().getApplicationContext(), "좋아요!.", Toast.LENGTH_SHORT).show();
                     }
-                    //review_like.setText(likes);
-                    //myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
+
+                    review_like.setText(likes+"");
+                    myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
                 }
             });
         }
