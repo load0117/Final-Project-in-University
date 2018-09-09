@@ -122,17 +122,19 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
                 @Override
                 public void onClick(View v) {
                     // TODO: 2018. 9. 8. 버튼 누를 시에 좋아요 색깔 변동
-                    long likes = Long.valueOf(review_like.getText().toString());
+                    long likes = Long.valueOf(review_like.getText().toString());[]
                     if(like){ // 좋아하는 것에서 -> 취소로
+                        System.out.println("좋아요 취소!");
                         likes--;
                         like = false;
-
+                        review_likeBtn.setImageResource(R.drawable.ic_like_icon);
                         //디버그 용
                         Toast.makeText(v.getContext().getApplicationContext(),"두번은 못누른다.",Toast.LENGTH_SHORT).show();
                     }else{    // 좋아하기 누름.
+                        System.out.println("좋아요!");
                         likes++;
                         like = true;
-
+                        review_likeBtn.setImageResource(R.drawable.ic_like_selected_icon);
                         // 디버그 용
                         Toast.makeText(v.getContext().getApplicationContext(), "좋아요!.", Toast.LENGTH_SHORT).show();
                     }
