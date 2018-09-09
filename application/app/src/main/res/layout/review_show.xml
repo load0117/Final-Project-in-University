@@ -1,95 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_block_border"
     android:orientation="vertical">
 
     <!-- 여기에는 리뷰-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:orientation="horizontal">
-        <!--todo 배열 정렬 -->
+        android:background="#FFFFFF">
 
         <ImageView
             android:id="@+id/profile_show"
             android:layout_width="wrap_content"
-            android:layout_height="40sp"
-            android:contentDescription="@string/profile"
+            android:layout_height="48sp"
             android:layout_alignParentTop="true"
-            android:src="@drawable/ic_heart_like" />
+            android:contentDescription="@string/profile"
+            android:src="@drawable/ic_like_icon" />
 
         <TextView
             android:id="@+id/review_id_show"
-            android:layout_width="wrap_content"
-            android:layout_height="40sp"
-            android:layout_alignParentStart="true"
+            android:layout_width="316dp"
+            android:layout_height="48sp"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@id/profile_show"
-            android:layout_marginStart="59dp"
-            android:gravity="center" />
+            android:layout_toEndOf="@+id/profile_show"
+            android:gravity="center"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/review_uid"
-            android:layout_width="wrap_content"
+            android:layout_width="88dp"
             android:layout_height="wrap_content"
             android:visibility="gone" />
+
+
+        <ImageView
+            android:id="@+id/review_more"
+            android:layout_width="48dp"
+            android:layout_height="48sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/dot"
+            android:src="@drawable/ic_more_horiz_black_24dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
 
         <ImageView
             android:id="@+id/review_timeIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_alignStart="@id/review_uid"
+            android:layout_marginStart="13dp"
             android:contentDescription="@string/clock"
             android:src="@drawable/review_clock" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@id/review_timeIcon"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/review_writtenTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="0sp"
-                android:paddingStart="20sp"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-
-        <ImageView
-            android:id="@+id/review_more"
-            android:layout_width="38dp"
-            android:layout_height="40sp"
+        <TextView
+            android:id="@+id/review_writtenTime"
+            android:layout_width="375dp"
+            android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/dot"
-            android:src="@drawable/ic_more_horiz_black_24dp" />
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:paddingEnd="0sp"
+            android:paddingStart="20sp"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 
     <TextView
         android:id="@+id/review_screen"
         android:layout_width="match_parent"
-        android:layout_height="170sp"
+        android:layout_height="187dp"
         android:background="@drawable/bg_textview_border" />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="45dp">
+
         <TextView
             android:id="@+id/review_rating"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="25sp" />
@@ -98,7 +100,7 @@
         <TextView
             android:id="@+id/review_like"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="25sp" />
@@ -113,14 +115,14 @@
             android:id="@+id/review_likeBtn"
             android:layout_width="0dp"
             android:layout_height="50sp"
-            android:src="@drawable/ic_heart_like"
-            android:background="@color/bg_message_board"
             android:layout_weight="1"
-            android:contentDescription="@string/reviewWriteBtn" />
+            android:background="@color/bg_message_board"
+            android:contentDescription="@string/reviewWriteBtn"
+            android:src="@drawable/ic_like_icon" />
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="12sp"
-        android:background="#878787"/>
+        android:background="#878787" />
 </LinearLayout>
