@@ -21,5 +21,5 @@
 
     <!-- missing contentDescription -->
     <string name="dot">점 3개</string>
-    <string name="clock"></string>
+    <string name="clock">시계</string>
 </resources>
