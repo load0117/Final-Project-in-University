@@ -62,7 +62,6 @@
             android:contentDescription="@string/clock"
             android:src="@drawable/review_clock" />
 
-
         <TextView
             android:id="@+id/review_writtenTime"
             android:layout_width="375dp"
@@ -80,6 +79,7 @@
         android:id="@+id/review_screen"
         android:layout_width="match_parent"
         android:layout_height="187dp"
+        android:gravity="center"
         android:background="@drawable/bg_textview_border" />
 
 
