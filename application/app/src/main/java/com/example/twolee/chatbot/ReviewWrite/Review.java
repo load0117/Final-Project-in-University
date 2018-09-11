@@ -14,17 +14,15 @@ public class Review {
         작성 시간.
         좋아요 개수.
      */
-    private String uid;
+    private String userUid;
     private String username;
     private String contents;
     private String rating;
     private String writtenTime;
     private long like;
 
-    public Review(){}
-
-    public Review(String uid, String username, String contents, String rating, String writtenTime, long like){
-        setUid(uid);
+    public Review(String userUid, String username, String contents, String rating, String writtenTime, long like){
+        setUserUid(userUid);
         setUsername(username);
         setContents(contents);
         setRating(rating);
@@ -34,12 +32,12 @@ public class Review {
 
     //getter, setter
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
     }
 
-    public String getUid() {
-        return uid;
+    public String getUserUid() {
+        return userUid;
     }
 
     public void setUsername(String username) {
