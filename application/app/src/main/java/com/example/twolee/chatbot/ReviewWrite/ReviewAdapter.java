@@ -1,6 +1,7 @@
 package com.example.twolee.chatbot.ReviewWrite;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.twolee.chatbot.R;
+import com.example.twolee.chatbot.login.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,10 +27,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
     // 데이터 관리 역할. 디비와 어뎁터 연결.
     private List<Review> reviewArrayList;
+    private List<String> review_uidList;
 
     // 생성자
-    public ReviewAdapter(List<Review> reviewArrayList) {
+    public ReviewAdapter(List<Review> reviewArrayList, List<String> review_uidList) {
         this.reviewArrayList = reviewArrayList;
+        this.review_uidList = review_uidList;
     }
 
     // 호출 순서 - getItemCount , onCreateViewHolder, onBindViewHolder
@@ -44,23 +50,24 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     }
 
     @Override
-    public void onBindViewHolder(ReviewViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         // 데이터를 알맞게 새로 세팅하는 것. 데이터 변경시 계속 호출.
 
-        // TODO: 2018. 9. 3. 디비에서 뷰에 값만 넣기.
-        // 보여지고 있는 뷰의 위치 가져오기.
+        // TODO: 2018. 9. 11. 스크롤 최상단과 최하단의 이벤트 추가하기.
+        // 홈 프래그먼트가 담고 있는 정보를 어댑터로 가져오기. 어댑터에서 리사이클러 뷰로 정보 띄우기
         Review review = reviewArrayList.get(position);
-        /* 디비에서 리뷰로 값 가져오기 */
-        holder.setData(review);
+        String review_uid = review_uidList.get(position);
+        holder.setData(review, review_uid);
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         //        //여기서 홀더 관리.
         @BindView(R.id.profile_show) ImageView profile_show;
-        @BindView(R.id.review_id_show) TextView review_id_show;
+        @BindView(R.id.review_userEmail) TextView review_userEmail;
+        @BindView(R.id.review_user_uid) TextView review_user_uid;
         @BindView(R.id.review_uid) TextView review_uid;
         @BindView(R.id.review_more) ImageView review_more;
-        @BindView(R.id.review_screen) TextView review_screen;
+        @BindView(R.id.review_contents) TextView review_contents;
         @BindView(R.id.review_rating) TextView review_rating;
         @BindView(R.id.review_like) TextView review_like;
         @BindView(R.id.review_writtenTime) TextView review_writtenTime;
@@ -70,24 +77,24 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         // database reference
         private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
-        private boolean like = false;
+        private boolean isLike = false;
 
         public ReviewViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
 
-            //non see uid.
-            review_uid.setVisibility(View.INVISIBLE);
-
             setListener();
         }
 
         // view data
-        public void setData(Review review){
-            review_id_show.setText(review.getUsername());
-            review_uid.setText(review.getUid());
-            review_screen.setText(review.getContents());
-            review_rating.setText(review.getRating());
+        public void setData(Review review, String uid){
+            //profile
+            review_userEmail.setText(review.getUsername());
+            review_uid.setText(uid);
+            review_user_uid.setText(review.getUserUid());
+            review_contents.setText(review.getContents());
+            // todo 평점을 표현할 때 어떻게 표현 할 지.
+            review_rating.setText("평점 : "+review.getRating());
             review_like.setText(String.valueOf(review.getLike()));
             review_writtenTime.setText(review.getWrittenTime());
         }
@@ -105,41 +112,56 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             });
 
             // click review contents
-            review_screen.setOnClickListener(new View.OnClickListener() {
+            review_contents.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 클릭 시 -> 리뷰 페이지로 이동
                     Intent intent = new Intent(v.getContext(), ReviewShow.class);
 
                     //디버그용.
-                    intent.putExtra("uid", review_uid.getText().toString());
+                    //intent.putExtra("uid", review_uid.getText().toString());
                     v.getContext().startActivity(intent);
                 }
             });
 
-            // click review like button
+            // click review isLike button
             review_likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: 2018. 9. 8. 버튼 누를 시에 좋아요 색깔 변동
+                    // TODO: 2018. 9. 11. 좋아요 버튼 누르면 두번 되는거 고치기
                     long likes = Long.valueOf(review_like.getText().toString());
-                    if(like){ // 좋아하는 것에서 -> 취소로
-                        System.out.println("좋아요 취소!");
+
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                    // 현재 로그인 돼 있지 않으면 로그인 페이지로.
+                    if(currentUser == null){
+                        Intent intent = new Intent(v.getContext().getApplicationContext(), LoginActivity.class);
+                        v.getContext().startActivity(intent);
+                    }
+
+                    // 좋아요 되어 있는지 확인 후 선택.
+                    if(isLike){
+                        // 좋아요 클릭 취소
+                        //System.out.println("좋아요 취소!");
                         likes--;
-                        like = false;
+                        isLike = false;
                         review_likeBtn.setImageResource(R.drawable.ic_like_icon);
                         //디버그 용
                         Toast.makeText(v.getContext().getApplicationContext(),"두번은 못누른다.",Toast.LENGTH_SHORT).show();
-                    }else{    // 좋아하기 누름.
-                        System.out.println("좋아요!");
+                    }else{
+                        // 좋아요 클릭
+                        //System.out.println("좋아요!");
                         likes++;
-                        like = true;
+                        isLike = true;
                         review_likeBtn.setImageResource(R.drawable.ic_like_selected_icon);
                         // 디버그 용
                         Toast.makeText(v.getContext().getApplicationContext(), "좋아요!.", Toast.LENGTH_SHORT).show();
                     }
 
-                    review_like.setText(likes+"");
+                    // 좋아요 화면에 반영.
+                    review_like.setText(String.valueOf(likes));
+
+                    // 디비에 반영.
                     myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
                 }
             });
