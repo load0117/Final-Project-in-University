@@ -21,8 +21,8 @@
             android:src="@drawable/ic_like_icon" />
 
         <TextView
-            android:id="@+id/review_id_show"
-            android:layout_width="316dp"
+            android:id="@+id/review_userEmail"
+            android:layout_width="170dp"
             android:layout_height="48sp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/profile_show"
@@ -30,11 +30,16 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/review_uid"
-            android:layout_width="88dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/review_user_uid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/review_uid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/review_more"
@@ -64,10 +69,11 @@
 
         <TextView
             android:id="@+id/review_writtenTime"
-            android:layout_width="375dp"
+            android:layout_width="194dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_marginEnd="181dp"
             android:gravity="center"
             android:paddingEnd="0sp"
             android:paddingStart="20sp"
@@ -76,7 +82,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/review_screen"
+        android:id="@+id/review_contents"
         android:layout_width="match_parent"
         android:layout_height="187dp"
         android:gravity="center"
@@ -95,7 +101,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="25sp" />
-        <!-- 평점 버튼-->
 
         <TextView
             android:id="@+id/review_like"
