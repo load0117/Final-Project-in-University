@@ -105,9 +105,9 @@ public class ChatActivity extends AppCompatActivity {
         inputMessage = findViewById(R.id.message);
         btnSend = findViewById(R.id.btn_send);
         btnRecord = findViewById(R.id.btn_record);
-//        String customFont = "Montserrat-Regular.ttf";
-//        Typeface typeface = Typeface.createFromAsset(getAssets(), customFont);
-//        inputMessage.setTypeface(typeface);
+        //        String customFont = "Montserrat-Regular.ttf";
+        //        Typeface typeface = Typeface.createFromAsset(getAssets(), customFont);
+        //        inputMessage.setTypeface(typeface);
         recyclerView = findViewById(R.id.recycler_view);
 
         messageArrayList = new ArrayList<>();
@@ -126,6 +126,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //Watson Text-to-Speech Service on IBM Cloud
         final TextToSpeech service = new TextToSpeech();
+
         service.setUsernameAndPassword("Text to Speech service username", "Text to Speech service password");
 
         int permission = ContextCompat.checkSelfPermission(this,
@@ -236,7 +237,7 @@ public class ChatActivity extends AppCompatActivity {
             inputMessage.setMessage(inputmessage);
             inputMessage.setId("100");
             this.initialRequest = false;
-            Toast.makeText(getApplicationContext(), "Tap on the message for Voice", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "음성인식 하려면 옆 버튼을 눌러주세요.", Toast.LENGTH_LONG).show();
 
         }
 
@@ -296,11 +297,10 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     //Record a message via Watson Speech to Text
-    // 왓슨 STT를 통해서 메세지를 기록
     private void recordMessage() {
         //mic.setEnabled(false);
         speechService = new SpeechToText();
-        speechService.setUsernameAndPassword("Speech to Text username", "Speech to Text password");
+        speechService.setUsernameAndPassword("92284d0b-8e06-42d9-99da-fbafbd29ceac", "2gdcq0zmnVWS");
 
         if (listening != true) {
             capture = microphoneHelper.getInputStream(true);
@@ -315,12 +315,14 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }).start();
             listening = true;
-            Toast.makeText(ChatActivity.this, "Listening....Click to Stop", Toast.LENGTH_LONG).show();
+            // 여기서 실행됨.
+
+            Toast.makeText(ChatActivity.this, "한 번 더 누르면 녹음이 종료 됩니다.", Toast.LENGTH_SHORT).show();
         } else {
             try {
                 microphoneHelper.closeInputStream();
                 listening = false;
-                Toast.makeText(ChatActivity.this, "Stopped Listening....Click to Start", Toast.LENGTH_LONG).show();
+                Toast.makeText(ChatActivity.this, "음성 인식을 종료합니다. 다시 시작하시려면 클릭하세요.", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -345,7 +347,7 @@ public class ChatActivity extends AppCompatActivity {
         if (isConnected) {
             return true;
         } else {
-            Toast.makeText(this, " No Internet Connection available ", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, " 인터넷을 이용할 수 없습니다. ", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -355,6 +357,7 @@ public class ChatActivity extends AppCompatActivity {
     private RecognizeOptions getRecognizeOptions() {
         return new RecognizeOptions.Builder()
                 .contentType(ContentType.OPUS.toString())
+                .model("ko-KR_NarrowbandModel")
                 //.model("en-UK_NarrowbandModel")
                 .interimResults(true)
                 .inactivityTimeout(2000)
