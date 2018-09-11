@@ -1,6 +1,7 @@
 package com.example.twolee.chatbot.ReviewWrite;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,12 +47,12 @@ public class ReviewFormActivity extends AppCompatActivity{
     @BindView(R.id.reviewWriteBtn) Button reviewWriteBtn;
 
     // DataBase
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myref = database.getReference();
+    private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
     // session
     @NonNull
-    private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     // To relationship
     private Map<String, Object> user = new HashMap<>();
@@ -84,7 +86,8 @@ public class ReviewFormActivity extends AppCompatActivity{
 
     public void getData(){
 
-        myref.child("users").child(uid).child("username").addValueEventListener(new ValueEventListener() {
+        // TODO: 2018. 9. 11. 프로필 설정 및 성능 향상 관리.
+        myRef.child("users").child(userUid).child("username").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String email = dataSnapshot.getValue(String.class);
@@ -114,28 +117,27 @@ public class ReviewFormActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 // 리뷰 버튼 눌렀을 시. 해야 할 일. -> 리뷰 자체를 디비에 연결.
-                DatabaseReference keyRef = myref.child("reviews").push();
+                DatabaseReference keyRef = myRef.child("reviews").push();
 
                 String rating = String.format(Locale.KOREA,"%.1f",reviewRatingBar.getRating());
-                Review review = new Review(uid, idShow.getText().toString(), reviewWriteScreen.getText().toString(), rating, getCurrentTime(),0);
+                Review review = new Review(userUid, idShow.getText().toString(), reviewWriteScreen.getText().toString(), rating, getCurrentTime(),0);
                 // TODO: 2018. 8. 31. 현재 시간이 틀리다. 나라 수정으로 현재 시간 바꾸자.
 
                 keyRef.setValue(review);
                 user.put(keyRef.getKey(), "/reviews/"+ keyRef.getKey());
 
                 // relationship
-                myref.child("users").child(uid).child("reviews").updateChildren(user);
+                myRef.child("users").child(userUid).child("reviews").updateChildren(user);
 
                 // not input rating
                if(reviewWriteScreen.getText().toString().equals("")) {
                    Toast.makeText(getApplicationContext(), "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
                    // TODO: 2018. 8. 30. 알림창으로 변경
-               }
-                else{
+               }else{
                    Toast.makeText(getApplicationContext(),"입력 되었습니다.", Toast.LENGTH_SHORT).show();
                    Intent intent = new Intent(ReviewFormActivity.this, ReviewShow.class);
                    // TODO: 2018. 9. 4. 뒤로 가기 시에 종료가 되도록 스택에 쌓여 있는 액티비티들 제거 하는 플래그 추가.
-                   //intent.putExtra("uid",uid);
+                   //intent.putExtra("userUid",userUid);
                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                    startActivity(intent);
                    //차 후 주석 제거.
