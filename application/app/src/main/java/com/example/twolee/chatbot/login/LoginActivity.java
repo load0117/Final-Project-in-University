@@ -39,6 +39,10 @@ public class LoginActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
+
+        // 임시로 사용 시마다 로그인 차후 자동 로그인으로 변경.
+        mAuth.signOut();
+
         // 이메일로 로그인
         btnLoginEmail.setOnClickListener(new View.OnClickListener() {
             @Override
