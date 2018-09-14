@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.twolee.chatbot.bottombar.BottomNavigationViewHelper;
 import com.example.twolee.chatbot.chatting.ChatActivity;
@@ -91,8 +92,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this,"정말 종료하시겠습니까?",Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
 }
