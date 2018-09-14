@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.twolee.chatbot.BackButton.BackPressCloseHandler;
 import com.example.twolee.chatbot.bottombar.BottomNavigationViewHelper;
 import com.example.twolee.chatbot.chatting.ChatActivity;
 import com.example.twolee.chatbot.fragments.HomeFragment;
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     //처음 홈 프래그먼트가 뜨도록 초기값 설정.
     private Fragment selectedFragment;
     private FragmentTransaction transaction;
-    // 틀 안에 무엇이 들어갈지..
+
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        //back button push handler
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         //toolbar
         setSupportActionBar(toolbar);
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             if (selectedFragment != null) {
                                 //프레그먼트 선택할 때
                                 transaction = getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.frame_layout, selectedFragment); // 프래그먼트 대체
+                                transaction.replace(R.id.frame_layout, selectedFragment);
                                 transaction.commit();
                             }
                             return true;
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this,"정말 종료하시겠습니까?",Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 }
