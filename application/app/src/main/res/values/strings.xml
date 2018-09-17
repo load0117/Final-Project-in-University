@@ -18,6 +18,8 @@
 
     <string name="reviewWriteBtn">리뷰 등록</string>
     <string name="reviewHint">리뷰를 남겨 주세요.</string>
+    <string name="review_rating_num">평점 :</string>
+    <string name="review_like_num">좋아요 수:</string>
 
     <!-- missing contentDescription -->
     <string name="dot">점 3개</string>
