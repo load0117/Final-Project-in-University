@@ -21,6 +21,8 @@ public class Review {
     private String writtenTime;
     private long like;
 
+    public Review(){}
+
     public Review(String userUid, String username, String contents, String rating, String writtenTime, long like){
         setUserUid(userUid);
         setUsername(username);
