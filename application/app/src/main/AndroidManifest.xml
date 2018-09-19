@@ -42,7 +42,7 @@
         <activity android:name=".login.SignInActivity"/>
 
         <activity android:name=".ReviewWrite.ReviewFormActivity"/>
-        <activity android:name=".ReviewWrite.ReviewShow"/>
+        <activity android:name=".ReviewWrite.CommentShow"/>
     </application>
 
 </manifest>
