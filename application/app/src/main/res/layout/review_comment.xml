@@ -11,20 +11,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </RelativeLayout>
+
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="이런.. "/>
+        android:text="developing.."/>
 
     <!-- 내용 바 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
+    </LinearLayout>
     <!--댓글 바 -->
 
 </LinearLayout>
