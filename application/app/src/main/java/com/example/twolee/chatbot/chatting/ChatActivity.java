@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
-import com.example.twolee.chatbot.fragments.HomeFragment;
+import com.example.twolee.chatbot.model.Message;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneHelper;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneInputStream;
 import com.ibm.watson.developer_cloud.android.library.audio.StreamPlayer;
@@ -42,20 +42,19 @@ import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
 
 import java.util.ArrayList;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private String workplaceId = "be7a4631-bd1c-4031-81a2-29b5f4637b37";
+    com.ibm.watson.developer_cloud.conversation.v1.model.Context context = null;
     private RecyclerView recyclerView;
     private ChatAdapter mAdapter;
     private ArrayList messageArrayList;
     private EditText inputMessage;
     private ImageView btnSend;
     private ImageView btnRecord;
-    //private Map<String,Object> context = new HashMap<>();
-    com.ibm.watson.developer_cloud.conversation.v1.model.Context context = null;
     StreamPlayer streamPlayer;
     private boolean initialRequest;
     private boolean permissionToRecordAccepted = false;
@@ -67,10 +66,16 @@ public class ChatActivity extends AppCompatActivity {
     private MicrophoneInputStream capture;
     private SpeakerLabelsDiarization.RecoTokens recoTokens;
     private MicrophoneHelper microphoneHelper;
-    protected @BindView(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    protected @BindView(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView chatToolbarTitle;
+    @BindString(R.string.waston_assistant_workspacesId)
+    String workspacesId;
+    @BindString(R.string.watson_assistant_username)
+    String watsonUsername;
+    @BindString(R.string.watson_assistant_password)
+    String watsonPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,8 +233,6 @@ public class ChatActivity extends AppCompatActivity {
             inputMessage.setMessage(inputmessage);
             inputMessage.setId("100");
             this.initialRequest = false;
-            Toast.makeText(getApplicationContext(), "음성인식 하려면 옆 버튼을 눌러주세요.", Toast.LENGTH_SHORT).show();
-
         }
 
         this.inputMessage.setText("");
@@ -240,18 +243,11 @@ public class ChatActivity extends AppCompatActivity {
                 try {
 
                     Conversation service = new Conversation(Conversation.VERSION_DATE_2017_05_26);
-                    service.setUsernameAndPassword("7de2c306-c49a-4882-978d-50bd00e43312", "bpOFAA82TUHx");
-
+                    service.setUsernameAndPassword(watsonUsername, watsonPassword);
                     InputData input = new InputData.Builder(inputmessage).build();
-                    MessageOptions options = new MessageOptions.Builder(workplaceId).input(input).context(context).build();
+                    MessageOptions options = new MessageOptions.Builder(workspacesId).input(input).context(context).build();
                     MessageResponse response = service.message(options).execute();
 
-                    //Passing Context of last conversation
-                    if (response.getContext() != null) {
-                        //context.clear();
-                        context = response.getContext();
-
-                    }
                     Message outMessage = new Message();
                     if (response != null) {
                         if (response.getOutput() != null && response.getOutput().containsKey("text")) {
@@ -277,9 +273,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-
         thread.start();
-
     }
 
     //Record a message via Watson Speech to Text

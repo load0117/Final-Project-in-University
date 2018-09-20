@@ -1,4 +1,4 @@
-package com.example.twolee.chatbot.chatting;
+package com.example.twolee.chatbot.model;
 
 
 import java.io.Serializable;
