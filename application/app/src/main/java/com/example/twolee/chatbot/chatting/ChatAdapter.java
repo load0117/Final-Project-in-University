@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.twolee.chatbot.R;
+import com.example.twolee.chatbot.model.Message;
 
 import java.util.ArrayList;
 
