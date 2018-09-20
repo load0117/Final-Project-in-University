@@ -45,16 +45,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
-/*
-        왓슨
-        기존 Workplace id : a1e19fa2-8947-4444-8bd7-ddf358e51e44,
-        연습용 Workplace id : be7a4631-bd1c-4031-81a2-29b5f4637b37,
-        "url": "https://gateway.watsonplatform.net/assistant/api",
-        "username": "7de2c306-c49a-4882-978d-50bd00e43312",
-        "password": "bpOFAA82TUHx"
- */
-
 public class ChatActivity extends AppCompatActivity {
 
     private String workplaceId = "be7a4631-bd1c-4031-81a2-29b5f4637b37";
@@ -296,7 +286,7 @@ public class ChatActivity extends AppCompatActivity {
     private void recordMessage() {
         //mic.setEnabled(false);
         speechService = new SpeechToText();
-        speechService.setUsernameAndPassword("92284d0b-8e06-42d9-99da-fbafbd29ceac", "2gdcq0zmnVWS");
+        //speechService.setUsernameAndPassword("56ab3087-b3ae-4c72-813d-0b9c5ff07c67", "sRHiZSiGZ7c7");
 
         if (listening != true) {
             capture = microphoneHelper.getInputStream(true);
