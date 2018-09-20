@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mainToolbarTitle.setText("위봇");
 
+        // init Fragment
         selectedFragment = HomeFragment.newInstance();
 
         transaction = getSupportFragmentManager().beginTransaction();
@@ -77,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 case R.id.action_chatting:
                                     Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                                    // TODO: 2018. 8. 27. 뒤로 가기시에 메인 화면이 나오도록 하는 플레그 적용하기
                                     intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                                     startActivity(intent);
                                     break;

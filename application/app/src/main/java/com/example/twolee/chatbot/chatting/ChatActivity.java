@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
+import com.example.twolee.chatbot.fragments.HomeFragment;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneHelper;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneInputStream;
 import com.ibm.watson.developer_cloud.android.library.audio.StreamPlayer;
@@ -237,7 +238,7 @@ public class ChatActivity extends AppCompatActivity {
             inputMessage.setMessage(inputmessage);
             inputMessage.setId("100");
             this.initialRequest = false;
-            Toast.makeText(getApplicationContext(), "음성인식 하려면 옆 버튼을 눌러주세요.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "음성인식 하려면 옆 버튼을 눌러주세요.", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -247,7 +248,6 @@ public class ChatActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 try {
-                    // TODO : Watson ass 연동
 
                     Conversation service = new Conversation(Conversation.VERSION_DATE_2017_05_26);
                     service.setUsernameAndPassword("7de2c306-c49a-4882-978d-50bd00e43312", "bpOFAA82TUHx");
@@ -278,13 +278,9 @@ public class ChatActivity extends AppCompatActivity {
                                 mAdapter.notifyDataSetChanged();
                                 if (mAdapter.getItemCount() > 1) {
                                     recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
-
                                 }
-
                             }
                         });
-
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -321,6 +317,7 @@ public class ChatActivity extends AppCompatActivity {
         } else {
             try {
                 microphoneHelper.closeInputStream();
+
                 listening = false;
                 Toast.makeText(ChatActivity.this, "음성 인식을 종료합니다. 다시 시작하시려면 클릭하세요.", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
@@ -442,6 +439,5 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
-
 }
 

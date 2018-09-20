@@ -1,12 +1,16 @@
 package com.example.twolee.chatbot.login;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.twolee.chatbot.BackButton.BackPressCloseHandler;
 import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,15 +33,24 @@ public class LoginActivity extends AppCompatActivity  {
     Button btnLoginGoogle;
     protected @BindView(R.id.btn_login_email)
     Button btnLoginEmail;
+
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+
     private static final int RC_SIGN_IN = 9001;
+
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        // back button handler
+        backPressCloseHandler = new BackPressCloseHandler(this);
+
+        // auth
         mAuth = FirebaseAuth.getInstance();
 
         // 임시로 사용 시마다 로그인 차후 자동 로그인으로 변경.
@@ -49,16 +62,17 @@ public class LoginActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignInActivity.class);
                 startActivity(intent);
-
-
             }
         });
+
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         // 구글 아이디 로그인
         btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +87,7 @@ public class LoginActivity extends AppCompatActivity  {
     public void loginSkip(View v) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -84,7 +99,7 @@ public class LoginActivity extends AppCompatActivity  {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);//
+                firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
             }
@@ -101,6 +116,7 @@ public class LoginActivity extends AppCompatActivity  {
                             // Sign in success, update UI with the signed-in user's information
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                         }
@@ -109,4 +125,9 @@ public class LoginActivity extends AppCompatActivity  {
                 });
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
+    }
 }

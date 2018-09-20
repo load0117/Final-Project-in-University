@@ -53,7 +53,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         // 데이터를 알맞게 새로 세팅하는 것. 데이터 변경시 계속 호출.
 
-        // TODO: 2018. 9. 11. 스크롤 최상단과 최하단의 이벤트 추가하기.
         // 홈 프래그먼트가 담고 있는 정보를 어댑터로 가져오기. 어댑터에서 리사이클러 뷰로 정보 띄우기
         Review review = reviewArrayList.get(position);
         String review_uid = review_uidList.get(position);
@@ -93,8 +92,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             review_uid.setText(uid);
             review_user_uid.setText(review.getUserUid());
             review_contents.setText(review.getContents());
-            // todo 평점을 표현할 때 어떻게 표현 할 지.
-            review_rating.setText("평점 : "+review.getRating());
+
+            review_rating.setText(review.getRating());
             review_like.setText(String.valueOf(review.getLike()));
             review_writtenTime.setText(review.getWrittenTime());
         }
@@ -106,7 +105,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             review_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: 2018. 9. 4. 몇 가지 기능 추가로..
+
                     Toast.makeText(itemView.getContext().getApplicationContext(), "더보기 기능 추가하기.", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -116,10 +115,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
                 @Override
                 public void onClick(View v) {
                     // 클릭 시 -> 리뷰 페이지로 이동
-                    Intent intent = new Intent(v.getContext(), ReviewShow.class);
+                    Intent intent = new Intent(v.getContext(), CommentShow.class);
 
                     //디버그용.
-                    //intent.putExtra("uid", review_uid.getText().toString());
                     v.getContext().startActivity(intent);
                 }
             });
@@ -128,7 +126,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             review_likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: 2018. 9. 11. 좋아요 버튼 누르면 두번 되는거 고치기
+
                     long likes = Long.valueOf(review_like.getText().toString());
 
                     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -137,32 +135,41 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
                     if(currentUser == null){
                         Intent intent = new Intent(v.getContext().getApplicationContext(), LoginActivity.class);
                         v.getContext().startActivity(intent);
-                    }
-
-                    // 좋아요 되어 있는지 확인 후 선택.
-                    if(isLike){
-                        // 좋아요 클릭 취소
-                        //System.out.println("좋아요 취소!");
-                        likes--;
-                        isLike = false;
-                        review_likeBtn.setImageResource(R.drawable.ic_like_icon);
-                        //디버그 용
-                        Toast.makeText(v.getContext().getApplicationContext(),"두번은 못누른다.",Toast.LENGTH_SHORT).show();
                     }else{
-                        // 좋아요 클릭
-                        //System.out.println("좋아요!");
-                        likes++;
-                        isLike = true;
-                        review_likeBtn.setImageResource(R.drawable.ic_like_selected_icon);
-                        // 디버그 용
-                        Toast.makeText(v.getContext().getApplicationContext(), "좋아요!.", Toast.LENGTH_SHORT).show();
+                        // 좋아요 되어 있는지 확인 후 선택.
+
+                        if(isLike){
+                            likes--;
+                        }else{
+                            likes++;
+                        }
+                        /*
+                        if(isLike){
+                            // 좋아요 클릭 취소
+                            //System.out.println("좋아요 취소!");
+                            likes--;
+                            isLike = false;
+                            review_likeBtn.setImageResource(R.drawable.ic_like_icon);
+                        }else{
+                            // 좋아요 클릭
+                            //System.out.println("좋아요!");
+                            likes++;
+                            isLike = true;
+                            review_likeBtn.setImageResource(R.drawable.ic_like_selected_icon);
+                        }
+
+                        // 좋아요 화면에 반영.
+                        review_like.setText(String.valueOf(likes));
+
+                        // 디비에 반영.
+                        myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
+
+                        */
+                        review_like.setText(String.valueOf(likes));
+
+                        // 디비에 반영.
+                        myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
                     }
-
-                    // 좋아요 화면에 반영.
-                    review_like.setText(String.valueOf(likes));
-
-                    // 디비에 반영.
-                    myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
                 }
             });
         }

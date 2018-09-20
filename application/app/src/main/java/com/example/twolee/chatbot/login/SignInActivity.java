@@ -47,6 +47,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -67,6 +68,7 @@ public class SignInActivity extends AppCompatActivity {
                     Log.d("authState", "onAuthStateChanged:signed_in:" + user.getUid());
                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 } else {
                     // User is signed out
                     Log.d("authState", "onAuthStateChanged:signed_out");

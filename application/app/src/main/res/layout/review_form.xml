@@ -3,9 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <!--
-        todo 2018.08.20 디자인 변경 할 것 찾아보기.
-    -->
 
     <include layout="@layout/toolbar"/>
 
