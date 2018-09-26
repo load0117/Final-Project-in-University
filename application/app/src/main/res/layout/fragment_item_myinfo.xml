@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
 
     <ImageView
@@ -24,7 +25,7 @@
         android:gravity="center"
         android:text="상태" />
 
-    <TextView
+    <Button
         android:id="@+id/state_updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,9 +34,10 @@
         android:layout_toStartOf="@id/profile_icon"
         android:gravity="center"
         android:textSize="15sp"
-        android:text="상태 변경" />
+        android:background="#FFFFFF"
+        android:text="@string/stateUpdateButton" />
 
-    <TextView
+    <Button
         android:id="@+id/profile_changeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,6 +46,7 @@
         android:layout_toEndOf="@id/profile_icon"
         android:gravity="center"
         android:textSize="15sp"
-        android:text="사진 변경" />
+        android:background="#FFFFFF"
+        android:text="@string/photoUpdateButton" />
 
 </RelativeLayout>

@@ -6,6 +6,22 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="177dp"
+        android:gravity="center"
+        android:text="@string/requireLogin"
+        android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/require_id_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="186dp"
+        android:background="@color/bg_message_board"
+        android:text="@string/loginButton"
+        android:textColor="#be3939" />
 </RelativeLayout>
