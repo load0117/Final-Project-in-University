@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/login_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -13,15 +14,13 @@
         android:gravity="center"
         android:text="@string/requireLogin"
         android:textSize="20sp" />
-
     <Button
         android:id="@+id/require_id_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="186dp"
-        android:background="@color/bg_message_board"
-        android:text="@string/loginButton"
-        android:textColor="#be3939" />
+        android:layout_marginBottom="157dp"
+        android:text="@string/loginButton" />
+
 </RelativeLayout>
