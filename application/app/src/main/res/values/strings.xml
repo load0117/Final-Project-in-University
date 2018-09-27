@@ -24,6 +24,7 @@
     <!-- missing contentDescription -->
     <string name="dot">점 3개</string>
     <string name="clock">시계</string>
+    <string name="profileIcon">프로필 사진</string>
 
     <!-- inform data-->
     <string name="stateUpdateButton">상태 변경</string>
