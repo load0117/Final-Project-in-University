@@ -10,13 +10,35 @@
         android:id="@+id/mainActivity_toolbar"
         layout="@layout/toolbar" />
 
+    <RelativeLayout
+        android:id="@+id/mainActivity_layout_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mainActivity_toolbar"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/mainActivity_scanner"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_bot_message_box"
+            android:drawableStart="@drawable/ic_face_scanner"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:text="@string/sentimentScanner"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mainActivity_toolbar"
-        tools:ignore="UnknownId">
-    </FrameLayout>
+        android:layout_below="@id/mainActivity_layout_scanner"
+        tools:ignore="UnknownId"></FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

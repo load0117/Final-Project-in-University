@@ -6,27 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.twolee.chatbot.fragments.HomeFragment">
 
-    <RelativeLayout
-        android:id="@+id/mainActivity_layout_scanner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mainActivity_toolbar"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/mainActivity_scanner"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:background="@drawable/bg_bot_message_box"
-            android:drawableStart="@drawable/ic_face_scanner"
-            android:paddingStart="15dp"
-            android:text="@string/sentimentScanner"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp" />
-    </RelativeLayout>
-
     <LinearLayout
         android:id="@+id/button_layout"
         android:layout_width="match_parent"

@@ -6,8 +6,8 @@
     android:orientation="horizontal">
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_margin="10dp"
         android:src="@drawable/ic_bot" />
 

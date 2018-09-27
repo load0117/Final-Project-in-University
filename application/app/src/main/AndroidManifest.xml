@@ -39,10 +39,11 @@
         <!-- 로그인 화면 -->
         <activity android:name=".login.SignUpActivity" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".login.SignInActivity"/>
-
-        <activity android:name=".ReviewWrite.ReviewFormActivity"/>
-        <activity android:name=".ReviewWrite.CommentShow"/>
+        <activity android:name=".login.SignInActivity" />
+        <activity android:name=".ReviewWrite.ReviewFormActivity" />
+        <activity android:name=".ReviewWrite.CommentShow" />
+        <activity android:name=".scanner.ScannerActivity" />
+        <activity android:name=".scanner.WriteTextActivity"></activity>
     </application>
 
 </manifest>
