@@ -23,6 +23,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.Conversation;
 import com.ibm.watson.developer_cloud.conversation.v1.model.InputData;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
+import com.ibm.watson.developer_cloud.speech_to_text.v1.model.RecognizeOptions;
 
 import java.util.ArrayList;
 
@@ -55,8 +56,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate
-                (savedInstanceState);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
         // toolbar
@@ -155,12 +155,6 @@ public class ChatActivity extends AppCompatActivity {
         thread.start();
     }
 
-
-    /**
-     * Check Internet Connection
-     *
-     * @return
-     */
     // 인터넷 연결 확인
     private boolean checkInternetConnection() {
         // get Connectivity Manager object to check connection
@@ -180,5 +174,12 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
 

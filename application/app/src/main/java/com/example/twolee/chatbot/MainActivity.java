@@ -17,6 +17,7 @@ import com.example.twolee.chatbot.BackButton.BackPressCloseHandler;
 import com.example.twolee.chatbot.bottombar.BottomNavigationViewHelper;
 import com.example.twolee.chatbot.chatting.ChatActivity;
 import com.example.twolee.chatbot.fragments.HomeFragment;
+import com.example.twolee.chatbot.fragments.MyInfoFragment;
 import com.example.twolee.chatbot.fragments.SearchFragment;
 import com.example.twolee.chatbot.scanner.ScannerActivity;
 
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     break;
                                 case R.id.action_settings:
+                                    selectedFragment = MyInfoFragment.newInstance();
                                     break;
                             }
                             if (selectedFragment != null) {
