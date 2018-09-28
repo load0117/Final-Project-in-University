@@ -83,9 +83,11 @@ public class MainActivity extends AppCompatActivity {
                             switch (item.getItemId()) {
                                 case R.id.action_home:
                                     selectedFragment = HomeFragment.newInstance();
+                                    startSacnner.setVisibility(View.VISIBLE);
                                     break;
                                 case R.id.action_search:
                                     selectedFragment = SearchFragment.newInstance();
+                                    startSacnner.setVisibility(View.GONE);
                                     break;
                                 case R.id.action_chatting:
                                     Intent intent = new Intent(MainActivity.this, ChatActivity.class);
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 case R.id.action_settings:
                                     selectedFragment = MyInfoFragment.newInstance();
+                                    startSacnner.setVisibility(View.GONE);
                                     break;
                             }
                             if (selectedFragment != null) {
