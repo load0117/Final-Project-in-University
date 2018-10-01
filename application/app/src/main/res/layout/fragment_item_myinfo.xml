@@ -23,7 +23,8 @@
         android:layout_marginTop="30sp"
         android:gravity="center"
         android:text="상태"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="#FFFAFAFA"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -41,7 +42,8 @@
             android:layout_marginStart="77dp"
             android:gravity="center"
             android:text="@string/stateUpdateButton"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            style="?attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/profile_changeBtn"
@@ -53,7 +55,8 @@
             android:layout_alignBottom="@id/state_updateBtn"
             android:gravity="center"
             android:text="@string/photoUpdateButton"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            style="?attr/buttonBarButtonStyle"/>
 
 
     </RelativeLayout>
