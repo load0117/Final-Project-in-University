@@ -102,6 +102,7 @@ public class MyInfoFragment extends Fragment {
                 public void onClick(View v) {
                     // 상태 메시지 입력 - 입력 창 생성 하기
                     Toast.makeText(getActivity(), "상태 변경 클릭", Toast.LENGTH_SHORT).show();
+
                 }
             });
 
@@ -125,8 +126,6 @@ public class MyInfoFragment extends Fragment {
                 }
             });
         } else {
-            require_id_button = getActivity().findViewById(R.id.require_id_button);
-
             // 로그인 필요 버튼
             require_id_button.setOnClickListener(new View.OnClickListener() {
                 @Override
