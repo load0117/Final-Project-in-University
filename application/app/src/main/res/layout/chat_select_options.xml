@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <android.support.v7.widget.AppCompatImageView
@@ -10,20 +10,28 @@
         android:layout_margin="10dp"
         android:src="@drawable/ic_webot" />
 
-    <TextView
-        android:id="@+id/message"
-        android:autoLink="web"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="30dp"
-        android:padding="8dp"
-        android:elevation="2dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/bg_bot_message_box"
-        android:textColor="@android:color/black"
-        android:textIsSelectable="true"
-        android:textSize="16sp" />
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 
 </LinearLayout>

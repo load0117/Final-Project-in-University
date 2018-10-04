@@ -101,7 +101,6 @@ public class MyInfoFragment extends Fragment {
 
     }
     public void setData() throws NullPointerException{
-        profile_icon = getActivity().findViewById(R.id.profile_icon);
         profile_state = getActivity().findViewById(R.id.profile_state);
         state_updateBtn = getActivity().findViewById(R.id.state_updateBtn);
         profile_changeBtn = getActivity().findViewById(R.id.profile_changeBtn);
