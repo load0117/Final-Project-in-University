@@ -13,17 +13,14 @@ import com.example.twolee.chatbot.model.Message;
 import java.util.ArrayList;
 
 
-
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private int SELF = 100;
-    //메세지 리스트 보여주기
     private ArrayList<Message> messageArrayList;
 
-    // 생성자
     public ChatAdapter(ArrayList<Message> messageArrayList) {
-        this.messageArrayList=messageArrayList;
+        this.messageArrayList = messageArrayList;
 
     }
 
@@ -38,7 +35,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.chat_item_self, parent, false);
         } else {
-            // WatBot message
+            // WeBot message
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.chat_item_watson, parent, false);
         }
@@ -50,7 +47,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         Message message = messageArrayList.get(position);
-        if (message.getId()!=null && message.getId().equals("1")) {
+        if (message.getId() != null && message.getId().equals("1")) {
             return SELF;
         }
 
@@ -62,11 +59,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Message message = messageArrayList.get(position);
         message.setMessage(message.getMessage());
         ((ViewHolder) holder).message.setText(message.getMessage());
-        }
+    }
 
     @Override
     public int getItemCount() {
-            return messageArrayList.size();
+        return messageArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,7 +71,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public ViewHolder(View view) {
             super(view);
-            message = (TextView) itemView.findViewById(R.id.message);
+            message = itemView.findViewById(R.id.message);
 
             //TODO: Uncomment this if you want to use a custom Font
             /*String customFont = "Montserrat-Regular.ttf";

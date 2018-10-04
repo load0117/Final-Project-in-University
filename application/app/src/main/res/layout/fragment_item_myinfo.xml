@@ -4,16 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/profile_icon"
-        android:layout_width="48sp"
-        android:layout_height="48sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="199dp"
-        android:contentDescription="@string/profileIcon"
-        android:src="@drawable/ic_bot" />
-
     <TextView
         android:id="@+id/profile_state"
         android:layout_width="150dp"

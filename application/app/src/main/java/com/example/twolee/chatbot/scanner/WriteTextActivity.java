@@ -8,21 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.twolee.chatbot.R;
-import com.ibm.watson.developer_cloud.http.ServiceCallback;
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.ToneAnalyzer;
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.Tone;
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneOptions;
-import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneScore;
-
-import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+//import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.Tone;
 
 public class WriteTextActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
@@ -57,6 +50,7 @@ public class WriteTextActivity extends AppCompatActivity {
             }
         });
         // tone analyzer
+        /*
         try {
             final ToneAnalyzer toneAnalyzer = new ToneAnalyzer("2017-07-01");
             toneAnalyzer.setUsernameAndPassword(username, password);
@@ -106,5 +100,6 @@ public class WriteTextActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        */
     }
 }

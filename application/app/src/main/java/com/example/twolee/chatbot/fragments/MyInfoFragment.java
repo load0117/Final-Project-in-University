@@ -151,7 +151,7 @@ public class MyInfoFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         takePhoto();
-                }
+                    }
                 })
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
@@ -162,6 +162,12 @@ public class MyInfoFragment extends Fragment {
 
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
+    }
+
+    public void setData() throws NullPointerException{
+        profile_state = getActivity().findViewById(R.id.profile_state);
+        state_updateBtn = getActivity().findViewById(R.id.state_updateBtn);
+        profile_changeBtn = getActivity().findViewById(R.id.profile_changeBtn);
     }
 
     private void takePhoto() {
