@@ -50,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     @BindView(R.id.toolbar_title)
     TextView chatToolbarTitle;
     @BindString(R.string.waston_assistant_workspacesId)
+    //@BindString(R.string.hk_workspaceId)
     String workspacesId;
     @BindString(R.string.watson_assistant_username)
     String watsonUsername;
