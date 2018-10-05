@@ -18,19 +18,38 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/bg_bot_message_box"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="8dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/select_options_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textColor="@color/color_black"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/select_text">
+
+        </LinearLayout>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/select_options_btn1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/select_options_btn2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
     </LinearLayout>
 
 
