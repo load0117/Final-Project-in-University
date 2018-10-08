@@ -110,18 +110,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
                 }
             });
 
-            // click review contents
-            review_contents.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 클릭 시 -> 리뷰 페이지로 이동
-                    Intent intent = new Intent(v.getContext(), CommentShow.class);
-
-                    //디버그용.
-                    v.getContext().startActivity(intent);
-                }
-            });
-
+    
             // click review isLike button
             review_likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
