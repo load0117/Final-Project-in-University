@@ -110,7 +110,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
                 }
             });
 
-    
+
             // click review isLike button
             review_likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
