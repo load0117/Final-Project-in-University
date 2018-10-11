@@ -32,4 +32,11 @@
     <string name="loginButton">로그인</string>
     <string name="requireLogin">로그인이 필요합니다.</string>
     <string name="logout">로그 아웃</string>
+
+    <!-- state toolbar-->
+    <string name="stateMessage">상태 메세지</string>
+    <string name="okMessage">확인</string>
+    <!-- state message -->
+    <string name="stateMessageShow">상태메시지를 입력해 주세요.</string>
+
 </resources>

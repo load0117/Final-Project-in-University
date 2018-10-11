@@ -6,10 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -21,11 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
+import com.example.twolee.chatbot.ReviewWrite.StateUpdateActivity;
 import com.example.twolee.chatbot.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -102,7 +99,9 @@ public class MyInfoFragment extends Fragment {
                 public void onClick(View v) {
                     // 상태 메시지 입력 - 입력 창 생성 하기
                     Toast.makeText(getActivity(), "상태 변경 클릭", Toast.LENGTH_SHORT).show();
-
+                    Intent intent = new Intent(getActivity(), StateUpdateActivity.class);
+                    intent.putExtra("state",profile_state.getText().toString());
+                    startActivity(intent);
                 }
             });
 
@@ -205,7 +204,7 @@ public class MyInfoFragment extends Fragment {
     // 카메라로 찍은 이미지 생성
     public File createImageFile() throws IOException{
         String imgFileName = System.currentTimeMillis() + ".jpg";
-        File imageFile= null;
+        File imageFile = null;
         File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "ireh");
         if(!storageDir.exists()){
             Log.v("알림","storageDir 존재 x " + storageDir.toString());
