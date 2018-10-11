@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <android.support.v7.widget.AppCompatImageView
@@ -17,11 +17,12 @@
         android:layout_marginEnd="30dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/bg_bot_message_box"
+        android:elevation="2dp"
         android:orientation="vertical"
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/select_options_text"
+            android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -30,21 +31,28 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@android:color/black">
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray">
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/select_options_btn1"
+            android:id="@+id/btn_options1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray">
+
+        </LinearLayout>
+
         <Button
-            android:id="@+id/select_options_btn2"
+            android:id="@+id/btn_options2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"

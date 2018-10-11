@@ -1,29 +1,36 @@
 package com.example.twolee.chatbot.chatting;
 
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.twolee.chatbot.R;
 import com.example.twolee.chatbot.model.Message;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    private int SELF = 100;
+    private final int SELF = 100;
+    private final int OPTION = 300;
+    private final ClickListener listener;
     private ArrayList<Message> messageArrayList;
 
-    public ChatAdapter(ArrayList<Message> messageArrayList) {
+    public ChatAdapter(ArrayList<Message> messageArrayList, ClickListener listener) {
         this.messageArrayList = messageArrayList;
-
+        this.listener = listener;
     }
 
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
@@ -36,12 +43,16 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .inflate(R.layout.chat_item_self, parent, false);
         } else {
             // WeBot message
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.chat_item_watson, parent, false);
+            if (viewType == OPTION) {
+                itemView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.chat_select_options, parent, false);
+            } else {
+                itemView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.chat_item_watson, parent, false);
+            }
         }
 
-
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, listener);
     }
 
     @Override
@@ -50,6 +61,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (message.getId() != null && message.getId().equals("1")) {
             return SELF;
         }
+        if (message.getId() != null && message.getId().equals("3")) {
+            return OPTION;
+        }
 
         return position;
     }
@@ -57,8 +71,21 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         Message message = messageArrayList.get(position);
-        message.setMessage(message.getMessage());
-        ((ViewHolder) holder).message.setText(message.getMessage());
+        if (holder.getItemViewType() == OPTION) {
+            message.setTitle(message.getTitle());
+            ((ViewHolder) holder).message.setText(message.getTitle());
+
+            String[] labels = new String[2];
+            for (int i = 0; i < message.getLabels().length; i++) {
+                labels[i] = message.getLabels()[i];
+            }
+            message.setLabels(labels);
+            ((ViewHolder) holder).button1.setText(message.getLabels()[0]);
+            ((ViewHolder) holder).button2.setText(message.getLabels()[1]);
+        } else {
+            message.setMessage(message.getMessage());
+            ((ViewHolder) holder).message.setText(message.getMessage());
+        }
     }
 
     @Override
@@ -66,17 +93,33 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return messageArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView message;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView message;
+        private Button button1;
+        private Button button2;
+        private WeakReference<ClickListener> listenerRef;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, ClickListener listener) {
             super(view);
-            message = itemView.findViewById(R.id.message);
+            listenerRef = new WeakReference<>(listener);
+            message = view.findViewById(R.id.message);
+            button1 = view.findViewById(R.id.btn_options1);
+            button2 = view.findViewById(R.id.btn_options2);
+            if (button1 != null && button2 != null) {
+                button1.setOnClickListener(this);
+                button2.setOnClickListener(this);
+            }
+        }
 
-            //TODO: Uncomment this if you want to use a custom Font
-            /*String customFont = "Montserrat-Regular.ttf";
-            Typeface typeface = Typeface.createFromAsset(itemView.getContext().getAssets(), customFont);
-            message.setTypeface(typeface);*/
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == button1.getId()) {
+                Toast.makeText(v.getContext(), "BUTTON1 PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(v.getContext(), "BUTTON2 PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+            }
+
+            listenerRef.get().onPositionClicked(getAdapterPosition());
 
         }
     }

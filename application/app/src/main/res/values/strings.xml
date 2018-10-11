@@ -4,7 +4,7 @@
     <!--추가 사항-->
     <string name="input_message">메시지를 입력해주세요.</string>
     <string name="home">홈</string>
-    <string name="content">병원찾기</string>
+    <string name="content">심리노트</string>
     <string name="message">상담받기</string>
     <string name="more">더보기</string>
 
