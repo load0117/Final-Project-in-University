@@ -131,7 +131,7 @@ public class ReviewFormActivity extends AppCompatActivity{
 
                }else{
                    Toast.makeText(getApplicationContext(),"입력 되었습니다.", Toast.LENGTH_SHORT).show();
-                   Intent intent = new Intent(ReviewFormActivity.this, CommentShow.class);
+                   Intent intent = new Intent(ReviewFormActivity.this, StateUpdateActivity.class);
 
                    //intent.putExtra("userUid",userUid);
                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
