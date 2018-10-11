@@ -3,6 +3,7 @@ package com.example.twolee.chatbot.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,10 +34,16 @@ public class HomeFragment extends Fragment {
     Button startBtn;
     @BindView(R.id.writeBtn)
     Button writeBtn;
+    @BindView(R.id.noteButton)
+    Button noteButton;
+
     @BindView(R.id.home_recycler_view) RecyclerView home_recycler_view;
 
     // 코드 level
     private ReviewAdapter reviewAdapter;
+
+    private Fragment selectedFragment;
+    private FragmentTransaction transaction;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -56,6 +63,7 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_item_home, container, false);
 
         ButterKnife.bind(this, v);
+
         return v;
     }
 
@@ -87,6 +95,17 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        // 버튼 불 들어오도록..
+        noteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedFragment = NoteFragment.newInstance();
+                transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout,selectedFragment);
+                transaction.commit();
             }
         });
 

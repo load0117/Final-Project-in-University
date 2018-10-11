@@ -19,7 +19,7 @@ import com.example.twolee.chatbot.bottombar.BottomNavigationViewHelper;
 import com.example.twolee.chatbot.chatting.ChatActivity;
 import com.example.twolee.chatbot.fragments.HomeFragment;
 import com.example.twolee.chatbot.fragments.MyInfoFragment;
-import com.example.twolee.chatbot.fragments.SearchFragment;
+import com.example.twolee.chatbot.fragments.NoteFragment;
 import com.example.twolee.chatbot.scanner.ScannerActivity;
 
 import butterknife.BindView;
@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     TextView mainToolbarTitle;
     protected @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
-    @BindView(R.id.mainActivity_scanner)
-    Button startSacnner;
-
 
     //처음 홈 프래그먼트가 뜨도록 초기값 설정.
     private Fragment selectedFragment;
@@ -64,13 +61,7 @@ public class MainActivity extends AppCompatActivity {
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, selectedFragment); // 프래그먼트 대체
         transaction.commit();
-        startSacnner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ScannerActivity.class);
-                startActivity(intent);
-            }
-        });
+
         try {
 
             // 버튼 이벤트 추가
@@ -85,11 +76,9 @@ public class MainActivity extends AppCompatActivity {
                             switch (item.getItemId()) {
                                 case R.id.action_home:
                                     selectedFragment = HomeFragment.newInstance();
-                                    startSacnner.setVisibility(View.VISIBLE);
                                     break;
                                 case R.id.action_search:
-                                    selectedFragment = SearchFragment.newInstance();
-                                    startSacnner.setVisibility(View.GONE);
+                                    selectedFragment = NoteFragment.newInstance();
                                     break;
                                 case R.id.action_chatting:
                                     Intent intent = new Intent(MainActivity.this, ChatActivity.class);
@@ -98,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 case R.id.action_settings:
                                     selectedFragment = MyInfoFragment.newInstance();
-                                    startSacnner.setVisibility(View.GONE);
                                     break;
                             }
                             if (selectedFragment != null) {

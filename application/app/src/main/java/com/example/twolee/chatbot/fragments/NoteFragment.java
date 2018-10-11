@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 
 import com.example.twolee.chatbot.R;
 
-public class SearchFragment extends Fragment {
-    public static SearchFragment newInstance() {
-        SearchFragment fragment = new SearchFragment();
+public class NoteFragment extends Fragment {
+    public static NoteFragment newInstance() {
+        NoteFragment fragment = new NoteFragment();
         return fragment;
     }
 
