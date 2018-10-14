@@ -103,7 +103,6 @@ public class ReviewFormActivity extends AppCompatActivity{
         reviewRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-
                 reviewRatingNum.setText(String.valueOf(ratingBar.getRating()));
             }
         });
