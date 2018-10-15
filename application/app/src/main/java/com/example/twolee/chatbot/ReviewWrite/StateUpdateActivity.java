@@ -1,9 +1,9 @@
 package com.example.twolee.chatbot.ReviewWrite;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -51,10 +51,22 @@ public class StateUpdateActivity extends AppCompatActivity{
 
     public void getData(){
         //get data
+        System.out.println(userUid);
         myRef.child("users").child(userUid).child("state").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                state_message.setText(dataSnapshot.getValue(String.class));
+                String stateMessage = dataSnapshot.getValue(String.class);
+                System.out.println("출력 문자 :"+ stateMessage);
+                if(stateMessage == null)
+                    System.out.println("없음:");
+                else if(stateMessage.length() == 0)
+                    stateTextLength.setText(R.string.zeroLength);
+                else{
+                    String totalString = getString(stateMessage.length())+getString(R.string.maxLength);
+                    stateTextLength.setText(totalString);
+                }
+
+
             }
 
             @Override
@@ -74,29 +86,39 @@ public class StateUpdateActivity extends AppCompatActivity{
                 startActivity(new Intent(StateUpdateActivity.this, MainActivity.class));
                 finish();
             }
+
         });
     }
 
     public void setListener(){
         // listener
-        // TODO: 15/10/2018 입력 리스너..
         state_message.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // 입력되는 텍스트에 변화가 있을 때
-                //stateTextLength.setText(message.length());
+                // 입력 하기 전에
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // 입력이 끝났을 때
+                // 입력되는 텍스트에 변화가 있을 때
+                Integer stateMessage = s.toString().length();
+                if(stateMessage == 0)
+                    stateTextLength.setText(R.string.zeroLength);
+                else{
+                    String totalString = stateMessage+getString(R.string.maxLength);
+                    stateTextLength.setText(totalString);
+                }
+
+                if(stateMessage==60)
+                    stateTextLength.setTextColor(Color.RED);
+                else
+                    stateTextLength.setTextColor(Color.BLACK);
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                // 입력 하기 전에
-                //state_message.setText(message);
-                //stateTextLength.setText(message.length());
+                // 입력이 끝났을 때
             }
         });
 
