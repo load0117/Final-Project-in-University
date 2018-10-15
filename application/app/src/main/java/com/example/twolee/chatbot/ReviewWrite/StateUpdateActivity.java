@@ -56,17 +56,16 @@ public class StateUpdateActivity extends AppCompatActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String stateMessage = dataSnapshot.getValue(String.class);
-                System.out.println("출력 문자 :"+ stateMessage);
+                state_message.setText(stateMessage);
+
                 if(stateMessage == null)
-                    System.out.println("없음:");
+                    Log.w("nothing", "없음");
                 else if(stateMessage.length() == 0)
                     stateTextLength.setText(R.string.zeroLength);
                 else{
-                    String totalString = getString(stateMessage.length())+getString(R.string.maxLength);
+                    String totalString = stateMessage.length()+getString(R.string.maxLength);
                     stateTextLength.setText(totalString);
                 }
-
-
             }
 
             @Override
@@ -83,7 +82,6 @@ public class StateUpdateActivity extends AppCompatActivity{
         state_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StateUpdateActivity.this, MainActivity.class));
                 finish();
             }
 
