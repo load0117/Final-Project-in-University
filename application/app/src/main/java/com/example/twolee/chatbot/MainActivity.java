@@ -10,8 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.twolee.chatbot.BackButton.BackPressCloseHandler;
@@ -20,7 +18,6 @@ import com.example.twolee.chatbot.chatting.ChatActivity;
 import com.example.twolee.chatbot.fragments.HomeFragment;
 import com.example.twolee.chatbot.fragments.MyInfoFragment;
 import com.example.twolee.chatbot.fragments.NoteFragment;
-import com.example.twolee.chatbot.scanner.ScannerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                                 case R.id.action_home:
                                     selectedFragment = HomeFragment.newInstance();
                                     break;
-                                case R.id.action_search:
+                                case R.id.action_note:
                                     selectedFragment = NoteFragment.newInstance();
                                     break;
                                 case R.id.action_chatting:

@@ -9,7 +9,7 @@
         android:title="@string/home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/action_note"
         android:enabled="true"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/content"
