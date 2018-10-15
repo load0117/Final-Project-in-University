@@ -24,6 +24,8 @@
     <string name="dot">점 3개</string>
     <string name="clock">시계</string>
     <string name="profileIcon">프로필 사진</string>
+    <string name="nothing">없음</string>
+
 
     <!-- inform data-->
     <string name="stateUpdateButton">상태 변경</string>
@@ -37,5 +39,6 @@
     <string name="okMessage">확인</string>
     <!-- state message -->
     <string name="stateMessageShow">상태메시지를 입력해 주세요.</string>
-
+    <string name="zeroLength">0/60</string>
+    <string name="maxLength">/60</string>
 </resources>
