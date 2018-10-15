@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
+import com.example.twolee.chatbot.fragments.MyInfoFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -124,6 +125,7 @@ public class StateUpdateActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 myRef.child("users").child(userUid).child("state").setValue(state_message.getText().toString());
+                MyInfoFragment.newInstance();
                 finish();
             }
         });
