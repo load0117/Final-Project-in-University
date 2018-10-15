@@ -56,6 +56,9 @@ public class SignUpActivity extends AppCompatActivity {
                                     String uid = task.getResult().getUser().getUid();
                                     // write
                                     FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
+                                    Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             }
                         });
