@@ -98,9 +98,7 @@ public class MyInfoFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     // 상태 메시지 입력 - 입력 창 생성 하기
-                    Toast.makeText(getActivity(), "상태 변경 클릭", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), StateUpdateActivity.class);
-                    intent.putExtra("state",profile_state.getText().toString());
                     startActivity(intent);
                 }
             });

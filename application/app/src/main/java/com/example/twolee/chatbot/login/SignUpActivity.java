@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
@@ -46,9 +47,8 @@ public class SignUpActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
-                                    Log.w("entrv", "signInWithEmail", task.getException());
+                                    Log.w("enTrv", "signInWithEmail", task.getException());
                                     Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                    return;
                                 } else {
                                     Toast.makeText(getBaseContext(), "회원 가입을 축하드립니다.", Toast.LENGTH_LONG).show();
                                     User user = new User(signEmail.getText().toString(), signPw.getText().toString());
