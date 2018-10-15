@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
@@ -23,6 +24,11 @@ import com.example.twolee.chatbot.R;
 import com.example.twolee.chatbot.ReviewWrite.StateUpdateActivity;
 import com.example.twolee.chatbot.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -47,6 +53,7 @@ public class MyInfoFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     StorageReference storage = FirebaseStorage.getInstance("gs://chatbot-6c425.appspot.com").getReference();
 
+    private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     // profile photo select
     private String mCurrentPhotoPath;
     private Uri imgUri, photoURI, albumURI;
@@ -92,36 +99,10 @@ public class MyInfoFragment extends Fragment {
         // Run after activity onCreate method
         super.onActivityCreated(savedInstanceState);
 
+
         if (isExistUser) {
-
-            state_updateBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 상태 메시지 입력 - 입력 창 생성 하기
-                    Intent intent = new Intent(getActivity(), StateUpdateActivity.class);
-                    startActivity(intent);
-                }
-            });
-
-            profile_changeBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //profile photo 버튼 추가
-                    //Toast.makeText(getActivity(), "프로필 변경 클릭", Toast.LENGTH_SHORT).show();
-                    makeDialog(v);
-                }
-            });
-
-            logout_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    firebaseAuth.signOut();
-                    isExistUser = false;
-                    Intent intent = new Intent(v.getContext(), LoginActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-            });
+            setData();
+            setListener();
         } else {
             // 로그인 필요 버튼
             require_id_button.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +114,68 @@ public class MyInfoFragment extends Fragment {
                 }
             });
         }
+    }
+    public void setData() throws NullPointerException{
+
+        //profile_icon.setImageResource();
+        String userUid = firebaseAuth.getUid();
+        System.out.println(userUid);
+        myRef.child("users").child(userUid).child("state").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String stateMessage = dataSnapshot.getValue(String.class);
+                if(stateMessage == null)
+                    Log.w("nullpointException","널 포인트");
+                else if(stateMessage.length()==0 && profile_state != null)
+                    profile_state.setHint("상태를 적어 주세요");
+                else if(profile_state != null)
+                    profile_state.setText(stateMessage);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("failure","실패");
+            }
+        });
+    }
+
+    public void setListener(){
+
+        profile_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "hi", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        state_updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 상태 메시지 입력 - 입력 창 생성 하기
+                Intent intent = new Intent(getActivity(), StateUpdateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        profile_changeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //profile photo 버튼 추가
+                //Toast.makeText(getActivity(), "프로필 변경 클릭", Toast.LENGTH_SHORT).show();
+                makeDialog(v);
+            }
+        });
+
+        logout_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+                isExistUser = false;
+                Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
     }
 
     private void makeDialog(View v) {
@@ -159,12 +202,6 @@ public class MyInfoFragment extends Fragment {
 
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
-    }
-
-    public void setData() throws NullPointerException{
-        profile_state = getActivity().findViewById(R.id.profile_state);
-        state_updateBtn = getActivity().findViewById(R.id.state_updateBtn);
-        profile_changeBtn = getActivity().findViewById(R.id.profile_changeBtn);
     }
 
     private void takePhoto() {
