@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.twolee.chatbot.BackButton.BackPressCloseHandler;
+import com.example.twolee.chatbot.backButton.BackPressCloseHandler;
 import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

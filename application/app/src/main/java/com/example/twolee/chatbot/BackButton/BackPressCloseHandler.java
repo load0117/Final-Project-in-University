@@ -1,4 +1,4 @@
-package com.example.twolee.chatbot.BackButton;
+package com.example.twolee.chatbot.backButton;
 
 import android.app.Activity;
 import android.widget.Toast;
