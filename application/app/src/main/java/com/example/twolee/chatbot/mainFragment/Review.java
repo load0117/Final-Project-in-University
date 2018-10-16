@@ -1,4 +1,4 @@
-package com.example.twolee.chatbot.ReviewWrite;
+package com.example.twolee.chatbot.mainFragment;
 
 public class Review {
     /*

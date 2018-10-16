@@ -1,7 +1,8 @@
-package com.example.twolee.chatbot.fragments;
+package com.example.twolee.chatbot.mainFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.twolee.chatbot.R;
-import com.example.twolee.chatbot.ReviewWrite.Review;
-import com.example.twolee.chatbot.ReviewWrite.ReviewAdapter;
-import com.example.twolee.chatbot.ReviewWrite.ReviewFormActivity;
-import com.example.twolee.chatbot.ReviewWrite.ReviewListener;
-import com.example.twolee.chatbot.ReviewWrite.ReviewLoader;
 import com.example.twolee.chatbot.chatting.ChatActivity;
+import com.example.twolee.chatbot.noteFragment.NoteFragment;
 import com.example.twolee.chatbot.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,7 +43,7 @@ public class HomeFragment extends Fragment {
     private FragmentTransaction transaction;
 
     public static HomeFragment newInstance() {
-        HomeFragment homeFragment = new HomeFragment();
+        HomeFragment  homeFragment = new HomeFragment();
         return homeFragment;
     }
 
@@ -57,7 +54,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // create view
         View v = inflater.inflate(R.layout.fragment_item_home, container, false);

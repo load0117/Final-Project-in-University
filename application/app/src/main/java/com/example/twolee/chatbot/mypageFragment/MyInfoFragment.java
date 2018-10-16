@@ -1,7 +1,8 @@
-package com.example.twolee.chatbot.fragments;
+package com.example.twolee.chatbot.mypageFragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,9 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.twolee.chatbot.R;
-import com.example.twolee.chatbot.ReviewWrite.StateUpdateActivity;
 import com.example.twolee.chatbot.login.LoginActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,18 +53,22 @@ public class MyInfoFragment extends Fragment {
     @Nullable @BindView(R.id.logout_button) Button logout_button;
 
     // dataBase
-    FirebaseAuth firebaseAuth;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     StorageReference storage = FirebaseStorage.getInstance("gs://chatbot-6c425.appspot.com").getReference();
 
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     // profile photo select
     private String mCurrentPhotoPath;
     private Uri imgUri, photoURI, albumURI;
+
     private static final int FROM_CAMERA = 0;
     private static final int FROM_ALBUM = 1;
 
     // is exist login user
     private boolean isExistUser = false;
+
+    // in android
+    //private static Bitmap profilePhoto;
 
     public static MyInfoFragment newInstance() {
         MyInfoFragment myInfoFragment = new MyInfoFragment();
@@ -79,9 +86,8 @@ public class MyInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v;
-        firebaseAuth = FirebaseAuth.getInstance();
 
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+        if (firebaseAuth.getCurrentUser() == null) {
             v = inflater.inflate(R.layout.fragment_item_noinfo, container, false);
             isExistUser = false;
         } else {
@@ -98,7 +104,6 @@ public class MyInfoFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         // Run after activity onCreate method
         super.onActivityCreated(savedInstanceState);
-
 
         if (isExistUser) {
             setData();
@@ -118,14 +123,29 @@ public class MyInfoFragment extends Fragment {
     public void setData() throws NullPointerException{
 
         //profile_icon.setImageResource();
+        String filename = firebaseAuth.getUid()+".jpg";
+        storage.child("profile").child(filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                //profile_icon.setImageURI(uri);
+                Glide.with(getActivity()).load(uri).into(profile_icon);
+                Toast.makeText(getActivity(), "성공", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "파일을 불러 올 수 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         String userUid = firebaseAuth.getUid();
-        System.out.println(userUid);
+
         myRef.child("users").child(userUid).child("state").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String stateMessage = dataSnapshot.getValue(String.class);
                 if(stateMessage == null)
-                    Log.w("nullpointException","널 포인트");
+                    Log.w("nullPointException","널 포인트");
                 else if(stateMessage.length()==0 && profile_state != null)
                     profile_state.setHint("상태를 적어 주세요");
                 else if(profile_state != null)
@@ -144,10 +164,10 @@ public class MyInfoFragment extends Fragment {
         profile_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "hi", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), PhotoShowActivity.class);
+                startActivity(intent);
             }
         });
-
         state_updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

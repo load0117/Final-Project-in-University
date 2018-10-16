@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schmas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.twolee.chatbot.fragments.HomeFragment">
+    tools:context="com.example.twolee.chatbot.mainFragment.HomeFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/psychological_note"
+        android:id="@+id/homework_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>

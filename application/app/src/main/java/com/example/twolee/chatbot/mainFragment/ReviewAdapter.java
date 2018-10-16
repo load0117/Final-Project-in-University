@@ -1,4 +1,4 @@
-package com.example.twolee.chatbot.ReviewWrite;
+package com.example.twolee.chatbot.mainFragment;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;

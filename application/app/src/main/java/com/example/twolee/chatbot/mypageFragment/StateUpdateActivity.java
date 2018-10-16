@@ -1,6 +1,5 @@
-package com.example.twolee.chatbot.ReviewWrite;
+package com.example.twolee.chatbot.mypageFragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
-import com.example.twolee.chatbot.fragments.MyInfoFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
