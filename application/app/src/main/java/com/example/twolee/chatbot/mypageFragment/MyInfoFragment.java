@@ -279,6 +279,6 @@ public class MyInfoFragment extends Fragment {
         mediaScanIntent.setData(contentUri);
         getContext().sendBroadcast(mediaScanIntent);
         //Toast.makeText(this,"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
-
+        // TODO: 17/10/2018 크기 변형해서 저장하기 
     }
 }
