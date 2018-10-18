@@ -160,7 +160,6 @@ public class MyInfoFragment extends Fragment {
     }
 
     public void setListener(){
-
         profile_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,7 +243,6 @@ public class MyInfoFragment extends Fragment {
                     startActivityForResult(intent, FROM_CAMERA);
                 }
             }
-
         }else
             Log.v("알림", "저장공간에 접근 불가능");
     }
@@ -279,6 +277,6 @@ public class MyInfoFragment extends Fragment {
         mediaScanIntent.setData(contentUri);
         getContext().sendBroadcast(mediaScanIntent);
         //Toast.makeText(this,"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
-        // TODO: 17/10/2018 크기 변형해서 저장하기 
+        // TODO: 17/10/2018 크기 변형해서 저장하기
     }
 }
