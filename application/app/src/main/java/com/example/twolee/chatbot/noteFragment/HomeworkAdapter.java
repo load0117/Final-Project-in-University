@@ -1,8 +1,7 @@
-package com.example.twolee.chatbot.psycological;
+package com.example.twolee.chatbot.noteFragment;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,11 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
     public HomeworkAdapter(){
         homeworkList = new ArrayList<>();
 
+        // 보여주기.
+        setHomeworkList();
+    }
+
+    public void setHomeworkList(){
         for(int i=0; i<20; i++)
             homeworkList.add(new Homework());
     }
@@ -46,12 +50,13 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
 
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-
+        Homework newHomework = homeworkList.get(position);
+        holder.setData(newHomework);
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.homework_title)
-        TextView homework_title;
+        @BindView(R.id.homework_goal)
+        TextView homework_goal;
         @BindView(R.id.homework_finished_button)
         CheckBox homework_finished_button;
         @BindView(R.id.homework_form)
@@ -63,6 +68,10 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
             ButterKnife.bind(this,view);
 
             setListener();
+        }
+
+        public void setData(Homework newHomework){
+            homework_goal.setText(newHomework.getGoal());
         }
 
         private void setListener(){

@@ -55,6 +55,9 @@ public class SignUpActivity extends AppCompatActivity {
                                     // firebase auth 이메일에 해당하는 uid
                                     String uid = task.getResult().getUser().getUid();
                                     // write
+
+                                    //FirebaseDatabase.getInstance().getReference().child("users").child(uid).updateChildren();
+                                    // TODO: 18/10/2018 변경 확인
                                     FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
                                     Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                                     startActivity(intent);
