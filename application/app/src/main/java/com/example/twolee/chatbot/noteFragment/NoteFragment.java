@@ -50,7 +50,7 @@ public class NoteFragment extends Fragment {
 
         View v;
 
-        if(firebaseAuth.getCurrentUser() != null){
+        if(firebaseAuth.getCurrentUser() == null){
             v = inflater.inflate(R.layout.fragment_item_note, container, false);
             isExistUser = false;
         }else {
