@@ -40,10 +40,10 @@ public class ChatActivity extends AppCompatActivity {
 
     com.ibm.watson.developer_cloud.assistant.v1.model.Context context = null;
     private final int RESPONSE_NUM = 10;
-    private final int OPTION_NUM = 2;
+    private final int OPTION_NUM = 10;
     private boolean initialRequest;
     private ChatAdapter mAdapter;
-    private ArrayList messageArrayList;
+    private ArrayList<Message> messageArrayList;
     private String[] labels;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -110,13 +110,18 @@ public class ChatActivity extends AppCompatActivity {
         messageArrayList = new ArrayList<>();
         mAdapter = new ChatAdapter(messageArrayList, new ClickListener() {
             @Override
-            public void onPositionClicked(int position) {
-                if (mAdapter.getItemId(position) == 4) {
-                    ChatActivity.this.inputMessage.setText(labels[0]);
-                    sendMessage();
-                }else{
-                    ChatActivity.this.inputMessage.setText(labels[1]);
-                    sendMessage();
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.btn_options1:
+                        ChatActivity.this.inputMessage.setText(labels[0]);
+                        sendMessage();
+                        break;
+                    case R.id.btn_options2:
+                        ChatActivity.this.inputMessage.setText(labels[1]);
+                        sendMessage();
+                        break;
+                    default:
+                        break;
                 }
             }
         });
@@ -173,21 +178,20 @@ public class ChatActivity extends AppCompatActivity {
                     Log.i("context", context.toString());
                     Log.i("response", response.toString());
 
-                    if (response.getOutput() != null && response.getOutput().containsKey("text")) {
-                        ArrayList<String> responseList = (ArrayList) response.getOutput().get("text");
+                    if (response.getOutput() != null) {
+                        ArrayList responseList = (ArrayList) response.getOutput().get("text");
                         Log.i("responseList Text", responseList.toString());
 
                         Message[] outMessage = new Message[RESPONSE_NUM];
-                        if (responseList != null && responseList.size() > 0) {
+                        if (responseList.size() > 0) {
                             for (int i = 0; i < responseList.size(); i++) {
                                 outMessage[i] = new Message();
-                                outMessage[i].setMessage(responseList.get(i));
+                                outMessage[i].setMessage(responseList.get(i).toString());
                                 outMessage[i].setId("2");
-                                Log.i("outMessage", responseList.get(i));
+                                Log.i("outMessage", responseList.get(i).toString());
                                 messageArrayList.add(outMessage[i]);
                             }
                         } else {
-                            //TODO: response type = options
                             String strGeneric = response.getOutput().getGeneric().toString();
                             Log.i("repsonse generic", strGeneric);
 

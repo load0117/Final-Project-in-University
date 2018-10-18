@@ -1,5 +1,7 @@
 package com.example.twolee.chatbot.chatting;
 
+import android.view.View;
+
 public interface ClickListener {
-    void onPositionClicked(int position);
+    void onClick(View view);
 }

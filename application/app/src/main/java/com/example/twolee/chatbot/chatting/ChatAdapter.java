@@ -2,19 +2,22 @@ package com.example.twolee.chatbot.chatting;
 
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.twolee.chatbot.R;
 import com.example.twolee.chatbot.model.Message;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -24,6 +27,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int OPTION = 300;
     private final ClickListener listener;
     private ArrayList<Message> messageArrayList;
+    private final int[] BUTTONS = {
+            R.id.btn_options1, R.id.btn_options2, R.id.btn_options3, R.id.btn_options4, R.id.btn_options5
+    };
 
     public ChatAdapter(ArrayList<Message> messageArrayList, ClickListener listener) {
         this.messageArrayList = messageArrayList;
@@ -75,7 +81,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             message.setTitle(message.getTitle());
             ((ViewHolder) holder).message.setText(message.getTitle());
 
-            String[] labels = new String[2];
+            String[] labels = new String[10];
             for (int i = 0; i < message.getLabels().length; i++) {
                 labels[i] = message.getLabels()[i];
             }
@@ -94,33 +100,31 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView message;
-        private Button button1;
-        private Button button2;
+        @BindView(R.id.message)
+        TextView message;
+        @Nullable
+        @BindView(R.id.btn_options1)
+        Button button1;
+        @Nullable
+        @BindView(R.id.btn_options2)
+        Button button2;
+
         private WeakReference<ClickListener> listenerRef;
 
         public ViewHolder(View view, ClickListener listener) {
             super(view);
+            ButterKnife.bind(this, view);
             listenerRef = new WeakReference<>(listener);
-            message = view.findViewById(R.id.message);
-            button1 = view.findViewById(R.id.btn_options1);
-            button2 = view.findViewById(R.id.btn_options2);
             if (button1 != null && button2 != null) {
                 button1.setOnClickListener(this);
                 button2.setOnClickListener(this);
+
             }
         }
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == button1.getId()) {
-                Toast.makeText(v.getContext(), "BUTTON1 PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(v.getContext(), "BUTTON2 PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-            }
-
-            listenerRef.get().onPositionClicked(getAdapterPosition());
-
+            listenerRef.get().onClick(v);
         }
     }
 

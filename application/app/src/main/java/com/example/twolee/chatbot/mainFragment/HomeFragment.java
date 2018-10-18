@@ -11,10 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.twolee.chatbot.R;
 import com.example.twolee.chatbot.chatting.ChatActivity;
-import com.example.twolee.chatbot.noteFragment.NoteFragment;
 import com.example.twolee.chatbot.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,11 +28,9 @@ import butterknife.ButterKnife;
 public class HomeFragment extends Fragment {
     // 뷰 level
     @BindView(R.id.startBtn)
-    Button startBtn;
+    TextView startBtn;
     @BindView(R.id.writeBtn)
     Button writeBtn;
-    @BindView(R.id.noteButton)
-    Button noteButton;
 
     @BindView(R.id.home_recycler_view) RecyclerView home_recycler_view;
 
@@ -92,17 +90,6 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
-            }
-        });
-
-        // 버튼 불 들어오도록..
-        noteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedFragment = NoteFragment.newInstance();
-                transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout,selectedFragment);
-                transaction.commit();
             }
         });
 

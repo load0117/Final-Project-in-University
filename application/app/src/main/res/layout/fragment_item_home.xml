@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schmas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,60 +11,69 @@
         android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/startBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?attr/buttonBarButtonStyle"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_bot_message_box"
-                android:elevation="2dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/startConsult"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/noteButton"
-                style="?attr/buttonBarButtonStyle"
+            android:layout_margin="5dp"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="5dp">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_bot_message_box"
-                android:elevation="2dp"
-                android:gravity="center"
-                android:text="@string/notePage"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:drawablePadding="20dp"
+                    android:drawableTop="@drawable/ic_face_scanner"
+                    android:gravity="center"
+                    android:text="위봇으로 심리 상담을 받아 보세요."
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:gravity="center"
+                    android:text="지금 바로 위봇을 만나러 가보세요." />
+
+                <TextView
+                    android:id="@+id/startBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:text="확인"
+                    android:textColor="@color/colorAccent" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/writeBtn"
-                style="?attr/buttonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_create_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:padding="15dp"
                 android:background="@drawable/bg_bot_message_box"
                 android:elevation="2dp"
-                android:gravity="center"
                 android:text="@string/writeReview"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/colorBlack"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -73,6 +82,5 @@
         android:id="@+id/home_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_layout">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_below="@id/button_layout"></android.support.v7.widget.RecyclerView>
 </LinearLayout>
