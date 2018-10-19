@@ -64,6 +64,7 @@ public class NoteFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        
         super.onActivityCreated(savedInstanceState);
 
         try{
