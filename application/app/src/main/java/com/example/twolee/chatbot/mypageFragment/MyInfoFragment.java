@@ -120,46 +120,49 @@ public class MyInfoFragment extends Fragment {
             });
         }
     }
-    public void setData() throws NullPointerException{
 
-        //profile_icon.setImageResource();
-        String filename = firebaseAuth.getUid()+".jpg";
-        storage.child("profile").child(filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //profile_icon.setImageURI(uri);
-                Glide.with(getActivity()).load(uri).into(profile_icon);
-                Toast.makeText(getActivity(), "성공", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "파일을 불러 올 수 없습니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
+    public void setData() throws NullPointerException {
+        try {
+            String filename = firebaseAuth.getUid() + ".jpg";
+            storage.child("profile").child(filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    //profile_icon.setImageURI(uri);
+                    Glide.with(getActivity()).load(uri).into(profile_icon);
+                    Toast.makeText(getActivity(), "성공", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), "파일을 불러 올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        String userUid = firebaseAuth.getUid();
+            String userUid = firebaseAuth.getUid();
 
-        myRef.child("users").child(userUid).child("state").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String stateMessage = dataSnapshot.getValue(String.class);
-                if(stateMessage == null)
-                    Log.w("nullPointException","널 포인트");
-                else if(stateMessage.length()==0 && profile_state != null)
-                    profile_state.setHint("상태를 적어 주세요");
-                else if(profile_state != null)
-                    profile_state.setText(stateMessage);
-            }
+            myRef.child("users").child(userUid).child("state").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String stateMessage = dataSnapshot.getValue(String.class);
+                    if (stateMessage == null)
+                        Log.w("nullPointException", "널 포인트");
+                    else if (stateMessage.length() == 0 && profile_state != null)
+                        profile_state.setHint("상태를 적어 주세요");
+                    else if (profile_state != null)
+                        profile_state.setText(stateMessage);
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("failure","실패");
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("failure", "실패");
+                }
+            });
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setListener(){
+    public void setListener() {
         profile_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,28 +229,28 @@ public class MyInfoFragment extends Fragment {
     private void takePhoto() {
         // 촬영 후 이미지 가져옴 - 현재 수정중
         String state = Environment.getExternalStorageState();
-        if(Environment.MEDIA_MOUNTED.equals(state)){
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if(intent.resolveActivity(getContext().getPackageManager())!=null){
+            if (intent.resolveActivity(getContext().getPackageManager()) != null) {
                 File photoFile = null;
-                try{
+                try {
                     photoFile = createImageFile();
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                if(photoFile!=null){
-                    Uri providerURI = FileProvider.getUriForFile(getContext(),getContext().getPackageName(),photoFile);
+                if (photoFile != null) {
+                    Uri providerURI = FileProvider.getUriForFile(getContext(), getContext().getPackageName(), photoFile);
                     imgUri = providerURI;
                     intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, providerURI);
                     startActivityForResult(intent, FROM_CAMERA);
                 }
             }
-        }else
+        } else
             Log.v("알림", "저장공간에 접근 불가능");
     }
 
-    private void selectAlbum(){
+    private void selectAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         intent.setType("image/*");
@@ -255,22 +258,23 @@ public class MyInfoFragment extends Fragment {
     }
 
     // 카메라로 찍은 이미지 생성
-    public File createImageFile() throws IOException{
+    public File createImageFile() throws IOException {
         String imgFileName = System.currentTimeMillis() + ".jpg";
         File imageFile = null;
         File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "ireh");
-        if(!storageDir.exists()){
-            Log.v("알림","storageDir 존재 x " + storageDir.toString());
+        if (!storageDir.exists()) {
+            Log.v("알림", "storageDir 존재 x " + storageDir.toString());
             storageDir.mkdirs();
         }
 
-        Log.v("알림","storageDir 존재함 " + storageDir.toString());
-        imageFile = new File(storageDir,imgFileName);
+        Log.v("알림", "storageDir 존재함 " + storageDir.toString());
+        imageFile = new File(storageDir, imgFileName);
         mCurrentPhotoPath = imageFile.getAbsolutePath();
         return imageFile;
     }
+
     // 촬영한 이미지 저장하기
-    public void galleryAddPic(){
+    public void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
         Uri contentUri = Uri.fromFile(f);

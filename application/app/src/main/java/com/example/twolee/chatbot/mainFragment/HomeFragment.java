@@ -37,9 +37,6 @@ public class HomeFragment extends Fragment {
     // 코드 level
     private ReviewAdapter reviewAdapter;
 
-    private Fragment selectedFragment;
-    private FragmentTransaction transaction;
-
     public static HomeFragment newInstance() {
         HomeFragment  homeFragment = new HomeFragment();
         return homeFragment;
