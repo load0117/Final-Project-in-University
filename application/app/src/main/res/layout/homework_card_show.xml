@@ -36,6 +36,11 @@
             android:layout_weight="40">
 
             <TextView
+                android:id="@+id/homework_uid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+            <TextView
                 android:id="@+id/homework_goal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,8 +48,18 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="13dp"
                 android:contentDescription="@string/nothing"
-                android:text="숙제 test"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/remove_button"
+                android:layout_width="69dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="66dp"
+                android:text="삭제"
+                android:background="#FFFFFF"
+                android:visibility="invisible"/>
 
             <CheckBox
                 android:id="@+id/homework_finished_button"

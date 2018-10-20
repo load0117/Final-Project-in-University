@@ -2,18 +2,18 @@ package com.example.twolee.chatbot.noteFragment;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.twolee.chatbot.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,17 +22,11 @@ import butterknife.ButterKnife;
 public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ReviewViewHolder> {
 
     private List<Homework> homeworkList;
+    private List<String> homeworkUidList;
 
-    public HomeworkAdapter(){
-        homeworkList = new ArrayList<>();
-
-        // 보여주기.
-        setHomeworkList();
-    }
-
-    public void setHomeworkList(){
-        for(int i=0; i<20; i++)
-            homeworkList.add(new Homework());
+    public HomeworkAdapter(List<Homework> homeworkList, List<String> homeworkUidList){
+        this.homeworkList = homeworkList;
+        this.homeworkUidList = homeworkUidList;
     }
 
     @Override
@@ -51,7 +45,8 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         Homework newHomework = homeworkList.get(position);
-        holder.setData(newHomework);
+        String homeworkUid = homeworkUidList.get(position);
+        holder.setData(newHomework,homeworkUid);
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
@@ -61,6 +56,10 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
         CheckBox homework_finished_button;
         @BindView(R.id.homework_form)
         LinearLayout homework_form;
+        @BindView(R.id.homework_uid)
+        TextView homework_uid;
+        @BindView(R.id.remove_button)
+        Button removeButton;
 
         public ReviewViewHolder(View view) {
             super(view);
@@ -70,8 +69,9 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
             setListener();
         }
 
-        public void setData(Homework newHomework){
+        public void setData(Homework newHomework, String uid){
             homework_goal.setText(newHomework.getGoal());
+            homework_uid.setText(uid);
         }
 
         private void setListener(){
@@ -80,13 +80,25 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked){
                         // 체크 하면
-                        Toast.makeText(buttonView.getContext(), "완료", Toast.LENGTH_SHORT).show();
+                        Log.w("finish", "완료");
                         // 불투명 하게
                         homework_form.setAlpha((float)0.5);
+
+                        // 삭제 버튼 생성
+                        removeButton.setVisibility(View.VISIBLE);
+                        removeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CreateDialog dialog = new CreateDialog(v.getContext());
+                            }
+                        });
                     }else{
-                        // 최크 해제하면
-                        Toast.makeText(buttonView.getContext(), "해제", Toast.LENGTH_SHORT).show();
+                        // 체크 해제하면
+                        Log.w("notFinish", "해제");
+                        CheckingHomework checkingHomework = CheckingHomework.getInstance();
+                        checkingHomework.setChecking(homework_uid.getText().toString(),true);
                         homework_form.setAlpha((float)1.0);
+                        removeButton.setVisibility(View.INVISIBLE);
                     }
                 }
             });

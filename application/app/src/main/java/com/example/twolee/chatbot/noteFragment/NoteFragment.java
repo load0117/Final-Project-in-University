@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.twolee.chatbot.R;
 import com.example.twolee.chatbot.login.LoginActivity;
@@ -25,6 +26,9 @@ import butterknife.ButterKnife;
 public class NoteFragment extends Fragment {
     @Nullable @BindView(R.id.homework_recyclerView)
     RecyclerView homework_recyclerView;
+    @Nullable @BindView(R.id.noHomeworkShow)
+    TextView noHomeworkShow;
+
     @Nullable @BindView(R.id.require_id_button)
     Button require_id_button;
 
@@ -32,7 +36,7 @@ public class NoteFragment extends Fragment {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private HomeworkAdapter homeworkAdapter;
-    private boolean isExistUser;
+    private boolean isExistUser = false;
 
     public static NoteFragment newInstance() {
         NoteFragment fragment = new NoteFragment();
@@ -50,12 +54,12 @@ public class NoteFragment extends Fragment {
 
         View v;
 
-        if(firebaseAuth.getCurrentUser() == null){
+        if(firebaseAuth.getCurrentUser() != null){
             v = inflater.inflate(R.layout.fragment_item_note, container, false);
-            isExistUser = false;
+            isExistUser = true;
         }else {
             v = inflater.inflate(R.layout.fragment_item_noinfo, container, false);
-            isExistUser = true;
+            isExistUser = false;
         }
 
         ButterKnife.bind(this,v);
@@ -64,15 +68,17 @@ public class NoteFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        
+
         super.onActivityCreated(savedInstanceState);
 
         try{
             if (isExistUser) {
+
                 HomeworkReader.getInitData(new HomeworkListener() {
                     @Override
-                    public void goalListener(List<Homework> homeworkList) {
-                        homeworkAdapter = new HomeworkAdapter();
+                    public void goalListener(List<Homework> homeworkList, List<String> homeworkUidList) {
+
+                        homeworkAdapter = new HomeworkAdapter(homeworkList, homeworkUidList);
                         homework_recyclerView.setAdapter(homeworkAdapter);
 
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -80,8 +86,21 @@ public class NoteFragment extends Fragment {
                         linearLayoutManager.setStackFromEnd(true);
 
                         homework_recyclerView.setLayoutManager(linearLayoutManager);
+
+                        try{
+                            if(homeworkList.size()==0){
+                                homework_recyclerView.setVisibility(View.INVISIBLE);
+                                noHomeworkShow.setVisibility(View.VISIBLE);
+                            }else{
+                                noHomeworkShow.setVisibility(View.INVISIBLE);
+                                homework_recyclerView.setVisibility(View.VISIBLE);
+                            }
+                        }catch (NullPointerException e){
+                            e.printStackTrace();
+                        }
                     }
                 });
+
             }else{
                 // 로그인 필요 버튼
                 require_id_button.setOnClickListener(new View.OnClickListener() {

@@ -41,4 +41,7 @@
     <string name="stateMessageShow">상태메시지를 입력해 주세요.</string>
     <string name="zeroLength">0/60</string>
     <string name="maxLength">/60</string>
+
+    <!-- note fragment-->
+    <string name="noHomework">완료할 과제가 없습니다. \n 상담을 받아보세요.</string>
 </resources>
