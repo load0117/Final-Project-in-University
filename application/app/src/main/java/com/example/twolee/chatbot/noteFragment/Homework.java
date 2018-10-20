@@ -1,9 +1,19 @@
 package com.example.twolee.chatbot.noteFragment;
 
 public class Homework {
+
+    /*
+        과제 form V1.1
+
+        - 추가 사항
+
+        ischecked;
+     */
+
     private String goal;
     private String startTime;
     private String endTime;
+    private boolean isChecked;
 
     public Homework(){}
 
@@ -11,6 +21,7 @@ public class Homework {
         setGoal(goal);
         setStartTime(startTime);
         setEndTime(endTime);
+
     }
 
     public String getGoal() {
@@ -35,5 +46,13 @@ public class Homework {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }
