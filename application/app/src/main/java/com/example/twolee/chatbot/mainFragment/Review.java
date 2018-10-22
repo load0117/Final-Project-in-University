@@ -2,7 +2,7 @@ package com.example.twolee.chatbot.mainFragment;
 
 public class Review {
     /*
-        Review 내용 V 1.3
+        Review 내용 V 1.31
 
         객체가 가지는 정보
 
@@ -13,6 +13,8 @@ public class Review {
         리뷰 평점.
         작성 시간.
         좋아요 개수.
+
+        변경 사항 : 생성자 변수 받는 방식 변경
      */
     private String userUid;
     private String username;
@@ -24,12 +26,12 @@ public class Review {
     public Review(){}
 
     public Review(String userUid, String username, String contents, String rating, String writtenTime, long like){
-        setUserUid(userUid);
-        setUsername(username);
-        setContents(contents);
-        setRating(rating);
-        setWrittenTime(writtenTime);
-        setLike(like);
+        this.userUid = userUid;
+        this.username = username;
+        this.contents = contents;
+        this.rating = rating;
+        this.writtenTime = writtenTime;
+        this.like = like;
     }
 
     //getter, setter
