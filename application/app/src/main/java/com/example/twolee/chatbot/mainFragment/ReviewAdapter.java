@@ -104,6 +104,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             review_writtenTime.setText(review.getWrittenTime());
         }
 
+        @OnClick(R.id.profile_show)
+        public void profile(View v){
+            // 수정하기
+            Toast.makeText(v.getContext(), "hi",Toast.LENGTH_SHORT).show();
+        }
 
         @OnClick(R.id.review_more)
         public void moreInfo(){
