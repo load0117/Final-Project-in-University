@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">webot</string>
     <string name="what_s_on_your_mind">What\'s on your mind?</string>
+
     <!--추가 사항-->
     <string name="input_message">메시지를 입력해주세요.</string>
     <string name="home">홈</string>
@@ -11,7 +12,9 @@
     <!-- 홈 프래그먼트 string -->
     <string name="startConsult">상담 시작</string>
     <string name="writeReview">리뷰 작성</string>
-    <string name="notePage">심리 노트</string>
+    <string name="counselingLetter">위봇으로 심리 상담을 받아 보세요.</string>
+    <string name="gotoCounselor">지금 바로 위봇을 만나러 가보세요.</string>
+    <string name="okButton">확인</string>
     <!-- 리뷰 폼 string -->
     <string name="profile">프로필</string>
 

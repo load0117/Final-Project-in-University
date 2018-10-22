@@ -33,7 +33,7 @@
                     android:drawablePadding="20dp"
                     android:drawableTop="@drawable/ic_face_scanner"
                     android:gravity="center"
-                    android:text="위봇으로 심리 상담을 받아 보세요."
+                    android:text="@string/counselingLetter"
                     android:textColor="@color/colorBlack"
                     android:textSize="18sp" />
 
@@ -42,15 +42,15 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:gravity="center"
-                    android:text="지금 바로 위봇을 만나러 가보세요." />
+                    android:text="@string/gotoCounselor" />
 
                 <TextView
                     android:id="@+id/startBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:clickable="true"
-                    android:text="확인"
+                    android:focusable="true"
+                    android:text="@string/okButton"
                     android:textColor="@color/colorAccent" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -81,6 +81,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/home_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/button_layout"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
