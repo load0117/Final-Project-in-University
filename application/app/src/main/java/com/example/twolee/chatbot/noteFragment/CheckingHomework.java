@@ -5,17 +5,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class CheckingHomework {
-    private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("homeworks");
+    private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
-    public static CheckingHomework getInstance(){
-        CheckingHomework checkingHomework = new CheckingHomework();
-        return checkingHomework;
-    }
-
-    public static void setChecking(String homeworkUid, Boolean bool){
+    // 체크 박스 누를 시에 과제 내의 isChecked 를 변화 시킴
+    public static void setChecking(String homeworkUid, Boolean integer){
         if(FirebaseAuth.getInstance().getCurrentUser()!=null){
             String userUid = FirebaseAuth.getInstance().getUid();
-            myRef.child(userUid).child(homeworkUid).child("isChecked").setValue(bool);
+            if(userUid != null && !userUid.equals(""))
+                myRef.child("homeWorks").child(userUid).child(homeworkUid).child("isChecked").setValue(integer);
+        }else{
+            System.out.println("error");
         }
     }
 }
