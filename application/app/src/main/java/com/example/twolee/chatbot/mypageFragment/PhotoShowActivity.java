@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -52,7 +53,8 @@ public class PhotoShowActivity extends AppCompatActivity{
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "파일을 불러 올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "파일을 불러 올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                Log.w("fail","불러오기 실패");
             }
         });
 
