@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         //toolbar
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         mainToolbarTitle.setText("위봇");
 
         // init Fragment
@@ -65,11 +66,9 @@ public class MainActivity extends AppCompatActivity {
             BottomNavigationViewHelper.disableShiftMode(bottomNavigationView); //이동 모드 해제
             bottomNavigationView.setOnNavigationItemSelectedListener(
                     new BottomNavigationView.OnNavigationItemSelectedListener() {
-
                         @Override
                         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                             // 수정
-                            //selectedFragment = null;
                             switch (item.getItemId()) {
                                 case R.id.action_home:
                                     selectedFragment = HomeFragment.newInstance();
@@ -86,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                                     selectedFragment = MyInfoFragment.newInstance();
                                     break;
                             }
+
                             if (selectedFragment != null) {
                                 //프레그먼트 선택할 때
                                 transaction = getSupportFragmentManager().beginTransaction();
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         }
                     });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
