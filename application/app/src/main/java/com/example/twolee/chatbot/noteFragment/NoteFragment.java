@@ -32,7 +32,6 @@ public class NoteFragment extends Fragment {
     @Nullable @BindView(R.id.require_id_button)
     Button require_id_button;
 
-
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private HomeworkAdapter homeworkAdapter;
@@ -68,16 +67,14 @@ public class NoteFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-
         super.onActivityCreated(savedInstanceState);
 
-        try{
-            if (isExistUser) {
+        if (isExistUser) {
+            HomeworkReader.getInitData(new HomeworkListener() {
+                @Override
+                public void goalListener(List<Homework> homeworkList, List<String> homeworkUidList) {
 
-                HomeworkReader.getInitData(new HomeworkListener() {
-                    @Override
-                    public void goalListener(List<Homework> homeworkList, List<String> homeworkUidList) {
-
+                    if(homework_recyclerView != null){
                         homeworkAdapter = new HomeworkAdapter(homeworkList, homeworkUidList);
                         homework_recyclerView.setAdapter(homeworkAdapter);
 
@@ -87,33 +84,30 @@ public class NoteFragment extends Fragment {
 
                         homework_recyclerView.setLayoutManager(linearLayoutManager);
 
-                        try{
-                            if(homeworkList.size()==0){
-                                homework_recyclerView.setVisibility(View.INVISIBLE);
-                                noHomeworkShow.setVisibility(View.VISIBLE);
-                            }else{
-                                noHomeworkShow.setVisibility(View.INVISIBLE);
-                                homework_recyclerView.setVisibility(View.VISIBLE);
-                            }
-                        }catch (NullPointerException e){
-                            e.printStackTrace();
+                        if(homeworkList.size() ==0 && noHomeworkShow != null){
+                            noHomeworkShow.setVisibility(View.VISIBLE);
+                            homework_recyclerView.setVisibility(View.INVISIBLE);
+                        }else if(noHomeworkShow !=null){
+                            noHomeworkShow.setVisibility(View.INVISIBLE);
+                            homework_recyclerView.setVisibility(View.VISIBLE);
                         }
                     }
-                });
+                }
+            });
 
-            }else{
-                // 로그인 필요 버튼
+        }else{
+            // 로그인 필요 버튼
+            if(require_id_button != null){
                 require_id_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), LoginActivity.class);
                         startActivity(intent);
-                        getActivity().finish();
+                        if(getActivity()!=null)
+                            getActivity().finish();
                     }
                 });
             }
-        }catch (NullPointerException e){
-            e.printStackTrace();
         }
     }
 
