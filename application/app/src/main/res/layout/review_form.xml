@@ -14,6 +14,7 @@
             android:id="@+id/profile"
             android:layout_width="48sp"
             android:layout_height="48sp"
+            android:src="@drawable/ic_base_profile"
             android:contentDescription="@string/profile"
             />
 
