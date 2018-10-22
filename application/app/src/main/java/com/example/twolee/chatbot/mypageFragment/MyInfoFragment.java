@@ -69,9 +69,6 @@ public class MyInfoFragment extends Fragment {
     // is exist login user
     private boolean isExistUser = false;
 
-    // in android
-    //private static Bitmap profilePhoto;
-
     public static MyInfoFragment newInstance() {
         MyInfoFragment myInfoFragment = new MyInfoFragment();
         return myInfoFragment;
@@ -116,7 +113,7 @@ public class MyInfoFragment extends Fragment {
         Intent intent = new Intent(v.getContext(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        getActivity().finish();
+        getActivity().finishAffinity();
     }
 
     public void setData() throws NullPointerException {
@@ -132,7 +129,7 @@ public class MyInfoFragment extends Fragment {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "파일을 불러 올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    Log.w("fail","실패");
                 }
             });
 
