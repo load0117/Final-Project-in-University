@@ -22,6 +22,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 public class NoteFragment extends Fragment {
     @Nullable @BindView(R.id.homework_recyclerView)
@@ -75,6 +77,7 @@ public class NoteFragment extends Fragment {
                 public void goalListener(List<Homework> homeworkList, List<String> homeworkUidList) {
 
                     if(homework_recyclerView != null){
+
                         homeworkAdapter = new HomeworkAdapter(homeworkList, homeworkUidList);
                         homework_recyclerView.setAdapter(homeworkAdapter);
 
@@ -83,32 +86,29 @@ public class NoteFragment extends Fragment {
                         linearLayoutManager.setStackFromEnd(true);
 
                         homework_recyclerView.setLayoutManager(linearLayoutManager);
-
                         if(homeworkList.size() ==0 && noHomeworkShow != null){
+                            // 비어 있는데 로그인은 되어 있으면?
                             noHomeworkShow.setVisibility(View.VISIBLE);
                             homework_recyclerView.setVisibility(View.INVISIBLE);
                         }else if(noHomeworkShow !=null){
+                            // 비어 있지 않으면?
                             noHomeworkShow.setVisibility(View.INVISIBLE);
                             homework_recyclerView.setVisibility(View.VISIBLE);
                         }
                     }
                 }
             });
-
-        }else{
-            // 로그인 필요 버튼
-            if(require_id_button != null){
-                require_id_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(v.getContext(), LoginActivity.class);
-                        startActivity(intent);
-                        if(getActivity()!=null)
-                            getActivity().finish();
-                    }
-                });
-            }
         }
     }
 
+    @Optional
+    @OnClick(R.id.require_id_button)
+    public void require(View v){
+        System.out.println(v);
+        System.out.println("밖에서 돌린 컨택스트:"+this.getView().getContext());
+        Intent intent = new Intent(this.getView().getContext(), LoginActivity.class);
+        startActivity(intent);
+        if(getActivity()!=null)
+            getActivity().finish();
+    }
 }

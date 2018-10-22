@@ -17,11 +17,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
 
@@ -75,14 +77,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
         // database reference
         private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-
         private boolean isLike = false;
 
         public ReviewViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
-
-            setListener();
         }
 
         // view data
@@ -99,68 +98,34 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         }
 
 
-        public void setListener() {
-            // click more button
+        @OnClick(R.id.review_more)
+        public void moreInfo(){
+            Toast.makeText(itemView.getContext().getApplicationContext(), "더보기 기능 추가하기.", Toast.LENGTH_SHORT).show();
+        }
 
-            review_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        @OnClick(R.id.review_likeBtn)
+        public void like(View v){
+            long likes = Long.valueOf(review_like.getText().toString());
 
-                    Toast.makeText(itemView.getContext().getApplicationContext(), "더보기 기능 추가하기.", Toast.LENGTH_SHORT).show();
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+            // 현재 로그인 돼 있지 않으면 로그인 페이지로.
+            if(currentUser == null){
+                Intent intent = new Intent(v.getContext().getApplicationContext(), LoginActivity.class);
+                v.getContext().startActivity(intent);
+            }else{
+                // 좋아요 되어 있는지 확인 후 선택.
+
+                if(isLike){
+                    likes--;
+                }else{
+                    likes++;
                 }
-            });
+                review_like.setText(String.valueOf(likes));
 
-
-            // click review isLike button
-            review_likeBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    long likes = Long.valueOf(review_like.getText().toString());
-
-                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-                    // 현재 로그인 돼 있지 않으면 로그인 페이지로.
-                    if(currentUser == null){
-                        Intent intent = new Intent(v.getContext().getApplicationContext(), LoginActivity.class);
-                        v.getContext().startActivity(intent);
-                    }else{
-                        // 좋아요 되어 있는지 확인 후 선택.
-
-                        if(isLike){
-                            likes--;
-                        }else{
-                            likes++;
-                        }
-                        /*
-                        if(isLike){
-                            // 좋아요 클릭 취소
-                            //System.out.println("좋아요 취소!");
-                            likes--;
-                            isLike = false;
-                            review_likeBtn.setImageResource(R.drawable.ic_like_icon);
-                        }else{
-                            // 좋아요 클릭
-                            //System.out.println("좋아요!");
-                            likes++;
-                            isLike = true;
-                            review_likeBtn.setImageResource(R.drawable.ic_like_selected_icon);
-                        }
-
-                        // 좋아요 화면에 반영.
-                        review_like.setText(String.valueOf(likes));
-
-                        // 디비에 반영.
-                        myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
-
-                        */
-                        review_like.setText(String.valueOf(likes));
-
-                        // 디비에 반영.
-                        myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
-                    }
-                }
-            });
+                // 디비에 반영.
+                myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
+            }
         }
     }
 }

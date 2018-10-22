@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -68,13 +67,13 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
             super(view);
 
             ButterKnife.bind(this,view);
-
-            setListener();
         }
 
         private void setData(Homework newHomework, String uid){
+            // Insert Data
             homework_goal.setText(newHomework.getGoal());
             homework_uid.setText(uid);
+            // layout to check box button
             if(newHomework.getIsChecked()) {
                 homework_finished_button.setChecked(true);
                 visRemoveButton();
@@ -84,41 +83,23 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
             }
         }
 
-        /*
+
         @OnCheckedChanged(R.id.homework_finished_button)
-        public void ischecking(CompoundButton buttonView, boolean isChecked){
-            if(isChecked){
+        public void isChecking(boolean isChecked) {
+            if (isChecked) {
                 // 체크 하면
                 Log.w("finish", "완료");
                 // 불투명 하게
                 visRemoveButton();
+                // 체크했다고 디비에 연락
                 CheckingHomework.setChecking(homework_uid.getText().toString(), true);
-            }else{
+            } else {
                 // 체크 해제하면
                 Log.w("release", "해제");
                 noRemoveButton();
+                // 체크 헤제 했다고 디비에 연락
                 CheckingHomework.setChecking(homework_uid.getText().toString(), false);
             }
-        }
-        */
-        private void setListener(){
-            homework_finished_button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
-                        // 체크 하면
-                        Log.w("finish", "완료");
-                        // 불투명 하게
-                        visRemoveButton();
-                        CheckingHomework.setChecking(homework_uid.getText().toString(), true);
-                    }else{
-                        // 체크 해제하면
-                        Log.w("release", "해제");
-                        noRemoveButton();
-                        CheckingHomework.setChecking(homework_uid.getText().toString(), false);
-                    }
-                }
-            });
         }
 
         // 체크 버튼 누르면 삭제 버튼 생성 및 화면 불투명 하게

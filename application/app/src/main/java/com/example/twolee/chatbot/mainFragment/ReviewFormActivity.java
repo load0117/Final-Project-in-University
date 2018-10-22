@@ -32,6 +32,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ReviewFormActivity extends AppCompatActivity{
     // xml
@@ -68,22 +69,20 @@ public class ReviewFormActivity extends AppCompatActivity{
 
     public void setToolbar(){
         setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ReviewFormActivity.this, MainActivity.class));
                 finish();
             }
         });
     }
 
     public void getData(){
-
-
         myRef.child("users").child(userUid).child("username").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -97,6 +96,8 @@ public class ReviewFormActivity extends AppCompatActivity{
                 Log.w("failure",databaseError.toException());
             }
         });
+
+
     }
 
     public void setListeners(){
@@ -113,6 +114,7 @@ public class ReviewFormActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 // 리뷰 버튼 눌렀을 시. 해야 할 일. -> 리뷰 자체를 디비에 연결.
+
                 DatabaseReference keyRef = myRef.child("reviews").push();
 
                 String rating = String.format(Locale.KOREA,"%.1f",reviewRatingBar.getRating());
@@ -131,17 +133,49 @@ public class ReviewFormActivity extends AppCompatActivity{
 
                }else{
                    Toast.makeText(getApplicationContext(),"입력 되었습니다.", Toast.LENGTH_SHORT).show();
-                   Intent intent = new Intent(ReviewFormActivity.this, StateUpdateActivity.class);
-
-                   //intent.putExtra("userUid",userUid);
-                   intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                   Intent intent = new Intent(ReviewFormActivity.this, MainActivity.class);
+                   HomeFragment.newInstance();
                    startActivity(intent);
                    //차 후 주석 제거.
                    //finish();
                 }
+
             }
         });
     }
+    /*
+    @OnClick(R.id.reviewWriteBtn)
+    public void writeReview(){
+        // 리뷰 버튼 눌렀을 시. 해야 할 일. -> 리뷰 자체를 디비에 연결.
+        DatabaseReference keyRef = myRef.child("reviews").push();
+
+        String rating = String.format(Locale.KOREA,"%.1f",reviewRatingBar.getRating());
+        Review review = new Review(userUid, idShow.getText().toString(), reviewWriteScreen.getText().toString(), rating, getCurrentTime(),0);
+
+
+        keyRef.setValue(review);
+        user.put(keyRef.getKey(), "/reviews/"+ keyRef.getKey());
+
+        // relationship
+        myRef.child("users").child(userUid).child("reviews").updateChildren(user);
+
+        // not input rating
+        if(reviewWriteScreen.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(getApplicationContext(),"입력 되었습니다.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ReviewFormActivity.this, StateUpdateActivity.class);
+
+            //intent.putExtra("userUid",userUid);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            //차 후 주석 제거.
+            //finish();
+        }
+    }
+    */
+
 
     public String getCurrentTime(){
         long now = System.currentTimeMillis();

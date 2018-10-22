@@ -40,6 +40,8 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 public class MyInfoFragment extends Fragment {
 
@@ -77,12 +79,11 @@ public class MyInfoFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // 변수 할당.
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v;
@@ -105,20 +106,17 @@ public class MyInfoFragment extends Fragment {
         // Run after activity onCreate method
         super.onActivityCreated(savedInstanceState);
 
-        if (isExistUser) {
+        if (isExistUser)
             setData();
-            setListener();
-        } else {
-            // 로그인 필요 버튼
-            require_id_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), LoginActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-            });
-        }
+    }
+
+    @Optional
+    @OnClick(R.id.require_id_button)
+    public void require(View v){
+        Intent intent = new Intent(v.getContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     public void setData() throws NullPointerException {
@@ -129,7 +127,7 @@ public class MyInfoFragment extends Fragment {
                 public void onSuccess(Uri uri) {
                     //profile_icon.setImageURI(uri);
                     Glide.with(getActivity()).load(uri).into(profile_icon);
-                    Toast.makeText(getActivity(), "성공", Toast.LENGTH_SHORT).show();
+                    Log.w("success","성공");
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -162,42 +160,34 @@ public class MyInfoFragment extends Fragment {
         }
     }
 
-    public void setListener() {
-        profile_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PhotoShowActivity.class);
-                startActivity(intent);
-            }
-        });
-        state_updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 상태 메시지 입력 - 입력 창 생성 하기
-                Intent intent = new Intent(getActivity(), StateUpdateActivity.class);
-                startActivity(intent);
-            }
-        });
+    @Optional
+    @OnClick(R.id.profile_icon)
+    public void icon(){
+        Intent intent = new Intent(getActivity(), PhotoShowActivity.class);
+        startActivity(intent);
+    }
 
-        profile_changeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //profile photo 버튼 추가
-                //Toast.makeText(getActivity(), "프로필 변경 클릭", Toast.LENGTH_SHORT).show();
-                makeDialog(v);
-            }
-        });
+    @Optional
+    @OnClick(R.id.state_updateBtn)
+    public void updateState(){
+        Intent intent = new Intent(getActivity(), StateUpdateActivity.class);
+        startActivity(intent);
+    }
 
-        logout_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseAuth.signOut();
-                isExistUser = false;
-                Intent intent = new Intent(v.getContext(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
+    @Optional
+    @OnClick(R.id.profile_changeBtn)
+    public void changeProfile(View v){
+        makeDialog(v);
+    }
+
+    @Optional
+    @OnClick(R.id.logout_button)
+    public void logout(View v){
+        firebaseAuth.signOut();
+        isExistUser = false;
+        Intent intent = new Intent(v.getContext(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private void makeDialog(View v) {
@@ -283,4 +273,5 @@ public class MyInfoFragment extends Fragment {
         //Toast.makeText(this,"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
         // TODO: 17/10/2018 크기 변형해서 저장하기
     }
+
 }

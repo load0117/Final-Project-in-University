@@ -47,7 +47,7 @@
         <activity android:name=".mypageFragment.StateUpdateActivity" />
 
         <activity android:name=".scanner.ScannerActivity" />
-        <activity android:name=".scanner.WriteTextActivity"></activity>
+        <activity android:name=".scanner.WriteTextActivity" />
 
     </application>
 
