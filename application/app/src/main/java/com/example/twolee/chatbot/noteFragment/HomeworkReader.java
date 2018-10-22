@@ -20,18 +20,25 @@ public class HomeworkReader {
     private static List<Homework> homeworkList;
     private static List<String> homeworkUidList;
 
-    public static void getInitData(final HomeworkListener homeworkListener){
-        homeworkList = new ArrayList<>();
-        homeworkUidList = new ArrayList<>();
+    public static void getInitData(final HomeworkListener homeworkListener) {
 
-        myRef.child("homeworks").child(userUid).addValueEventListener(new ValueEventListener() {
+        myRef.child("homeWorks").child(userUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot data: dataSnapshot.getChildren()){
-                    Homework getHomework = data.getValue(Homework.class);
-                    Homework newHomework = new Homework(getHomework.getGoal(), getHomework.getStartTime(), getHomework.getEndTime());
+                homeworkList = new ArrayList<>();
+                homeworkUidList = new ArrayList<>();
 
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    // get data from FireBase
+                    Homework getHomework = data.getValue(Homework.class);
+                    // init
+                    Homework newHomework = new Homework();
+                    // add data
+                    if (getHomework != null)
+                        newHomework = new Homework(getHomework.getGoal(), getHomework.getStartTime(), getHomework.getEndTime(), getHomework.getIsChecked());
+
+                    // add to ArrayList
                     homeworkList.add(newHomework);
                     homeworkUidList.add(data.getKey());
                 }
@@ -41,7 +48,7 @@ public class HomeworkReader {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w("fail",databaseError.toException());
+                Log.w("fail", databaseError.toException());
             }
         });
     }

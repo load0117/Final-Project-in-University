@@ -18,6 +18,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 
 public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ReviewViewHolder> {
 
@@ -35,8 +37,9 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
         return homeworkList.size();
     }
 
+    @NonNull
     @Override
-    public HomeworkAdapter.ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HomeworkAdapter.ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // 뷰 홀더 생성시 호출 어떻게 생성해서 무엇을 전달할 것인가. 새롭게 생성할 때만 호출된다.
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.homework_card_show, parent, false);
         return new HomeworkAdapter.ReviewViewHolder(itemView);
@@ -61,7 +64,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
         @BindView(R.id.remove_button)
         Button removeButton;
 
-        public ReviewViewHolder(View view) {
+        private ReviewViewHolder(View view) {
             super(view);
 
             ButterKnife.bind(this,view);
@@ -69,11 +72,35 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
             setListener();
         }
 
-        public void setData(Homework newHomework, String uid){
+        private void setData(Homework newHomework, String uid){
             homework_goal.setText(newHomework.getGoal());
             homework_uid.setText(uid);
+            if(newHomework.getIsChecked()) {
+                homework_finished_button.setChecked(true);
+                visRemoveButton();
+            }else{
+                homework_finished_button.setChecked(false);
+                noRemoveButton();
+            }
         }
 
+        /*
+        @OnCheckedChanged(R.id.homework_finished_button)
+        public void ischecking(CompoundButton buttonView, boolean isChecked){
+            if(isChecked){
+                // 체크 하면
+                Log.w("finish", "완료");
+                // 불투명 하게
+                visRemoveButton();
+                CheckingHomework.setChecking(homework_uid.getText().toString(), true);
+            }else{
+                // 체크 해제하면
+                Log.w("release", "해제");
+                noRemoveButton();
+                CheckingHomework.setChecking(homework_uid.getText().toString(), false);
+            }
+        }
+        */
         private void setListener(){
             homework_finished_button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -82,28 +109,34 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
                         // 체크 하면
                         Log.w("finish", "완료");
                         // 불투명 하게
-                        homework_form.setAlpha((float)0.5);
-
-                        // 삭제 버튼 생성
-                        removeButton.setVisibility(View.VISIBLE);
-                        removeButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                CreateDialog dialog = new CreateDialog(v.getContext());
-                            }
-                        });
+                        visRemoveButton();
+                        CheckingHomework.setChecking(homework_uid.getText().toString(), true);
                     }else{
                         // 체크 해제하면
-                        Log.w("notFinish", "해제");
-                        CheckingHomework checkingHomework = CheckingHomework.getInstance();
-                        checkingHomework.setChecking(homework_uid.getText().toString(),true);
-                        homework_form.setAlpha((float)1.0);
-                        removeButton.setVisibility(View.INVISIBLE);
+                        Log.w("release", "해제");
+                        noRemoveButton();
+                        CheckingHomework.setChecking(homework_uid.getText().toString(), false);
                     }
                 }
             });
         }
 
+        // 체크 버튼 누르면 삭제 버튼 생성 및 화면 불투명 하게
+        private void visRemoveButton(){
+            homework_form.setAlpha((float)0.5);
+            removeButton.setVisibility(View.VISIBLE);
+        }
 
+        @OnClick(R.id.remove_button)
+        public void toRemove(View v){
+            CreateDialog dialog = new CreateDialog(homework_uid.getText().toString());
+            dialog.showDialog(v.getContext());
+        }
+
+        // 체크 버튼 누르지 않았으면 삭제 버튼 제거 및 화면 원래대로
+        private void noRemoveButton(){
+            homework_form.setAlpha((float)1.0);
+            removeButton.setVisibility(View.INVISIBLE);
+        }
     }
 }

@@ -3,25 +3,27 @@ package com.example.twolee.chatbot.noteFragment;
 public class Homework {
 
     /*
-        과제 form V1.1
+        과제 form V1.12
 
         - 추가 사항
 
-        ischecked;
+        isChecked 변수
+
+        getter / setter 명명
      */
 
     private String goal;
     private String startTime;
     private String endTime;
-    private boolean isChecked;
+    private Boolean isChecked= false;
 
     public Homework(){}
 
-    public Homework(String goal, String startTime, String endTime){
+    public Homework(String goal, String startTime, String endTime, Boolean isChecked){
         setGoal(goal);
         setStartTime(startTime);
         setEndTime(endTime);
-
+        setIsChecked(isChecked);
     }
 
     public String getGoal() {
@@ -48,11 +50,11 @@ public class Homework {
         this.endTime = endTime;
     }
 
-    public boolean isChecked() {
+    public Boolean getIsChecked() {
         return isChecked;
     }
 
-    public void setChecked(boolean checked) {
+    public void setIsChecked(Boolean checked) {
         isChecked = checked;
     }
 }
