@@ -2,7 +2,9 @@ package com.example.twolee.chatbot.mypageFragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -37,11 +39,14 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+
+import static android.app.Activity.RESULT_OK;
 
 public class MyInfoFragment extends Fragment {
 
@@ -55,7 +60,7 @@ public class MyInfoFragment extends Fragment {
     @Nullable @BindView(R.id.logout_button) Button logout_button;
 
     // dataBase
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    @Nullable FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     StorageReference storage = FirebaseStorage.getInstance("gs://chatbot-6c425.appspot.com").getReference();
 
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
@@ -111,19 +116,20 @@ public class MyInfoFragment extends Fragment {
     @OnClick(R.id.require_id_button)
     public void require(View v){
         Intent intent = new Intent(v.getContext(), LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        getActivity().finishAffinity();
+
+        if(getActivity() != null)
+            getActivity().finishAffinity();
     }
 
     public void setData() throws NullPointerException {
         try {
-            String filename = firebaseAuth.getUid() + ".jpg";
+            String filename = firebaseAuth.getUid();
             storage.child("profile").child(filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    //profile_icon.setImageURI(uri);
-                    Glide.with(getActivity()).load(uri).into(profile_icon);
+                    if(getActivity() != null)
+                        Glide.with(getActivity()).load(uri).into(profile_icon);
                     Log.w("success","성공");
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -180,11 +186,15 @@ public class MyInfoFragment extends Fragment {
     @Optional
     @OnClick(R.id.logout_button)
     public void logout(View v){
-        firebaseAuth.signOut();
+
+        if (firebaseAuth != null)
+            firebaseAuth.signOut();
+
         isExistUser = false;
         Intent intent = new Intent(v.getContext(), LoginActivity.class);
         startActivity(intent);
-        getActivity().finish();
+        if(getActivity() != null)
+            getActivity().finish();
     }
 
     private void makeDialog(View v) {
@@ -240,8 +250,37 @@ public class MyInfoFragment extends Fragment {
     private void selectAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, FROM_ALBUM);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == FROM_ALBUM){
+            if(resultCode == RESULT_OK){
+                try{
+                    InputStream in = null;
+
+                    if(getActivity() != null && data.getData() != null){
+                        in = getActivity().getContentResolver().openInputStream(data.getData());
+                    }
+
+                    Bitmap img = BitmapFactory.decodeStream(in);
+
+                    // Database
+                    storage.child("profile").child(firebaseAuth.getUid()).putFile(data.getData());
+
+                    if(profile_icon != null)
+                        profile_icon.setImageBitmap(img);
+
+
+                    in.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     // 카메라로 찍은 이미지 생성
