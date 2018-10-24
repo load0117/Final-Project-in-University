@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
 import com.example.twolee.chatbot.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SignUpActivity extends AppCompatActivity {
     protected @BindView(R.id.edit_text_sign_email)
@@ -38,44 +40,41 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
+
+    }
+
+    @OnClick(R.id.btn_sign)
+    public void btnSign() {
+
         // 회원 가입
-        btnSign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(signEmail.getText().toString(), signPw.getText().toString())
-                        .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()) {
-                                    Log.w("enTrv", "signInWithEmail", task.getException());
-                                    Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(getBaseContext(), "회원 가입을 축하드립니다.", Toast.LENGTH_LONG).show();
-                                    User user = new User(signEmail.getText().toString(), signPw.getText().toString());
-                                    // firebase auth 이메일에 해당하는 uid
-                                    String uid = task.getResult().getUser().getUid();
-                                    // write
 
-                                    //FirebaseDatabase.getInstance().getReference().child("users").child(uid).updateChildren();
-                                    // TODO: 18/10/2018 변경 확인
-                                    FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
-                                    Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }
-                        });
-            }
-        });
-        tvSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(signEmail.getText().toString(), signPw.getText().toString())
+                .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("enTrv", "signInWithEmail", task.getException());
+                            Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getBaseContext(), "회원 가입을 축하드립니다.", Toast.LENGTH_LONG).show();
+                            User user = new User(signEmail.getText().toString(), signPw.getText().toString());
 
+                            // firebase auth 이메일에 해당하는 uid
+                            String uid = task.getResult().getUser().getUid();
 
+                            // write
+                            // TODO: 18/10/2018 변경 확인
+                            FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
+                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finishAffinity();
+                        }
+                    }
+                });
+    }
+
+    @OnClick(R.id.sign_in)
+    public void signIn(){
+        finish();
     }
 }
