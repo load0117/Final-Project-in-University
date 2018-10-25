@@ -14,7 +14,8 @@
         android:id="@+id/homework_form"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -25,7 +26,8 @@
                 android:id="@+id/homework_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_chat_black_24dp"
+                android:src="@drawable/ic_homework_icon_24dp"
+                android:contentDescription="@string/homework"
                 android:layout_centerInParent="true" />
 
         </RelativeLayout>
@@ -36,15 +38,34 @@
             android:layout_weight="40">
 
             <TextView
+                android:id="@+id/homework_uid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/homework_goal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="157dp"
+                android:layout_height="37dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="13dp"
                 android:contentDescription="@string/nothing"
-                android:text="숙제 test"
+                android:singleLine="true"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/remove_button"
+                android:layout_width="69dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="66dp"
+                android:text="@string/remove"
+                android:background="#FFFFFF"
+                android:visibility="invisible"/>
 
             <CheckBox
                 android:id="@+id/homework_finished_button"
@@ -52,8 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="17dp"
-                android:text="" />
+                android:layout_marginEnd="17dp" />
 
         </RelativeLayout>
 

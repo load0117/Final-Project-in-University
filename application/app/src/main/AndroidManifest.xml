@@ -43,8 +43,6 @@
         <activity android:name=".mainFragment.ReviewFormActivity" />
         <activity android:name=".mypageFragment.PhotoShowActivity" />
         <activity android:name=".mypageFragment.StateUpdateActivity" />
-        <activity android:name=".scanner.ScannerActivity" />
-        <activity android:name=".scanner.WriteTextActivity" />
     </application>
 
 </manifest>

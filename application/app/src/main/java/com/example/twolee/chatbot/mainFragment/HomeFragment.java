@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,10 +22,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class HomeFragment extends Fragment {
-    // 뷰 level
+    // 뷰
     @BindView(R.id.startBtn)
     TextView startBtn;
     @BindView(R.id.writeBtn)
@@ -34,14 +34,11 @@ public class HomeFragment extends Fragment {
 
     @BindView(R.id.home_recycler_view) RecyclerView home_recycler_view;
 
-    // 코드 level
+    // 코드
     private ReviewAdapter reviewAdapter;
 
-    private Fragment selectedFragment;
-    private FragmentTransaction transaction;
-
     public static HomeFragment newInstance() {
-        HomeFragment  homeFragment = new HomeFragment();
+        HomeFragment homeFragment = new HomeFragment();
         return homeFragment;
     }
 
@@ -67,32 +64,6 @@ public class HomeFragment extends Fragment {
         // Run after activity onCreate method
         super.onActivityCreated(savedInstanceState);
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        writeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-                if (currentUser != null) {
-                    // Using Sign In
-                    Intent intent = new Intent(getActivity(), ReviewFormActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                } else {
-                    //  Not Sign In + Sign Up
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
         ReviewLoader.getInitData(new ReviewListener() {
             @Override
             public void runListener(List<Review> reviewArrayList, List<String> review_uidList) {
@@ -107,6 +78,29 @@ public class HomeFragment extends Fragment {
                 home_recycler_view.setLayoutManager(linearLayoutManager);
             }
         });
-
     }
+    // 확인 버튼 클릭시 이벤트
+    @OnClick(R.id.startBtn)
+    public void start(){
+        Intent intent = new Intent(getActivity(), ChatActivity.class);
+        startActivity(intent);
+    }
+
+    // 리뷰 작성시 이벤트
+    @OnClick(R.id.writeBtn)
+    public void write(){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            // Using Sign In
+            Intent intent = new Intent(getActivity(), ReviewFormActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else {
+            //  Not Sign In + Sign Up
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }

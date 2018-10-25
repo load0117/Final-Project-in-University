@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class StateUpdateActivity extends AppCompatActivity{
     @BindView(R.id.state_toolbar) Toolbar state_toolbar;
@@ -32,7 +33,7 @@ public class StateUpdateActivity extends AppCompatActivity{
 
     // database
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-    @NonNull private String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    @NonNull private String userUid = FirebaseAuth.getInstance().getUid();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -49,7 +50,6 @@ public class StateUpdateActivity extends AppCompatActivity{
 
     public void getData(){
         //get data
-        System.out.println(userUid);
         myRef.child("users").child(userUid).child("state").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -73,10 +73,12 @@ public class StateUpdateActivity extends AppCompatActivity{
         });
     }
 
-    public void setToolbar(){
+    public void setToolbar() {
         //tool bar
         setSupportActionBar(state_toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         state_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,15 +119,12 @@ public class StateUpdateActivity extends AppCompatActivity{
                 // 입력이 끝났을 때
             }
         });
-
-        updateOkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myRef.child("users").child(userUid).child("state").setValue(state_message.getText().toString());
-                MyInfoFragment.newInstance();
-                finish();
-            }
-        });
     }
 
+    @OnClick(R.id.updateOkButton)
+    public void update(){
+        myRef.child("users").child(userUid).child("state").setValue(state_message.getText().toString());
+        MyInfoFragment.newInstance();
+        finish();
+    }
 }

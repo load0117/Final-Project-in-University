@@ -14,7 +14,9 @@
             android:id="@+id/profile"
             android:layout_width="48sp"
             android:layout_height="48sp"
-            android:contentDescription="@string/profile" />
+            android:src="@drawable/ic_base_profile"
+            android:contentDescription="@string/profile"
+            />
 
         <TextView
             android:id="@+id/idShow"
