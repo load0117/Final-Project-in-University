@@ -25,7 +25,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
     private List<Homework> homeworkList;
     private List<String> homeworkUidList;
 
-    public HomeworkAdapter(List<Homework> homeworkList, List<String> homeworkUidList){
+    public HomeworkAdapter(List<Homework> homeworkList, List<String> homeworkUidList) {
         this.homeworkList = homeworkList;
         this.homeworkUidList = homeworkUidList;
     }
@@ -48,7 +48,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         Homework newHomework = homeworkList.get(position);
         String homeworkUid = homeworkUidList.get(position);
-        holder.setData(newHomework,homeworkUid);
+        holder.setData(newHomework, homeworkUid);
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
@@ -66,18 +66,18 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
         private ReviewViewHolder(View view) {
             super(view);
 
-            ButterKnife.bind(this,view);
+            ButterKnife.bind(this, view);
         }
 
-        private void setData(Homework newHomework, String uid){
+        private void setData(Homework newHomework, String uid) {
             // Insert Data
             homework_goal.setText(newHomework.getGoal());
             homework_uid.setText(uid);
             // layout to check box button
-            if(newHomework.getIsChecked()) {
+            if (newHomework.getIsChecked()) {
                 homework_finished_button.setChecked(true);
                 visRemoveButton();
-            }else{
+            } else {
                 homework_finished_button.setChecked(false);
                 noRemoveButton();
             }
@@ -103,20 +103,20 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Review
         }
 
         // 체크 버튼 누르면 삭제 버튼 생성 및 화면 불투명 하게
-        private void visRemoveButton(){
-            homework_form.setAlpha((float)0.5);
+        private void visRemoveButton() {
+            homework_form.setAlpha((float) 0.5);
             removeButton.setVisibility(View.VISIBLE);
         }
 
         @OnClick(R.id.remove_button)
-        public void toRemove(View v){
+        public void toRemove(View v) {
             CreateDialog dialog = new CreateDialog(homework_uid.getText().toString());
             dialog.showDialog(v.getContext());
         }
 
         // 체크 버튼 누르지 않았으면 삭제 버튼 제거 및 화면 원래대로
-        private void noRemoveButton(){
-            homework_form.setAlpha((float)1.0);
+        private void noRemoveButton() {
+            homework_form.setAlpha((float) 1.0);
             removeButton.setVisibility(View.INVISIBLE);
         }
     }
