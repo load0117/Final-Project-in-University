@@ -2,6 +2,6 @@ package com.example.twolee.chatbot.chatting;
 
 import android.view.View;
 
-public interface ClickListener {
+public interface ChatClickListener {
     void onClick(View view);
 }

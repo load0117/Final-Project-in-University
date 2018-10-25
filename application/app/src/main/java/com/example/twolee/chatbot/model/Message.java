@@ -6,7 +6,6 @@ import java.io.Serializable;
 public class Message implements Serializable {
     String id;
     String message;
-    String label;
     String title;
     String[] labels;
 
@@ -27,15 +26,6 @@ public class Message implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     public String getId() {

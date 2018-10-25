@@ -19,7 +19,7 @@
         android:background="@drawable/bg_bot_message_box"
         android:elevation="2dp"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/message"
@@ -32,7 +32,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray">
+            android:background="@color/colorLine">
 
         </LinearLayout>
 
@@ -47,7 +47,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray">
+            android:background="@color/colorLine">
 
         </LinearLayout>
 
@@ -58,48 +58,7 @@
             android:background="@color/colorPrimary"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray">
 
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_options3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray">
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_options4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray">
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_options5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
     </LinearLayout>
 
 

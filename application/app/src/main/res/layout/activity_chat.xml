@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.example.twolee.chatbot.chatting.ChatActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/chat_toolbar"/>
     <include layout="@layout/content_chat_room" />
 
 </LinearLayout>

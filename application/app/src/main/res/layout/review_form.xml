@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,17 +14,16 @@
             android:id="@+id/profile"
             android:layout_width="48sp"
             android:layout_height="48sp"
-            android:contentDescription="@string/profile"
-            />
+            android:contentDescription="@string/profile" />
 
         <TextView
             android:id="@+id/idShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="57dp" />
+            android:layout_marginStart="57dp"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 
@@ -33,10 +32,10 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:gravity="top"
+        android:hint="@string/reviewHint"
         android:inputType="textMultiLine"
         android:maxLength="1000"
-        android:scrollbars="vertical"
-        android:hint="@string/reviewHint" />
+        android:scrollbars="vertical" />
 
     <RelativeLayout
         android:layout_width="match_parent"

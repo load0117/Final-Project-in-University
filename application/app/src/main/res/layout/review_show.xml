@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_block_border"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="1dp">
 
     <!-- 여기에는 리뷰-->
 
@@ -12,21 +13,15 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF">
 
-        <ImageView
-            android:id="@+id/profile_show"
-            android:layout_width="wrap_content"
-            android:layout_height="48sp"
-            android:layout_alignParentTop="true"
-            android:contentDescription="@string/profile"
-            android:src="@drawable/ic_like_icon" />
 
         <TextView
             android:id="@+id/review_userEmail"
-            android:layout_width="170dp"
-            android:layout_height="48sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@id/profile_show"
+            android:fontFamily="@font/godom"
             android:gravity="center"
+            android:padding="10dp"
             android:textSize="16sp" />
 
         <TextView
@@ -69,14 +64,12 @@
 
         <TextView
             android:id="@+id/review_writtenTime"
-            android:layout_width="194dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="181dp"
+            android:layout_toEndOf="@id/review_timeIcon"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/godom"
             android:gravity="center"
-            android:paddingEnd="0sp"
-            android:paddingStart="20sp"
             android:textSize="12sp" />
 
     </RelativeLayout>
@@ -84,10 +77,10 @@
     <TextView
         android:id="@+id/review_contents"
         android:layout_width="match_parent"
-        android:layout_height="187dp"
-        android:gravity="center"
-        android:background="@drawable/bg_textview_border" />
-
+        android:layout_height="170dp"
+        android:fontFamily="@font/godom"
+        android:background="@drawable/bg_textview_border"
+        android:gravity="center" />
 
 
     <RelativeLayout
@@ -101,8 +94,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:gravity="center"
-            android:textSize="14sp"
-            android:text="@string/review_rating_num"/>
+            android:text="@string/review_rating_num"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/review_rating"
@@ -120,7 +113,7 @@
             android:layout_toEndOf="@+id/review_rating"
             android:gravity="center"
             android:text="@string/review_like_num"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/review_like"
@@ -152,13 +145,9 @@
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:layout_weight="1"
-            android:background="@color/bg_message_board"
+            android:background="@android:color/white"
             android:contentDescription="@string/reviewWriteBtn"
             android:src="@drawable/ic_like_icon" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="12sp"
-        android:background="#878787" />
 </LinearLayout>

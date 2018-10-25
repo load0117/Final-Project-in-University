@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import com.ibm.watson.developer_cloud.assistant.v1.model.MessageResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -45,19 +48,22 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter mAdapter;
     private ArrayList<Message> messageArrayList;
     private String[] labels;
+    private AlertDialog alertDialog;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.message)
     EditText inputMessage;
     @BindView(R.id.btn_send)
     ImageView btnSend;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.toolbar_title)
+    @BindView(R.id.chat_toolbar)
+    Toolbar chatToolbar;
+    @BindView(R.id.chat_toolbar_title)
     TextView chatToolbarTitle;
+    @BindView(R.id.chat_info)
+    ImageButton btnChatInfo;
     @BindString(R.string.waston_assistant_workspacesId)
     //@BindString(R.string.hk_workspaceId)
-    String workspacesId;
+            String workspacesId;
     @BindString(R.string.watson_assistant_username)
     String watsonUsername;
     @BindString(R.string.watson_assistant_password)
@@ -87,28 +93,42 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void setupToolbar() {
         // toolbar
-        setSupportActionBar(toolbar);
+        setSupportActionBar(chatToolbar);
         chatToolbarTitle.setText("위봇");
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // 뒤로가기 이벤트
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        chatToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ChatActivity.this, MainActivity.class));
                 finish();
             }
         });
+        btnChatInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View alertView = View.inflate(ChatActivity.this, R.layout.chat_info, null);
+                alertDialog = new AlertDialog.Builder(ChatActivity.this)
+                        .setView(alertView)
+                        .create();
+                alertDialog.show();
+
+            }
+        });
+
+    }
+    public void chatInfoClear(View v){
+        alertDialog.dismiss();
     }
 
     private void setupRecyclerView() {
         messageArrayList = new ArrayList<>();
-        mAdapter = new ChatAdapter(messageArrayList, new ClickListener() {
+        mAdapter = new ChatAdapter(messageArrayList, new ChatClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()) {
@@ -118,6 +138,18 @@ public class ChatActivity extends AppCompatActivity {
                         break;
                     case R.id.btn_options2:
                         ChatActivity.this.inputMessage.setText(labels[1]);
+                        sendMessage();
+                        break;
+                    case R.id.btn_options3:
+                        ChatActivity.this.inputMessage.setText(labels[2]);
+                        sendMessage();
+                        break;
+                    case R.id.btn_options4:
+                        ChatActivity.this.inputMessage.setText(labels[3]);
+                        sendMessage();
+                        break;
+                    case R.id.btn_options5:
+                        ChatActivity.this.inputMessage.setText(labels[4]);
                         sendMessage();
                         break;
                     default:
@@ -142,13 +174,13 @@ public class ChatActivity extends AppCompatActivity {
         if (!this.initialRequest) {
             Message inputMessage = new Message();
             inputMessage.setMessage(strInputMessage);
-            inputMessage.setId("1");
+            inputMessage.setId("0");
             messageArrayList.add(inputMessage);
             Log.i("input message", strInputMessage);
         } else {
             Message inputMessage = new Message();
             inputMessage.setMessage(strInputMessage);
-            inputMessage.setId("100");
+            inputMessage.setId("1");
             this.initialRequest = false;
             Log.i("init watson", "왓슨 인사 말 받아오기.");
         }
@@ -171,7 +203,6 @@ public class ChatActivity extends AppCompatActivity {
                             .build();
                     MessageResponse response = service.message(options).execute();
 
-                    //Passing Context of last conversation
                     if (response.getContext() != null) {
                         context = response.getContext();
                     }
@@ -187,7 +218,7 @@ public class ChatActivity extends AppCompatActivity {
                             for (int i = 0; i < responseList.size(); i++) {
                                 outMessage[i] = new Message();
                                 outMessage[i].setMessage(responseList.get(i).toString());
-                                outMessage[i].setId("2");
+                                outMessage[i].setId("1");
                                 Log.i("outMessage", responseList.get(i).toString());
                                 messageArrayList.add(outMessage[i]);
                             }
@@ -202,14 +233,22 @@ public class ChatActivity extends AppCompatActivity {
                             Log.i("pare list text", parseList.get(0).getOptions().get(0).getValue().getInput().getText());
                             Log.i("pare list", String.valueOf(parseList.size()));
 
+                            String cntOption = null;
+
                             for (int i = 0; i < parseList.get(0).getOptions().size(); i++) {
                                 labels[i] = parseList.get(0).getOptions().get(i).getLabel();
+                            }
+                            if (parseList.get(0).getOptions().size() == 2) {
+                                cntOption = "2";
+                            }
+                            if (parseList.get(0).getOptions().size() == 5) {
+                                cntOption = "5";
                             }
                             for (int i = 0; i < parseList.size(); i++) {
                                 outMessage[i] = new Message();
                                 outMessage[i].setTitle(parseList.get(i).getTitle());
                                 outMessage[i].setLabels(labels);
-                                outMessage[i].setId("3");
+                                outMessage[i].setId(cntOption);
                                 messageArrayList.add(outMessage[i]);
                             }
 

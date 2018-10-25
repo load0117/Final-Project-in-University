@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         //toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        mainToolbarTitle.setText("위봇");
+        mainToolbarTitle.setText("WE Bot.");
 
         // init Fragment
         selectedFragment = HomeFragment.newInstance();
@@ -69,12 +69,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                             // 수정
-                            //selectedFragment = null;
+                            selectedFragment = null;
                             switch (item.getItemId()) {
                                 case R.id.action_home:
+                                    mainToolbarTitle.setText("WE Bot.");
                                     selectedFragment = HomeFragment.newInstance();
                                     break;
                                 case R.id.action_note:
+                                    mainToolbarTitle.setText("심리노트");
                                     selectedFragment = NoteFragment.newInstance();
                                     break;
                                 case R.id.action_chatting:
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     break;
                                 case R.id.action_settings:
+                                    mainToolbarTitle.setText("더보기");
                                     selectedFragment = MyInfoFragment.newInstance();
                                     break;
                             }

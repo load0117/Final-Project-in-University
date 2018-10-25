@@ -61,7 +61,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         //        //여기서 홀더 관리.
-        @BindView(R.id.profile_show) ImageView profile_show;
+//        @BindView(R.id.profile_show) ImageView profile_show;
         @BindView(R.id.review_userEmail) TextView review_userEmail;
         @BindView(R.id.review_user_uid) TextView review_user_uid;
         @BindView(R.id.review_uid) TextView review_uid;

@@ -40,15 +40,11 @@
         <activity android:name=".login.SignUpActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.SignInActivity" />
-
         <activity android:name=".mainFragment.ReviewFormActivity" />
-
-        <activity android:name=".mypageFragment.PhotoShowActivity"/>
+        <activity android:name=".mypageFragment.PhotoShowActivity" />
         <activity android:name=".mypageFragment.StateUpdateActivity" />
-
         <activity android:name=".scanner.ScannerActivity" />
-        <activity android:name=".scanner.WriteTextActivity"></activity>
-
+        <activity android:name=".scanner.WriteTextActivity" />
     </application>
 
 </manifest>

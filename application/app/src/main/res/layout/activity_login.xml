@@ -27,8 +27,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:gravity="center"
+                android:fontFamily="@font/godom"
                 android:text="오늘 하루는 어떻게 보내셨어요?\n위봇에게 당신의 이야기를 들려주세요!"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,6 +55,7 @@
                             android:layout_margin="4dp"
                             android:background="#ffffff"
                             android:text="구글 아이디로 로그인"
+                            android:fontFamily="@font/godom"
                             android:textColor="#000000"
                             android:textSize="15dp"
                             android:textStyle="bold" />
@@ -85,6 +87,7 @@
                             android:layout_margin="4dp"
                             android:background="@color/colorAccent"
                             android:scaleType="centerInside"
+                            android:fontFamily="@font/godom"
                             android:text="이메일로 로그인"
                             android:textColor="#fefefe"
                             android:textSize="15dp"
@@ -107,6 +110,7 @@
                     android:layout_marginTop="20dp"
                     android:clickable="true"
                     android:gravity="center"
+                    android:fontFamily="@font/godom"
                     android:text="Skip"
                     android:textSize="20sp" />
 

@@ -15,8 +15,10 @@ import com.example.twolee.chatbot.model.Message;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 
@@ -24,14 +26,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private final int SELF = 100;
-    private final int OPTION = 300;
-    private final ClickListener listener;
+    private final int TEXT = 200;
+    private final int OPTION2 = 302;
+    private final int OPTION5 = 305;
+    private final ChatClickListener listener;
     private ArrayList<Message> messageArrayList;
-    private final int[] BUTTONS = {
-            R.id.btn_options1, R.id.btn_options2, R.id.btn_options3, R.id.btn_options4, R.id.btn_options5
-    };
 
-    public ChatAdapter(ArrayList<Message> messageArrayList, ClickListener listener) {
+    public ChatAdapter(ArrayList<Message> messageArrayList, ChatClickListener listener) {
         this.messageArrayList = messageArrayList;
         this.listener = listener;
     }
@@ -40,54 +41,58 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-
-        // view type is to identify where to render the chat message
-        // left or right
+        int layoutResId = 0;
         if (viewType == SELF) {
-            // self message
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.chat_item_self, parent, false);
-        } else {
-            // WeBot message
-            if (viewType == OPTION) {
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.chat_select_options, parent, false);
-            } else {
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.chat_item_watson, parent, false);
-            }
+            layoutResId = R.layout.chat_item_self;
+        } else if (viewType == OPTION2) {
+            layoutResId = R.layout.chat_select_options2;
+        } else if (viewType == OPTION5) {
+            layoutResId = R.layout.chat_select_options5;
+        } else if (viewType == TEXT) {
+            layoutResId = R.layout.chat_item_watson;
         }
-
+        itemView = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent, false);
         return new ViewHolder(itemView, listener);
     }
 
     @Override
     public int getItemViewType(int position) {
         Message message = messageArrayList.get(position);
-        if (message.getId() != null && message.getId().equals("1")) {
+        if (message.getId() != null && message.getId().equals("0")) {
             return SELF;
         }
-        if (message.getId() != null && message.getId().equals("3")) {
-            return OPTION;
+        if (message.getId() != null && message.getId().equals("1")) {
+            return TEXT;
+        }
+        if (message.getId() != null && message.getId().equals("2")) {
+            return OPTION2;
+        }
+        if (message.getId() != null && message.getId().equals("5")) {
+            return OPTION5;
         }
 
         return position;
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         Message message = messageArrayList.get(position);
-        if (holder.getItemViewType() == OPTION) {
+        if (holder.getItemViewType() == OPTION2) {
             message.setTitle(message.getTitle());
             ((ViewHolder) holder).message.setText(message.getTitle());
-
-            String[] labels = new String[10];
-            for (int i = 0; i < message.getLabels().length; i++) {
-                labels[i] = message.getLabels()[i];
+            for (int i = 0; i < 2; i++) {
+                try {
+                    ((ViewHolder) holder).buttons.get(i).setText(message.getLabels()[i]);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
-            message.setLabels(labels);
-            ((ViewHolder) holder).button1.setText(message.getLabels()[0]);
-            ((ViewHolder) holder).button2.setText(message.getLabels()[1]);
+        } else if (holder.getItemViewType() == OPTION5) {
+            message.setTitle(message.getTitle());
+            ((ViewHolder) holder).message.setText(message.getTitle());
+            for (int i = 0; i < 5; i++) {
+                ((ViewHolder) holder).buttons.get(i).setText(message.getLabels()[i]);
+            }
         } else {
             message.setMessage(message.getMessage());
             ((ViewHolder) holder).message.setText(message.getMessage());
@@ -102,24 +107,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.message)
         TextView message;
+        @BindViews({
+                R.id.btn_options1, R.id.btn_options2, R.id.btn_options3, R.id.btn_options4, R.id.btn_options5
+        })
         @Nullable
-        @BindView(R.id.btn_options1)
-        Button button1;
-        @Nullable
-        @BindView(R.id.btn_options2)
-        Button button2;
+        List<Button> buttons;
 
-        private WeakReference<ClickListener> listenerRef;
+        private WeakReference<ChatClickListener> listenerRef;
 
-        public ViewHolder(View view, ClickListener listener) {
+        public ViewHolder(View view, ChatClickListener listener) {
             super(view);
             ButterKnife.bind(this, view);
-            listenerRef = new WeakReference<>(listener);
-            if (button1 != null && button2 != null) {
-                button1.setOnClickListener(this);
-                button2.setOnClickListener(this);
-
+            for (Button item : buttons) {
+                if (item != null) item.setOnClickListener(this);
             }
+
+            listenerRef = new WeakReference<>(listener);
         }
 
         @Override
