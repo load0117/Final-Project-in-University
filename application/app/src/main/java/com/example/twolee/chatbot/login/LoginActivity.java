@@ -25,6 +25,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity  {
     protected @BindView(R.id.btn_login_google)
@@ -81,7 +82,6 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
     }
-
 
     public void loginSkip(View v) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
