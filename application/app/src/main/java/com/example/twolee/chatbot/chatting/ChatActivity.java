@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
+import com.example.twolee.chatbot.mainFragment.HomeFragment;
 import com.example.twolee.chatbot.model.Message;
 import com.example.twolee.chatbot.model.parse.GSONParse;
 import com.google.gson.Gson;
@@ -38,6 +40,7 @@ import java.util.Objects;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -49,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayList<Message> messageArrayList;
     private String[] labels;
     private AlertDialog alertDialog;
+
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.message)
@@ -61,9 +65,11 @@ public class ChatActivity extends AppCompatActivity {
     TextView chatToolbarTitle;
     @BindView(R.id.chat_info)
     ImageButton btnChatInfo;
+    @BindView(R.id.plus_btn)
+    ImageView plusBtn;
+
     @BindString(R.string.waston_assistant_workspacesId)
-    //@BindString(R.string.hk_workspaceId)
-            String workspacesId;
+    String workspacesId;
     @BindString(R.string.watson_assistant_username)
     String watsonUsername;
     @BindString(R.string.watson_assistant_password)
@@ -122,6 +128,12 @@ public class ChatActivity extends AppCompatActivity {
         });
 
     }
+
+    @OnClick(R.id.plus_btn)
+    public void plus(){
+        Toast.makeText(getApplicationContext(),"과제 부여",Toast.LENGTH_SHORT).show();
+    }
+
     public void chatInfoClear(View v){
         alertDialog.dismiss();
     }
@@ -293,9 +305,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        HomeFragment.newInstance();
         finish();
     }
 }
