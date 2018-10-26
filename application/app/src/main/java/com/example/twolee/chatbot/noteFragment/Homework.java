@@ -15,7 +15,7 @@ public class Homework {
     private String goal;
     private String startTime;
     private String endTime;
-    private Boolean isChecked= false;
+    private Boolean isChecked = false;
 
     public Homework(){}
 

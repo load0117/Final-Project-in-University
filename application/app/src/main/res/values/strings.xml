@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">webot</string>
     <string name="what_s_on_your_mind">What\'s on your mind?</string>
+    <!--login activity-->
+    <string name="loginMessage">지금 바로 위봇을 만나보세요! </string>
+    <string name="id">Email</string>
+    <string name="password">Password</string>
+    <string name="newLogin">회원가입</string>
+    <string name="gotoLogin">로그인하러 가기</string>
 
     <!--추가 사항-->
     <string name="input_message">메시지를 입력해주세요.</string>
@@ -24,6 +30,7 @@
     <string name="review_like_num">좋아요 수:</string>
 
     <!-- missing contentDescription -->
+    <string name="weBotMessage">위봇 메시지 아이콘</string>
     <string name="dot">점 3개</string>
     <string name="clock">시계</string>
     <string name="profileIcon">프로필 사진</string>

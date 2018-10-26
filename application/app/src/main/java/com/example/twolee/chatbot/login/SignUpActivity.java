@@ -57,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getBaseContext(), "회원 가입을 축하드립니다.", Toast.LENGTH_LONG).show();
-                            User user = new User(signEmail.getText().toString(), signPw.getText().toString());
+                            User user = new User(signEmail.getText().toString());
 
                             // firebase auth 이메일에 해당하는 uid
                             String uid = task.getResult().getUser().getUid();
