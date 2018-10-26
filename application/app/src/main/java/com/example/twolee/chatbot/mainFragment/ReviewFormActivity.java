@@ -1,6 +1,5 @@
 package com.example.twolee.chatbot.mainFragment;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,17 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.twolee.chatbot.MainActivity;
-import com.example.twolee.chatbot.mypageFragment.StateUpdateActivity;
 import com.example.twolee.chatbot.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -39,7 +33,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnFocusChange;
 
 public class ReviewFormActivity extends AppCompatActivity{
     // xml
@@ -57,7 +50,7 @@ public class ReviewFormActivity extends AppCompatActivity{
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     private StorageReference storage = FirebaseStorage.getInstance("gs://chatbot-6c425.appspot.com").getReference();
     // session
-    @NonNull private String userUid = FirebaseAuth.getInstance().getUid();
+    private String userUid = FirebaseAuth.getInstance().getUid();
 
     // To relationship
     private Map<String, Object> user = new HashMap<>();
@@ -87,12 +80,13 @@ public class ReviewFormActivity extends AppCompatActivity{
                 finish();
             }
         });
+
     }
 
     public void getData(){
 
         //profile
-        String filename = userUid + ".jpg";
+        String filename = userUid;
         storage.child("profile").child(filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -109,7 +103,7 @@ public class ReviewFormActivity extends AppCompatActivity{
         });
 
         //email
-        String email= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         idShow.setText(email);
     }
 
@@ -129,7 +123,7 @@ public class ReviewFormActivity extends AppCompatActivity{
         DatabaseReference keyRef = myRef.child("reviews").push();
 
         String rating = String.format(Locale.KOREA,"%.1f",reviewRatingBar.getRating());
-        Review review = new Review(userUid, idShow.getText().toString(), reviewWriteScreen.getText().toString(), rating, getCurrentTime(),0);
+        Review review = new Review(userUid, idShow.getText().toString(), reviewWriteScreen.getText().toString(), rating, getCurrentTime());
 
         keyRef.setValue(review);
         user.put(keyRef.getKey(), "/reviews/"+ keyRef.getKey());
@@ -143,9 +137,6 @@ public class ReviewFormActivity extends AppCompatActivity{
 
         }else{
             Toast.makeText(getApplicationContext(),"입력 되었습니다.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ReviewFormActivity.this, MainActivity.class);
-            HomeFragment.newInstance();
-            startActivity(intent);
             finish();
         }
     }
