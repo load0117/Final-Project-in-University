@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -58,6 +59,9 @@ public class SplashActivity extends AppCompatActivity {
     private void displayWelcomeMessage() {
         boolean caps = mFirebaseRemoteConfig.getBoolean("splash_message_caps");
         String msg = mFirebaseRemoteConfig.getString("splash_message");
+
+        Log.w("caps",caps+"");
+        Log.w("msg", msg);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -118,6 +119,7 @@ public class LoginActivity extends AppCompatActivity  {
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
+                            Log.w("failure","google ID login fail");
                         }
 
                     }
@@ -126,7 +128,6 @@ public class LoginActivity extends AppCompatActivity  {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         backPressCloseHandler.onBackPressed();
     }
 }

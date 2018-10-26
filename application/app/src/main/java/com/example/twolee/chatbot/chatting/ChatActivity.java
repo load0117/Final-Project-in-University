@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -46,7 +45,6 @@ public class ChatActivity extends AppCompatActivity {
 
     com.ibm.watson.developer_cloud.assistant.v1.model.Context context = null;
     private final int RESPONSE_NUM = 10;
-    private final int OPTION_NUM = 10;
     private boolean initialRequest;
     private ChatAdapter mAdapter;
     private ArrayList<Message> messageArrayList;
@@ -85,20 +83,19 @@ public class ChatActivity extends AppCompatActivity {
         setupToolbar();
         setupRecyclerView();
 
+        int OPTION_NUM = 10;
+
         labels = new String[OPTION_NUM];
         this.inputMessage.setText("");
         this.initialRequest = true;
         sendMessage();
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkInternetConnection()) {
-                    sendMessage();
-                }
-            }
-        });
+    }
 
+    @OnClick(R.id.btn_send)
+    public void send(){
+        if(checkInternetConnection())
+            sendMessage();
     }
 
     private void setupToolbar() {
@@ -107,26 +104,24 @@ public class ChatActivity extends AppCompatActivity {
         chatToolbarTitle.setText("위봇");
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // 뒤로가기 이벤트
+
         chatToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChatActivity.this, MainActivity.class));
+                Intent intent = new Intent(ChatActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
-        btnChatInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View alertView = View.inflate(ChatActivity.this, R.layout.chat_info, null);
-                alertDialog = new AlertDialog.Builder(ChatActivity.this)
-                        .setView(alertView)
-                        .create();
-                alertDialog.show();
+    }
 
-            }
-        });
-
+    @OnClick(R.id.chat_info)
+    public void btnChatInfo(View v){
+        View alertView = View.inflate(ChatActivity.this, R.layout.chat_info, null);
+        alertDialog = new AlertDialog.Builder(ChatActivity.this)
+                .setView(alertView)
+                .create();
+        alertDialog.show();
     }
 
     @OnClick(R.id.plus_btn)
@@ -213,6 +208,7 @@ public class ChatActivity extends AppCompatActivity {
                             .input(input)
                             .context(context)
                             .build();
+
                     MessageResponse response = service.message(options).execute();
 
                     if (response.getContext() != null) {
@@ -289,7 +285,9 @@ public class ChatActivity extends AppCompatActivity {
         // get Connectivity Manager object to check connection
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        NetworkInfo activeNetwork = null;
+        if(cm != null)
+            activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
 
@@ -305,7 +303,9 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent(ChatActivity.this,MainActivity.class);
         HomeFragment.newInstance();
+        startActivity(intent);
         finish();
     }
 }

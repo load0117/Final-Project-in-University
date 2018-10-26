@@ -2,7 +2,7 @@ package com.example.twolee.chatbot.mypageFragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -33,7 +33,7 @@ public class StateUpdateActivity extends AppCompatActivity{
 
     // database
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-    @NonNull private String userUid = FirebaseAuth.getInstance().getUid();
+    @Nullable private String userUid = FirebaseAuth.getInstance().getUid();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -50,27 +50,29 @@ public class StateUpdateActivity extends AppCompatActivity{
 
     public void getData(){
         //get data
-        myRef.child("users").child(userUid).child("state").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String stateMessage = dataSnapshot.getValue(String.class);
-                state_message.setText(stateMessage);
+        if(userUid != null) {
+            myRef.child("users").child(userUid).child("state").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String stateMessage = dataSnapshot.getValue(String.class);
+                    state_message.setText(stateMessage);
 
-                if(stateMessage == null)
-                    Log.w("nothing", "없음");
-                else if(stateMessage.length() == 0)
-                    stateTextLength.setText(R.string.zeroLength);
-                else{
-                    String totalString = stateMessage.length()+getString(R.string.maxLength);
-                    stateTextLength.setText(totalString);
+                    if (stateMessage == null)
+                        Log.w("nothing", "없음");
+                    else if (stateMessage.length() == 0)
+                        stateTextLength.setText(R.string.zeroLength);
+                    else {
+                        String totalString = stateMessage.length() + getString(R.string.maxLength);
+                        stateTextLength.setText(totalString);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("failure",databaseError.toException());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("failure", databaseError.toException());
+                }
+            });
+        }
     }
 
     public void setToolbar() {
@@ -123,8 +125,8 @@ public class StateUpdateActivity extends AppCompatActivity{
 
     @OnClick(R.id.updateOkButton)
     public void update(){
-        myRef.child("users").child(userUid).child("state").setValue(state_message.getText().toString());
-        MyInfoFragment.newInstance();
+        if(userUid != null)
+            myRef.child("users").child(userUid).child("state").setValue(state_message.getText().toString());
         finish();
     }
 }
