@@ -10,6 +10,7 @@
 
     <!--추가 사항-->
     <string name="input_message">메시지를 입력해주세요.</string>
+    <string name="mainToolbar">WE Bot.</string>
     <string name="home">홈</string>
     <string name="content">심리노트</string>
     <string name="message">상담받기</string>

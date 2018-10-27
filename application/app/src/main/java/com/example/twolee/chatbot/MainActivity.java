@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         //toolbar
         setSupportActionBar(toolbar);
-        mainToolbarTitle.setText("WE Bot.");
+        mainToolbarTitle.setText(R.string.mainToolbar);
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = null;
                             switch (item.getItemId()) {
                                 case R.id.action_home:
-                                    mainToolbarTitle.setText("WE Bot.");
+                                    mainToolbarTitle.setText(R.string.mainToolbar);
                                     selectedFragment = HomeFragment.newInstance();
                                     break;
                                 case R.id.action_note:
