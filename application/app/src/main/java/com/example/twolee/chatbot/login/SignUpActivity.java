@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,7 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
@@ -54,7 +52,8 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             Log.w("enTrv", "signInWithEmail", task.getException());
-                            Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            if(task.getException() != null)
+                                Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getBaseContext(), "회원 가입을 축하드립니다.", Toast.LENGTH_LONG).show();
                             User user = new User(signEmail.getText().toString());
@@ -64,10 +63,17 @@ public class SignUpActivity extends AppCompatActivity {
 
                             // write
                             // TODO: 18/10/2018 변경 확인
-                            FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
-                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finishAffinity();
+                            try{
+                                FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
+
+                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finishAffinity();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                Log.w("fail","로그인 실패");
+                            }
+
                         }
                     }
                 });

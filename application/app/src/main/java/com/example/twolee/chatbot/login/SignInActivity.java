@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SignInActivity extends AppCompatActivity {
     protected @BindView(R.id.edit_text_pw)
@@ -42,21 +43,6 @@ public class SignInActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
 
-        tvSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginEvent();
-            }
-        });
-
         // login interface listener
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -67,7 +53,7 @@ public class SignInActivity extends AppCompatActivity {
                     Log.d("authState", "onAuthStateChanged:signed_in:" + user.getUid());
                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                     startActivity(intent);
-                    finish();
+                    finishAffinity();
                 } else {
                     // User is signed out
                     Log.d("authState", "onAuthStateChanged:signed_out");
@@ -76,19 +62,36 @@ public class SignInActivity extends AppCompatActivity {
         };
     }
 
+    @OnClick(R.id.sign_up)
+    public void signUp(){
+        Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_login)
+    public void buttonLogin(){
+        loginEvent();
+    }
+
     public void loginEvent(){
-        firebaseAuth.signInWithEmailAndPassword(etEmail.getText().toString(), etPw.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                // 로그인 판단
-                if (!task.isSuccessful()) {
-                    Toast.makeText(SignInActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.d("sign", "Sign In Fail");
-                } else {
-                    Log.d("sign", "Sign In Success");
+        if(etEmail == null || etEmail.getText().toString().equals(""))
+            Toast.makeText(getApplicationContext(), "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
+        else if(etPw == null || etPw.getText().toString().equals(""))
+            Toast.makeText(getApplicationContext(),"비밀번호를 입력하세요",Toast.LENGTH_SHORT).show();
+        else {
+            firebaseAuth.signInWithEmailAndPassword(etEmail.getText().toString(), etPw.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    // 로그인 판단
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(SignInActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d("sign", "Sign In Fail");
+                    } else {
+                        Log.d("sign", "Sign In Success");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override

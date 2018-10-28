@@ -140,7 +140,7 @@ public class MyInfoFragment extends Fragment {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.w("fail","이미지 불러오기 실패");
+                    Log.w("fail","이미지 불러오기 실패, 불러온 이미지 없음");
                 }
             });
 
