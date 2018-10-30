@@ -1,4 +1,4 @@
-package com.example.twolee.chatbot.mypageFragment;
+package com.example.twolee.chatbot.myPageFragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;

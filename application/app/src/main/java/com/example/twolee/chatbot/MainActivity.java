@@ -16,7 +16,7 @@ import com.example.twolee.chatbot.backButton.BackPressCloseHandler;
 import com.example.twolee.chatbot.bottombar.BottomNavigationViewHelper;
 import com.example.twolee.chatbot.chatting.ChatActivity;
 import com.example.twolee.chatbot.mainFragment.HomeFragment;
-import com.example.twolee.chatbot.mypageFragment.MyInfoFragment;
+import com.example.twolee.chatbot.myPageFragment.MyInfoFragment;
 import com.example.twolee.chatbot.noteFragment.NoteFragment;
 
 import butterknife.BindView;
