@@ -37,6 +37,8 @@
     <string name="profileIcon">프로필 사진</string>
     <string name="nothing">없음</string>
     <string name="homework">과제</string>
+    <string name="detail_type">종류</string>
+    <string name="detail_content">내용</string>
 
     <!-- inform data-->
     <string name="stateUpdateButton">상태 변경</string>
@@ -58,6 +60,9 @@ r
 
     <!-- note fragment-->
     <string name="noHomework">완료할 과제가 없습니다. \n 상담을 받아보세요.</string>
+    <string name="type">인지 오류 종류</string>
+    <string name="communication">마지막으로 나눈 대화</string>
+    <string name="assignment">주어진 과제</string>
 
     <!-- my info fragment -->
     <string name="remove">삭제</string>
