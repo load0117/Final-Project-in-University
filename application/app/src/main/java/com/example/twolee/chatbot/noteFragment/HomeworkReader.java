@@ -35,7 +35,7 @@ public class HomeworkReader {
                     Homework newHomework = new Homework();
                     // add data
                     if (getHomework != null)
-                        newHomework = new Homework(getHomework.getGoal(), getHomework.getType(), getHomework.getIsChecked());
+                        newHomework = new Homework(getHomework.getGoal(), getHomework.getIsChecked(), getHomework.getRecentString(), getHomework.getType());
 
                     // add to ArrayList
                     homeworkList.add(newHomework);
