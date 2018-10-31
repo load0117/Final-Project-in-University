@@ -87,6 +87,9 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
 
             // Insert Data
             homework_goal.setText(newHomework.getGoal());
+            homework_uid.setText(uid);
+            homework_type.setText(newHomework.getType());
+            homework_recentString.setText(newHomework.getRecentString());
 
             // layout to check box button
             if (newHomework.getIsChecked()) {
@@ -96,10 +99,9 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
                 homework_finished_button.setChecked(false);
                 noRemoveButton();
             }
-            homework_recentString.setText(newHomework.getRecentString());
-            homework_type.setText(newHomework.getType());
 
-            homework_uid.setText(uid);
+
+
 
         }
 

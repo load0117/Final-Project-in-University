@@ -104,8 +104,6 @@ public class NoteFragment extends Fragment {
     @Optional
     @OnClick(R.id.require_id_button)
     public void require(View v){
-        System.out.println(v);
-        System.out.println("밖에서 돌린 컨택스트:"+this.getView().getContext());
         Intent intent = new Intent(this.getView().getContext(), LoginActivity.class);
         startActivity(intent);
         if(getActivity()!=null)
