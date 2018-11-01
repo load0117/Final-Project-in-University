@@ -8,17 +8,20 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/homework_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbarSize="5dp"
+        android:dividerHeight="4dp"/>
 
     <TextView
         android:id="@+id/noHomeworkShow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/godom"
         android:text="@string/noHomework"
         android:textAlignment="center"
-        android:textSize="30sp"
-        android:visibility="invisible"/>
+        android:textSize="28sp"
+        android:visibility="invisible" />
 </RelativeLayout>

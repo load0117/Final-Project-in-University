@@ -1,4 +1,4 @@
-package com.example.twolee.chatbot.bottombar;
+package com.example.twolee.chatbot.helper;
 
 import android.annotation.SuppressLint;
 import android.support.design.internal.BottomNavigationItemView;

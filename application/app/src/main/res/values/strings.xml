@@ -45,7 +45,7 @@
     <string name="stateMessageShow">상태메시지를 입력해 주세요.</string>
     <string name="zeroLength">0/60</string>
     <string name="maxLength">/60</string>
-r
+    r
     <string name="title_activity_main2">Main2Activity</string>
 
     <!-- note fragment-->

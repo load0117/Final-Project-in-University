@@ -2,59 +2,60 @@ package com.example.twolee.chatbot.noteFragment;
 
 public class Homework {
 
-    /*
-        과제 form V1.12
+    private String assignment;
+    private String cognitiveError;
+    private String automaticThought;
+    private Boolean isChecked = false;
+    private String writtenTime;
 
-        - 추가 사항
-
-        isChecked 변수
-
-        getter / setter 명명
-     */
-
-    private String goal;
-    private String startTime;
-    private String endTime;
-    private Boolean isChecked= false;
-
-    public Homework(){}
-
-    public Homework(String goal, String startTime, String endTime, Boolean isChecked){
-        setGoal(goal);
-        setStartTime(startTime);
-        setEndTime(endTime);
-        setIsChecked(isChecked);
+    public Homework() {
     }
 
-    public String getGoal() {
-        return goal;
+    public Homework(String assignment, String cognitiveError, String automaticThought, Boolean isChecked, String writtenTime) {
+        this.assignment = assignment;
+        this.cognitiveError = cognitiveError;
+        this.automaticThought = automaticThought;
+        this.isChecked = isChecked;
+        this.writtenTime = writtenTime;
     }
 
-    public void setGoal(String goal) {
-        this.goal = goal;
+    public String getAssignment() {
+        return assignment;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public void setAssignment(String assignment) {
+        this.assignment = assignment;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public String getCognitiveError() {
+        return cognitiveError;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public void setCognitiveError(String cognitiveError) {
+        this.cognitiveError = cognitiveError;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public String getAutomaticThought() {
+        return automaticThought;
     }
 
-    public Boolean getIsChecked() {
+    public void setAutomaticThought(String automaticThought) {
+        this.automaticThought = automaticThought;
+    }
+
+    public Boolean getChecked() {
         return isChecked;
     }
 
-    public void setIsChecked(Boolean checked) {
+    public void setChecked(Boolean checked) {
         isChecked = checked;
+    }
+
+    public String getWrittenTime() {
+        return writtenTime;
+    }
+
+    public void setWrittenTime(String writtenTime) {
+        this.writtenTime = writtenTime;
     }
 }

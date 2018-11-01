@@ -18,20 +18,21 @@ import com.example.twolee.chatbot.R;
 import com.example.twolee.chatbot.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
 
 public class NoteFragment extends Fragment {
-    @Nullable @BindView(R.id.homework_recyclerView)
+    @Nullable
+    @BindView(R.id.homework_recyclerView)
     RecyclerView homework_recyclerView;
-    @Nullable @BindView(R.id.noHomeworkShow)
+    @Nullable
+    @BindView(R.id.noHomeworkShow)
     TextView noHomeworkShow;
 
-    @Nullable @BindView(R.id.require_id_button)
+    @Nullable
+    @BindView(R.id.require_id_button)
     Button require_id_button;
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -55,46 +56,42 @@ public class NoteFragment extends Fragment {
 
         View v;
 
-        if(firebaseAuth.getCurrentUser() != null){
+        if (firebaseAuth.getCurrentUser() != null) {
             v = inflater.inflate(R.layout.fragment_item_note, container, false);
             isExistUser = true;
-        }else {
+        } else {
             v = inflater.inflate(R.layout.fragment_item_noinfo, container, false);
             isExistUser = false;
         }
 
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
         return v;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        HomeworkReader homeworkReader = new HomeworkReader();
         if (isExistUser) {
-            HomeworkReader.getInitData(new HomeworkListener() {
-                @Override
-                public void goalListener(List<Homework> homeworkList, List<String> homeworkUidList) {
+            homeworkReader.getInitData((homeworkList, homeworkUidList) -> {
 
-                    if(homework_recyclerView != null){
+                if (homework_recyclerView != null) {
 
-                        homeworkAdapter = new HomeworkAdapter(homeworkList, homeworkUidList);
-                        homework_recyclerView.setAdapter(homeworkAdapter);
+                    homeworkAdapter = new HomeworkAdapter(homeworkList, homeworkUidList);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+                    linearLayoutManager.setReverseLayout(true);
+                    linearLayoutManager.setStackFromEnd(true);
+                    homework_recyclerView.setLayoutManager(linearLayoutManager);
+                    homework_recyclerView.setAdapter(homeworkAdapter);
 
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-                        linearLayoutManager.setReverseLayout(true);
-                        linearLayoutManager.setStackFromEnd(true);
-
-                        homework_recyclerView.setLayoutManager(linearLayoutManager);
-                        if(homeworkList.size() ==0 && noHomeworkShow != null){
-                            // 비어 있는데 로그인은 되어 있으면?
-                            noHomeworkShow.setVisibility(View.VISIBLE);
-                            homework_recyclerView.setVisibility(View.INVISIBLE);
-                        }else if(noHomeworkShow !=null){
-                            // 비어 있지 않으면?
-                            noHomeworkShow.setVisibility(View.INVISIBLE);
-                            homework_recyclerView.setVisibility(View.VISIBLE);
-                        }
+                    if (homeworkList.size() == 0 && noHomeworkShow != null) {
+                        // 비어 있는데 로그인은 되어 있으면?
+                        noHomeworkShow.setVisibility(View.VISIBLE);
+                        homework_recyclerView.setVisibility(View.INVISIBLE);
+                    } else if (noHomeworkShow != null) {
+                        // 비어 있지 않으면?
+                        noHomeworkShow.setVisibility(View.INVISIBLE);
+                        homework_recyclerView.setVisibility(View.VISIBLE);
                     }
                 }
             });
@@ -103,12 +100,12 @@ public class NoteFragment extends Fragment {
 
     @Optional
     @OnClick(R.id.require_id_button)
-    public void require(View v){
+    public void require(View v) {
         System.out.println(v);
-        System.out.println("밖에서 돌린 컨택스트:"+this.getView().getContext());
+        System.out.println("밖에서 돌린 컨택스트:" + this.getView().getContext());
         Intent intent = new Intent(this.getView().getContext(), LoginActivity.class);
         startActivity(intent);
-        if(getActivity()!=null)
+        if (getActivity() != null)
             getActivity().finish();
     }
 }

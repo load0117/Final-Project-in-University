@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +14,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.twolee.chatbot.backButton.BackPressCloseHandler;
-import com.example.twolee.chatbot.bottombar.BottomNavigationViewHelper;
 import com.example.twolee.chatbot.chatting.ChatActivity;
+import com.example.twolee.chatbot.helper.BottomNavigationBehavior;
+import com.example.twolee.chatbot.helper.BottomNavigationViewHelper;
 import com.example.twolee.chatbot.mainFragment.HomeFragment;
 import com.example.twolee.chatbot.mypageFragment.MyInfoFragment;
 import com.example.twolee.chatbot.noteFragment.NoteFragment;
@@ -47,10 +49,14 @@ public class MainActivity extends AppCompatActivity {
         //back button push handler
         backPressCloseHandler = new BackPressCloseHandler(this);
 
+        // attaching bottom sheet behaviour - hide / show on scroll
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigationView.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());
+
         //toolbar
         setSupportActionBar(toolbar);
         mainToolbarTitle.setText("WE Bot.");
-        if(getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // init Fragment

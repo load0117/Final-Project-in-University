@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,6 +25,7 @@ import com.example.twolee.chatbot.R;
 import com.example.twolee.chatbot.mainFragment.HomeFragment;
 import com.example.twolee.chatbot.model.Message;
 import com.example.twolee.chatbot.model.parse.GSONParse;
+import com.example.twolee.chatbot.noteFragment.CreateDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ibm.watson.developer_cloud.assistant.v1.Assistant;
@@ -65,15 +65,15 @@ public class ChatActivity extends AppCompatActivity {
     TextView chatToolbarTitle;
     @BindView(R.id.chat_info)
     ImageButton btnChatInfo;
-    @BindView(R.id.plus_btn)
-    ImageView plusBtn;
-
+    @BindView(R.id.insert_note_btn)
+    ImageView insertNoteBtn;
     @BindString(R.string.waston_assistant_workspacesId)
     String workspacesId;
     @BindString(R.string.watson_assistant_username)
     String watsonUsername;
     @BindString(R.string.watson_assistant_password)
     String watsonPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +90,9 @@ public class ChatActivity extends AppCompatActivity {
         this.initialRequest = true;
         sendMessage();
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkInternetConnection()) {
-                    sendMessage();
-                }
+        btnSend.setOnClickListener(v -> {
+            if (checkInternetConnection()) {
+                sendMessage();
             }
         });
 
@@ -108,65 +105,61 @@ public class ChatActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // 뒤로가기 이벤트
-        chatToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ChatActivity.this, MainActivity.class));
-                finish();
-            }
+        chatToolbar.setNavigationOnClickListener(v -> {
+            startActivity(new Intent(ChatActivity.this, MainActivity.class));
+            finish();
         });
-        btnChatInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View alertView = View.inflate(ChatActivity.this, R.layout.chat_info, null);
-                alertDialog = new AlertDialog.Builder(ChatActivity.this)
-                        .setView(alertView)
-                        .create();
-                alertDialog.show();
+        btnChatInfo.setOnClickListener(v -> {
+            View alertView = View.inflate(ChatActivity.this, R.layout.chat_info, null);
+            alertDialog = new AlertDialog.Builder(ChatActivity.this)
+                    .setView(alertView)
+                    .create();
+            alertDialog.show();
 
-            }
         });
 
     }
 
-    @OnClick(R.id.plus_btn)
-    public void plus(){
-        Toast.makeText(getApplicationContext(),"과제 부여",Toast.LENGTH_SHORT).show();
+    @OnClick(R.id.insert_note_btn)
+    public void insertNote() {
+        CreateDialog createDialog = new CreateDialog();
+        if (createDialog.loginDialog(ChatActivity.this)) {
+            InsertNoteFragment insertNoteFragment = new InsertNoteFragment();
+            insertNoteFragment.show(getSupportFragmentManager(), insertNoteFragment.getTag());
+        }
+
     }
 
-    public void chatInfoClear(View v){
+    public void chatInfoClear(View v) {
         alertDialog.dismiss();
     }
 
     private void setupRecyclerView() {
         messageArrayList = new ArrayList<>();
-        mAdapter = new ChatAdapter(messageArrayList, new ChatClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.btn_options1:
-                        ChatActivity.this.inputMessage.setText(labels[0]);
-                        sendMessage();
-                        break;
-                    case R.id.btn_options2:
-                        ChatActivity.this.inputMessage.setText(labels[1]);
-                        sendMessage();
-                        break;
-                    case R.id.btn_options3:
-                        ChatActivity.this.inputMessage.setText(labels[2]);
-                        sendMessage();
-                        break;
-                    case R.id.btn_options4:
-                        ChatActivity.this.inputMessage.setText(labels[3]);
-                        sendMessage();
-                        break;
-                    case R.id.btn_options5:
-                        ChatActivity.this.inputMessage.setText(labels[4]);
-                        sendMessage();
-                        break;
-                    default:
-                        break;
-                }
+        mAdapter = new ChatAdapter(messageArrayList, view -> {
+            switch (view.getId()) {
+                case R.id.btn_options1:
+                    ChatActivity.this.inputMessage.setText(labels[0]);
+                    sendMessage();
+                    break;
+                case R.id.btn_options2:
+                    ChatActivity.this.inputMessage.setText(labels[1]);
+                    sendMessage();
+                    break;
+                case R.id.btn_options3:
+                    ChatActivity.this.inputMessage.setText(labels[2]);
+                    sendMessage();
+                    break;
+                case R.id.btn_options4:
+                    ChatActivity.this.inputMessage.setText(labels[3]);
+                    sendMessage();
+                    break;
+                case R.id.btn_options5:
+                    ChatActivity.this.inputMessage.setText(labels[4]);
+                    sendMessage();
+                    break;
+                default:
+                    break;
             }
         });
 
@@ -200,86 +193,82 @@ public class ChatActivity extends AppCompatActivity {
         this.inputMessage.setText("");
         mAdapter.notifyDataSetChanged();
 
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                try {
+        Thread thread = new Thread(() -> {
+            try {
 
-                    Assistant service = new Assistant("2018-09-20");
-                    service.setUsernameAndPassword(watsonUsername, watsonPassword);
-                    InputData input = new InputData.Builder(strInputMessage).build();
-                    Log.i("input Message Text", strInputMessage);
-                    MessageOptions options = new MessageOptions
-                            .Builder(workspacesId)
-                            .input(input)
-                            .context(context)
-                            .build();
-                    MessageResponse response = service.message(options).execute();
+                Assistant service = new Assistant("2018-09-20");
+                service.setUsernameAndPassword(watsonUsername, watsonPassword);
+                InputData input = new InputData.Builder(strInputMessage).build();
+                Log.i("input Message Text", strInputMessage);
+                MessageOptions options = new MessageOptions
+                        .Builder(workspacesId)
+                        .input(input)
+                        .context(context)
+                        .build();
+                MessageResponse response = service.message(options).execute();
 
-                    if (response.getContext() != null) {
-                        context = response.getContext();
-                    }
-                    Log.i("context", context.toString());
-                    Log.i("response", response.toString());
-
-                    if (response.getOutput() != null) {
-                        ArrayList responseList = (ArrayList) response.getOutput().get("text");
-                        Log.i("responseList Text", responseList.toString());
-
-                        Message[] outMessage = new Message[RESPONSE_NUM];
-                        if (responseList.size() > 0) {
-                            for (int i = 0; i < responseList.size(); i++) {
-                                outMessage[i] = new Message();
-                                outMessage[i].setMessage(responseList.get(i).toString());
-                                outMessage[i].setId("1");
-                                Log.i("outMessage", responseList.get(i).toString());
-                                messageArrayList.add(outMessage[i]);
-                            }
-                        } else {
-                            String strGeneric = response.getOutput().getGeneric().toString();
-                            Log.i("repsonse generic", strGeneric);
-
-                            List<GSONParse> parseList = new Gson().fromJson(strGeneric, new TypeToken<List<GSONParse>>() {
-                            }.getType());
-                            Log.i("pare list title", parseList.get(0).getTitle());
-                            Log.i("pare list label", parseList.get(0).getOptions().get(0).getLabel());
-                            Log.i("pare list text", parseList.get(0).getOptions().get(0).getValue().getInput().getText());
-                            Log.i("pare list", String.valueOf(parseList.size()));
-
-                            String cntOption = null;
-
-                            for (int i = 0; i < parseList.get(0).getOptions().size(); i++) {
-                                labels[i] = parseList.get(0).getOptions().get(i).getLabel();
-                            }
-                            if (parseList.get(0).getOptions().size() == 2) {
-                                cntOption = "2";
-                            }
-                            if (parseList.get(0).getOptions().size() == 5) {
-                                cntOption = "5";
-                            }
-                            for (int i = 0; i < parseList.size(); i++) {
-                                outMessage[i] = new Message();
-                                outMessage[i].setTitle(parseList.get(i).getTitle());
-                                outMessage[i].setLabels(labels);
-                                outMessage[i].setId(cntOption);
-                                messageArrayList.add(outMessage[i]);
-                            }
-
-
-                        }
-                    }
-
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            mAdapter.notifyDataSetChanged();
-                            if (mAdapter.getItemCount() > 1) {
-                                recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
-                            }
-                        }
-                    });
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (response.getContext() != null) {
+                    context = response.getContext();
                 }
+                Log.i("context", context.toString());
+                Log.i("response", response.toString());
+
+                if (response.getOutput() != null) {
+                    ArrayList responseList = (ArrayList) response.getOutput().get("text");
+                    Log.i("responseList Text", responseList.toString());
+
+                    Message[] outMessage = new Message[RESPONSE_NUM];
+                    if (responseList.size() > 0) {
+                        for (int i = 0; i < responseList.size(); i++) {
+                            outMessage[i] = new Message();
+                            outMessage[i].setMessage(responseList.get(i).toString());
+                            outMessage[i].setId("1");
+                            Log.i("outMessage", responseList.get(i).toString());
+                            messageArrayList.add(outMessage[i]);
+                        }
+                    } else {
+                        String strGeneric = response.getOutput().getGeneric().toString();
+                        Log.i("repsonse generic", strGeneric);
+
+                        List<GSONParse> parseList = new Gson().fromJson(strGeneric, new TypeToken<List<GSONParse>>() {
+                        }.getType());
+                        Log.i("pare list title", parseList.get(0).getTitle());
+                        Log.i("pare list label", parseList.get(0).getOptions().get(0).getLabel());
+                        Log.i("pare list text", parseList.get(0).getOptions().get(0).getValue().getInput().getText());
+                        Log.i("pare list", String.valueOf(parseList.size()));
+
+                        String cntOption = null;
+
+                        for (int i = 0; i < parseList.get(0).getOptions().size(); i++) {
+                            labels[i] = parseList.get(0).getOptions().get(i).getLabel();
+                        }
+                        if (parseList.get(0).getOptions().size() == 2) {
+                            cntOption = "2";
+                        }
+                        if (parseList.get(0).getOptions().size() == 5) {
+                            cntOption = "5";
+                        }
+                        for (int i = 0; i < parseList.size(); i++) {
+                            outMessage[i] = new Message();
+                            outMessage[i].setTitle(parseList.get(i).getTitle());
+                            outMessage[i].setLabels(labels);
+                            outMessage[i].setId(cntOption);
+                            messageArrayList.add(outMessage[i]);
+                        }
+
+
+                    }
+                }
+
+                runOnUiThread(() -> {
+                    mAdapter.notifyDataSetChanged();
+                    if (mAdapter.getItemCount() > 1) {
+                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
         thread.start();
