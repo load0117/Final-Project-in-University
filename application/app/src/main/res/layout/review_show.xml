@@ -13,13 +13,24 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF">
 
+        <ImageView
+            android:id="@+id/profile_show"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_base_profile"
+            android:contentDescription="@string/profileIcon" />
 
         <TextView
             android:id="@+id/review_userEmail"
-            android:layout_width="wrap_content"
+            android:layout_width="188dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/profile_show"
+            android:layout_marginStart="14sp"
             android:fontFamily="@font/godom"
+            android:layout_marginTop="5sp"
             android:gravity="center"
             android:padding="10dp"
             android:textSize="16sp" />
@@ -83,71 +94,27 @@
         android:gravity="center" />
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
         <TextView
             android:id="@+id/review_rating_num"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:gravity="center"
+            android:layout_weight="1"
             android:text="@string/review_rating_num"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/review_rating"
-            android:layout_width="101dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/review_rating_num"
-            android:gravity="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:layout_width="106dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/review_rating"
-            android:gravity="center"
-            android:text="@string/review_like_num"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/review_like"
-            android:layout_width="104dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:gravity="center"
-            android:textSize="25sp" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/review_likeBtn"
-            android:layout_width="match_parent"
-            android:layout_height="0sp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/white"
-            android:contentDescription="@string/reviewWriteBtn"
-            android:src="@drawable/ic_like_icon" />
+            android:gravity="center"
+            android:textSize="25sp" />
     </LinearLayout>
+
 
 </LinearLayout>

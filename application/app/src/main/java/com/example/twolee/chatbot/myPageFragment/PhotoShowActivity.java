@@ -1,11 +1,10 @@
-package com.example.twolee.chatbot.mypageFragment;
+package com.example.twolee.chatbot.myPageFragment;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 

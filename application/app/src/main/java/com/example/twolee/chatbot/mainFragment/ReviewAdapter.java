@@ -1,25 +1,15 @@
 package com.example.twolee.chatbot.mainFragment;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.twolee.chatbot.R;
-import com.example.twolee.chatbot.login.LoginActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -50,8 +40,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         return reviewArrayList.size();
     }
 
+    @NonNull
     @Override
-    public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // 뷰 홀더 생성시 호출 어떻게 생성해서 무엇을 전달할 것인가. 새롭게 생성할 때만 호출된다.
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_show, parent, false);
         return new ReviewViewHolder(itemView);
@@ -69,75 +60,47 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         //        //여기서 홀더 관리.
-      //  @BindView(R.id.profile_show) ImageView profile_show;
+        @BindView(R.id.profile_show) ImageView profile_show;
         @BindView(R.id.review_userEmail) TextView review_userEmail;
         @BindView(R.id.review_user_uid) TextView review_user_uid;
         @BindView(R.id.review_uid) TextView review_uid;
         @BindView(R.id.review_more) ImageView review_more;
         @BindView(R.id.review_contents) TextView review_contents;
         @BindView(R.id.review_rating) TextView review_rating;
-        @BindView(R.id.review_like) TextView review_like;
         @BindView(R.id.review_writtenTime) TextView review_writtenTime;
-        @BindView(R.id.review_likeBtn)
-        ImageButton review_likeBtn;
 
         // database reference
         private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         private static StorageReference storage = FirebaseStorage.getInstance("gs://chatbot-6c425.appspot.com").getReference();
-        private boolean isLike = false;
 
-        public ReviewViewHolder(View view) {
+        private ReviewViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
         }
 
         // view data
-        public void setData(Review review, String uid){
+        private void setData(Review review, String uid){
+            // 보이는 부분
             //profile
             review_userEmail.setText(review.getUsername());
+            review_contents.setText(review.getContents());
+            review_writtenTime.setText(review.getWrittenTime());
+            review_rating.setText(review.getRating());
+
+            // 보이지 않는 부분
             review_uid.setText(uid);
             review_user_uid.setText(review.getUserUid());
-            review_contents.setText(review.getContents());
-
-            review_rating.setText(review.getRating());
-            review_like.setText(String.valueOf(review.getLike()));
-            review_writtenTime.setText(review.getWrittenTime());
         }
-/*
+
         @OnClick(R.id.profile_show)
         public void profile(View v){
             // 수정하기
             Toast.makeText(v.getContext(), "hi",Toast.LENGTH_SHORT).show();
         }
-*/
+
         @OnClick(R.id.review_more)
         public void moreInfo(){
             Toast.makeText(itemView.getContext().getApplicationContext(), "더보기 기능 추가하기.", Toast.LENGTH_SHORT).show();
-        }
-
-        @OnClick(R.id.review_likeBtn)
-        public void like(View v){
-            long likes = Long.valueOf(review_like.getText().toString());
-
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-            // 현재 로그인 돼 있지 않으면 로그인 페이지로.
-            if(currentUser == null){
-                Intent intent = new Intent(v.getContext().getApplicationContext(), LoginActivity.class);
-                v.getContext().startActivity(intent);
-            }else{
-                // 좋아요 되어 있는지 확인 후 선택.
-
-                if(isLike){
-                    likes--;
-                }else{
-                    likes++;
-                }
-                review_like.setText(String.valueOf(likes));
-
-                // 디비에 반영.
-                myRef.child("reviews").child(review_uid.getText().toString()).child("like").setValue(likes);
-            }
         }
     }
 }

@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.twolee.chatbot.backButton.BackPressCloseHandler;
 import com.example.twolee.chatbot.MainActivity;
 import com.example.twolee.chatbot.R;
+import com.example.twolee.chatbot.backButton.BackPressCloseHandler;
+import com.example.twolee.chatbot.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -22,6 +24,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,15 +59,6 @@ public class LoginActivity extends AppCompatActivity  {
         // 임시로 사용 시마다 로그인 차후 자동 로그인으로 변경.
         mAuth.signOut();
 
-        // 이메일로 로그인
-        btnLoginEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignInActivity.class);
-                startActivity(intent);
-            }
-        });
-
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -72,16 +66,21 @@ public class LoginActivity extends AppCompatActivity  {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // 구글 아이디 로그인
-        btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-            }
-        });
     }
+
+    @OnClick(R.id.btn_login_email)
+    public void loginEmail(){
+        Intent intent = new Intent(LoginActivity.this, SignInActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_login_google)
+    public void loginGoogle(){
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent,RC_SIGN_IN);
+    }
+
+
 
     public void loginSkip(View v) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -113,11 +112,21 @@ public class LoginActivity extends AppCompatActivity  {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            String userUid = task.getResult().getUser().getUid();
+                            User user = new User(task.getResult().getUser().getEmail());
+
+                            try{
+                                FirebaseDatabase.getInstance().getReference().child("users").child(userUid).setValue(user);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
+                            Log.w("failure","google ID login fail");
                         }
 
                     }
@@ -126,7 +135,6 @@ public class LoginActivity extends AppCompatActivity  {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         backPressCloseHandler.onBackPressed();
     }
 }

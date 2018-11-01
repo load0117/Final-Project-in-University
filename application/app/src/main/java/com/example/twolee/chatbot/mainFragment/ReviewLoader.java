@@ -12,12 +12,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewLoader{
+public class ReviewLoader {
     private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     private static List<Review> reviewArrayList;
     private static List<String> reviewUidList;
 
-    public static void getInitData(final ReviewListener reviewListener){
+    public static void getInitData(final ReviewListener reviewListener) {
         reviewArrayList = new ArrayList<>();
         reviewUidList = new ArrayList<>();
         int limit = 6;
@@ -28,9 +28,10 @@ public class ReviewLoader{
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot data: dataSnapshot.getChildren()){
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Review review = data.getValue(Review.class);
-                    Review newReview = new Review(review.getUserUid(),review.getUsername(),review.getContents(),review.getRating(),review.getWrittenTime(),review.getLike());
+
+                    Review newReview = new Review(review.getUserUid(), review.getUsername(), review.getContents(), review.getRating(), review.getWrittenTime());
 
                     // 정보 담기.
                     reviewArrayList.add(newReview);
@@ -42,7 +43,7 @@ public class ReviewLoader{
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w("fail",databaseError.toException());
+                Log.w("fail", databaseError.toException());
             }
         });
     }

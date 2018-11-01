@@ -1,4 +1,4 @@
-package com.example.twolee.chatbot.mypageFragment;
+package com.example.twolee.chatbot.myPageFragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -122,7 +121,7 @@ public class MyInfoFragment extends Fragment {
             getActivity().finishAffinity();
     }
 
-    /* ---  if Login --- */
+    /* ---  if Login  --- */
     public void setData() throws NullPointerException {
         try {
 
@@ -141,7 +140,7 @@ public class MyInfoFragment extends Fragment {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.w("fail","이미지 불러오기 실패");
+                    Log.w("fail","이미지 불러오기 실패, 불러온 이미지 없음");
                 }
             });
 

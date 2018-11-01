@@ -18,7 +18,7 @@ import com.example.twolee.chatbot.chatting.ChatActivity;
 import com.example.twolee.chatbot.helper.BottomNavigationBehavior;
 import com.example.twolee.chatbot.helper.BottomNavigationViewHelper;
 import com.example.twolee.chatbot.mainFragment.HomeFragment;
-import com.example.twolee.chatbot.mypageFragment.MyInfoFragment;
+import com.example.twolee.chatbot.myPageFragment.MyInfoFragment;
 import com.example.twolee.chatbot.noteFragment.NoteFragment;
 
 import butterknife.BindView;
@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         //toolbar
         setSupportActionBar(toolbar);
-        mainToolbarTitle.setText("WE Bot.");
-        if (getSupportActionBar() != null)
+        mainToolbarTitle.setText(R.string.mainToolbar);
+        if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // init Fragment
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = null;
                             switch (item.getItemId()) {
                                 case R.id.action_home:
-                                    mainToolbarTitle.setText("WE Bot.");
+                                    mainToolbarTitle.setText(R.string.mainToolbar);
                                     selectedFragment = HomeFragment.newInstance();
                                     break;
                                 case R.id.action_note:
