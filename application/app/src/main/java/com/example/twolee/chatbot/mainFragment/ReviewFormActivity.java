@@ -47,6 +47,7 @@ public class ReviewFormActivity extends AppCompatActivity{
     @BindView(R.id.reviewWriteBtn) Button reviewWriteBtn;
 
     // DataBase
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     private StorageReference storage = FirebaseStorage.getInstance("gs://chatbot-6c425.appspot.com").getReference();
     // session
@@ -74,47 +75,32 @@ public class ReviewFormActivity extends AppCompatActivity{
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
+        toolbar.setTitle("리뷰 작성");
+        toolbar.setNavigationOnClickListener((v) -> finish());
     }
 
     public void getData(){
 
         //profile
         String filename = userUid;
-        storage.child("profile").child(filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //profile_icon.setImageURI(uri);
+        storage.child("profile").child(filename).getDownloadUrl().addOnSuccessListener((uri) -> {
                 Glide.with(getApplicationContext()).load(uri).into(profile);
                 Log.w("success","성공");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+        }).addOnFailureListener((e) -> {
                 Log.w("fail","실패");
                 e.printStackTrace();
-            }
         });
 
         //email
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String email="";
+        if(firebaseAuth.getCurrentUser() != null)
+            email = firebaseAuth.getCurrentUser().getEmail();
         idShow.setText(email);
     }
 
     public void setListeners(){
         // rating bar
-        reviewRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                reviewRatingNum.setText(String.valueOf(ratingBar.getRating()));
-            }
-        });
+        reviewRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> reviewRatingNum.setText(String.valueOf(ratingBar.getRating())));
     }
 
     @OnClick(R.id.reviewWriteBtn)

@@ -4,10 +4,10 @@ package com.example.twolee.chatbot.model;
 import java.io.Serializable;
 
 public class Message implements Serializable {
-    String id;
-    String message;
-    String title;
-    String[] labels;
+    private String id;
+    private String message;
+    private String title;
+    private String[] labels;
 
     public Message() {
     }

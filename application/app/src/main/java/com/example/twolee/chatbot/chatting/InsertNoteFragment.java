@@ -88,12 +88,7 @@ public class InsertNoteFragment extends BottomSheetDialogFragment {
                     .child("tasks")
                     .push()
                     .setValue(homework)
-                    .addOnSuccessListener(Objects.requireNonNull(getActivity()), new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(getContext(), "심리 노트에 추가되었습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    .addOnSuccessListener(Objects.requireNonNull(getActivity()), (aVoid) -> Toast.makeText(getContext(), "심리 노트에 추가되었습니다.", Toast.LENGTH_SHORT).show());
 
         }
 
@@ -108,21 +103,13 @@ public class InsertNoteFragment extends BottomSheetDialogFragment {
         final String items[] = {"흔백논리", "지나친 일반화", "낙인찌기", "내탓이오", "부정적 사고의 강조"};
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("인지적 오류").setCancelable(true).setSingleChoiceItems(items, 0,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        assert selectError != null;
-                        selectError.setText(items[item]);
-                    }
-                }).setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    }
-                }).setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.dismiss();
-                    }
-                }).create();
+                (dialogInterface, item) -> {
+                    assert selectError != null;
+                    selectError.setText(items[item]);
+                })
+                .setPositiveButton("Ok", (dialogInterface, item) -> { /* blank */ })
+                .setNegativeButton("Cancel", (dialogInterface, item) -> dialogInterface.dismiss())
+                .create();
         builder.show();
     }
 

@@ -18,8 +18,6 @@ import com.example.twolee.chatbot.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,8 +36,7 @@ public class HomeFragment extends Fragment {
     private ReviewAdapter reviewAdapter;
 
     public static HomeFragment newInstance() {
-        HomeFragment homeFragment = new HomeFragment();
-        return homeFragment;
+        return new HomeFragment();
     }
 
     @Override
@@ -64,19 +61,16 @@ public class HomeFragment extends Fragment {
         // Run after activity onCreate method
         super.onActivityCreated(savedInstanceState);
 
-        ReviewLoader.getInitData(new ReviewListener() {
-            @Override
-            public void runListener(List<Review> reviewArrayList, List<String> review_uidList) {
+        ReviewLoader.getInitData((reviewArrayList, review_uidList) -> {
 
-                reviewAdapter = new ReviewAdapter(reviewArrayList, review_uidList);
-                home_recycler_view.setAdapter(reviewAdapter);
+            reviewAdapter = new ReviewAdapter(reviewArrayList, review_uidList);
+            home_recycler_view.setAdapter(reviewAdapter);
 
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-                linearLayoutManager.setReverseLayout(true);
-                linearLayoutManager.setStackFromEnd(true);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            linearLayoutManager.setReverseLayout(true);
+            linearLayoutManager.setStackFromEnd(true);
 
-                home_recycler_view.setLayoutManager(linearLayoutManager);
-            }
+            home_recycler_view.setLayoutManager(linearLayoutManager);
         });
     }
     // 확인 버튼 클릭시 이벤트

@@ -1,8 +1,6 @@
 package com.example.twolee.chatbot.myPageFragment;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -10,8 +8,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.twolee.chatbot.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -42,17 +38,9 @@ public class PhotoShowActivity extends AppCompatActivity{
         String filename = FirebaseAuth.getInstance().getUid();
         filename = filename != null ? filename : "";
 
-        storage.child("profile").child(filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(getApplicationContext()).load(uri).into(profile_detail_show);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w("fail","불러오기 실패");
-            }
-        });
+        storage.child("profile").child(filename).getDownloadUrl()
+                .addOnSuccessListener((uri) ->Glide.with(getApplicationContext()).load(uri).into(profile_detail_show))
+                .addOnFailureListener((e) -> Log.w("fail","불러오기 실패"));
 
         // 캡쳐 여부
         profile_detail_show.setDrawingCacheEnabled(false);

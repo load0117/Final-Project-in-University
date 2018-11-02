@@ -43,9 +43,7 @@ public class SignInActivity extends AppCompatActivity {
         firebaseAuth.signOut();
 
         // login interface listener
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        authStateListener = (firebaseAuth) -> {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
@@ -57,8 +55,7 @@ public class SignInActivity extends AppCompatActivity {
                     // User is signed out
                     Log.d("authState", "onAuthStateChanged:signed_out");
                 }
-            }
-        };
+            };
     }
 
     @OnClick(R.id.sign_up)
@@ -78,9 +75,7 @@ public class SignInActivity extends AppCompatActivity {
         else if(etPw == null || etPw.getText().toString().equals(""))
             Toast.makeText(getApplicationContext(),"비밀번호를 입력하세요",Toast.LENGTH_SHORT).show();
         else {
-            firebaseAuth.signInWithEmailAndPassword(etEmail.getText().toString(), etPw.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+            firebaseAuth.signInWithEmailAndPassword(etEmail.getText().toString(), etPw.getText().toString()).addOnCompleteListener((task) -> {
                     // 로그인 판단
                     if (!task.isSuccessful()) {
                         Toast.makeText(SignInActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -88,7 +83,6 @@ public class SignInActivity extends AppCompatActivity {
                     } else {
                         Log.d("sign", "Sign In Success");
                     }
-                }
             });
         }
     }

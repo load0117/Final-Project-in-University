@@ -105,13 +105,9 @@ public class ChatActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        chatToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ChatActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        chatToolbar.setNavigationOnClickListener((v)-> {
+            startActivity(new Intent(ChatActivity.this, MainActivity.class));
+            finish();
         });
     }
     @OnClick(R.id.chat_info)

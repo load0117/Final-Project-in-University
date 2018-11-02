@@ -3,14 +3,12 @@ package com.example.twolee.chatbot;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.twolee.chatbot.backButton.BackPressCloseHandler;
@@ -70,41 +68,37 @@ public class MainActivity extends AppCompatActivity {
 
             // 버튼 이벤트 추가
             BottomNavigationViewHelper.disableShiftMode(bottomNavigationView); //이동 모드 해제
-            bottomNavigationView.setOnNavigationItemSelectedListener(
-                    new BottomNavigationView.OnNavigationItemSelectedListener() {
-                        @Override
-                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                            // 수정
-                            selectedFragment = null;
-                            switch (item.getItemId()) {
-                                case R.id.action_home:
-                                    mainToolbarTitle.setText(R.string.mainToolbar);
-                                    selectedFragment = HomeFragment.newInstance();
-                                    break;
-                                case R.id.action_note:
-                                    mainToolbarTitle.setText("심리노트");
-                                    selectedFragment = NoteFragment.newInstance();
-                                    break;
-                                case R.id.action_chatting:
-                                    Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                                    startActivity(intent);
-                                    break;
-                                case R.id.action_settings:
-                                    mainToolbarTitle.setText("더보기");
-                                    selectedFragment = MyInfoFragment.newInstance();
-                                    break;
-                            }
+            bottomNavigationView.setOnNavigationItemSelectedListener( (item) -> {
+                // 수정
+                selectedFragment = null;
+                switch (item.getItemId()) {
+                    case R.id.action_home:
+                        mainToolbarTitle.setText(R.string.mainToolbar);
+                        selectedFragment = HomeFragment.newInstance();
+                        break;
+                    case R.id.action_note:
+                        mainToolbarTitle.setText("심리노트");
+                        selectedFragment = NoteFragment.newInstance();
+                        break;
+                    case R.id.action_chatting:
+                        Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_settings:
+                        mainToolbarTitle.setText("더보기");
+                        selectedFragment = MyInfoFragment.newInstance();
+                        break;
+                }
 
-                            if (selectedFragment != null) {
-                                //프레그먼트 선택할 때
-                                transaction = getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.frame_layout, selectedFragment);
-                                transaction.commit();
-                            }
-                            return true;
-                        }
-                    });
+                if (selectedFragment != null) {
+                    //프레그먼트 선택할 때
+                    transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout, selectedFragment);
+                    transaction.commit();
+                }
+                return true;
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
