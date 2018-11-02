@@ -1,7 +1,9 @@
 package com.example.twolee.chatbot.mainFragment;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.twolee.chatbot.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -64,23 +65,28 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         @BindView(R.id.review_userEmail) TextView review_userEmail;
         @BindView(R.id.review_user_uid) TextView review_user_uid;
         @BindView(R.id.review_uid) TextView review_uid;
-        @BindView(R.id.review_more) ImageView review_more;
+        //@BindView(R.id.review_more) ImageView review_more;
         @BindView(R.id.review_contents) TextView review_contents;
         @BindView(R.id.review_rating) TextView review_rating;
         @BindView(R.id.review_writtenTime) TextView review_writtenTime;
 
         // database reference
-        private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         private static StorageReference storage = FirebaseStorage.getInstance("gs://chatbot-6c425.appspot.com").getReference();
+        private View view;
 
         private ReviewViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
+            this.view = view;
         }
 
         // view data
         private void setData(Review review, String uid){
             // 보이는 부분
+            storage.child("profile").child(review.getUserUid()).getDownloadUrl()
+                    .addOnSuccessListener( (uri) -> Glide.with(view.getContext().getApplicationContext()).load(uri).into(profile_show))
+                    .addOnFailureListener((e) -> Log.w("fail","불러오기 실패"));
+
             //profile
             review_userEmail.setText(review.getUsername());
             review_contents.setText(review.getContents());
@@ -92,10 +98,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             review_user_uid.setText(review.getUserUid());
         }
 
+
+
         @OnClick(R.id.profile_show)
         public void profile(View v){
             // 수정하기
-            Toast.makeText(v.getContext(), "hi",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(v.getContext().getApplicationContext(), ProfileShowActivity.class);
+            intent.putExtra("userUid", review_user_uid.getText().toString());
+            v.getContext().startActivity(intent);
         }
 
         @OnClick(R.id.review_more)

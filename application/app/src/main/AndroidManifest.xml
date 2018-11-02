@@ -45,6 +45,7 @@
         <activity android:name=".mainFragment.ReviewFormActivity" />
         <activity android:name=".myPageFragment.PhotoShowActivity" />
         <activity android:name=".myPageFragment.StateUpdateActivity" />
+        <activity android:name=".mainFragment.ProfileShowActivity"/>
     </application>
 
 </manifest>
