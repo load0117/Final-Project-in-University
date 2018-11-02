@@ -1,8 +1,5 @@
 package com.example.twolee.chatbot.noteFragment;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,8 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.twolee.chatbot.R;
-import com.google.firebase.auth.FirebaseAuth;
-
 
 import java.util.List;
 
@@ -78,10 +73,6 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
         // INVISIBLE
         @BindView(R.id.homework_uid)
         TextView homework_uid;
-//        @BindView(R.id.homework_type)
-//        TextView homework_type;
-//        @BindView(R.id.homework_recent_string)
-//        TextView homework_recentString;
 
         private HomeworkViewHolder(View view) {
             super(view);
@@ -90,15 +81,12 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
         }
 
         private void setData(Homework newHomework, String uid) {
-
             // Insert Data
             hwCognitiveError.setText(newHomework.getCognitiveError());
             hwDate.setText(newHomework.getWrittenTime());
             hwAutoThought.setText(newHomework.getAutomaticThought());
             hwAssignment.setText(newHomework.getAssignment());
             homework_uid.setText(uid);
-//            homework_type.setText(newHomework.getType());
-//            homework_recentString.setText(newHomework.getRecentString());
 
             // layout to check box button
             if (newHomework.getChecked()) {
@@ -109,26 +97,6 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
                 noRemoveButton();
             }
 
-        }
-
-
-
-        @OnClick(R.id.homework_assignment)
-        public void goalDetail(View view){
-            Intent intent = new Intent(view.getContext().getApplicationContext(),DetailActivity.class);
-
-            // data transport
-//            System.out.println("클릭 한 제목: "+homework_goal.getText().toString());
-//            System.out.println("타입 :"+ homework_type.getText().toString());
-//            System.out.println("최근 내용 :"+ homework_recentString.getText().toString());
-//            System.out.println("과제 :"+homework_goal.getText().toString());
-//
-//
-//            intent.putExtra("assignment",homework_goal.getText().toString());
-//            intent.putExtra("recentString",homework_recentString.getText().toString());
-//            intent.putExtra("homework_type",homework_type.getText().toString());
-
-            view.getContext().startActivity(intent);
         }
 
         @OnCheckedChanged(R.id.homework_finished_button)

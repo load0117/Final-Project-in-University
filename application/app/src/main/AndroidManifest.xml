@@ -45,9 +45,6 @@
         <activity android:name=".mainFragment.ReviewFormActivity" />
         <activity android:name=".myPageFragment.PhotoShowActivity" />
         <activity android:name=".myPageFragment.StateUpdateActivity" />
-        <!-- testing-->
-        <activity android:name=".noteFragment.DetailActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"/>
     </application>
 
 </manifest>
