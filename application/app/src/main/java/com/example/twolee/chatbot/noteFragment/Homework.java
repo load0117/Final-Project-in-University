@@ -5,11 +5,10 @@ public class Homework {
     private String assignment;
     private String cognitiveError;
     private String automaticThought;
-    private Boolean isChecked = false;
+    private Boolean isChecked;
     private String writtenTime;
 
-    public Homework() {
-    }
+    public Homework(){}
 
     public Homework(String assignment, String cognitiveError, String automaticThought, Boolean isChecked, String writtenTime) {
         this.assignment = assignment;

@@ -54,7 +54,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:contentDescription="@string/dot"
-            android:src="@drawable/ic_more_horiz_black_24dp" />
+            android:src="@drawable/ic_more_horiz_black_24dp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

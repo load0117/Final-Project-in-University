@@ -32,7 +32,7 @@ public class HomeworkReader {
                     // get data from FireBase
                     Homework getHomework = data.getValue(Homework.class);
                     // init
-                    Homework newHomework = new Homework();
+                    Homework newHomework = null;
                     // add data
                     if (getHomework != null) {
                         newHomework = new Homework(getHomework.getAssignment()

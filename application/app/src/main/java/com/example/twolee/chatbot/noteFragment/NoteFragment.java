@@ -41,8 +41,7 @@ public class NoteFragment extends Fragment {
     private boolean isExistUser = false;
 
     public static NoteFragment newInstance() {
-        NoteFragment fragment = new NoteFragment();
-        return fragment;
+        return new NoteFragment();
     }
 
     @Override
@@ -73,7 +72,7 @@ public class NoteFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         HomeworkReader homeworkReader = new HomeworkReader();
         if (isExistUser) {
-            homeworkReader.getInitData((homeworkList, homeworkUidList) -> {
+            homeworkReader.getInitData( (homeworkList, homeworkUidList) -> {
 
                 if (homework_recyclerView != null) {
 
@@ -101,7 +100,7 @@ public class NoteFragment extends Fragment {
     @Optional
     @OnClick(R.id.require_id_button)
     public void require(View v) {
-        Intent intent = new Intent(this.getView().getContext(), LoginActivity.class);
+        Intent intent = new Intent(v.getContext(), LoginActivity.class);
         startActivity(intent);
         if (getActivity() != null)
             getActivity().finish();
