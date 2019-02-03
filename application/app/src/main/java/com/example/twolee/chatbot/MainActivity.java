@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.twolee.chatbot.backButton.BackPressCloseHandler;
@@ -23,7 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-
     protected @BindView(R.id.toolbar)
     Toolbar toolbar;
     protected @BindView(R.id.toolbar_title)
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         //toolbar
         setSupportActionBar(toolbar);
         mainToolbarTitle.setText(R.string.mainToolbar);
-        if(getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // init Fragment
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
             // 버튼 이벤트 추가
             BottomNavigationViewHelper.disableShiftMode(bottomNavigationView); //이동 모드 해제
-            bottomNavigationView.setOnNavigationItemSelectedListener( (item) -> {
+            bottomNavigationView.setOnNavigationItemSelectedListener((item) -> {
                 // 수정
                 selectedFragment = null;
                 switch (item.getItemId()) {
@@ -99,15 +99,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             });
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e){
+            Log.w("Error Msg", e.toString());
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        backPressCloseHandler.onBackPressed();
     }
 }
